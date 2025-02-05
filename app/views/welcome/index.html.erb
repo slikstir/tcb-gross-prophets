@@ -1,4 +1,26 @@
-<h2>Hello World</h2>
-<p>
-  The time is now: <%= Time.now %>
-</p>
+<hr>
+<div class="text-uppercase">
+  <% if @attendee.blank? %>
+    <p>Chuds Balance</p>  
+    <%= link_to "Login first", new_attendee_path %>
+  <% else %>
+    <p><%= @attendee.name %>'s Chuds Balance</p>
+    <p><%= @attendee.chuds %> CHUDS</p>
+  <% end %>
+</div>
+
+<hr>
+
+<div>
+  <h3 class="text-uppercase">Be the best you!</h3>
+  <p>
+    Some in world copy about the seminar blah blah blah
+  </p>
+</div>
+
+<div>
+  <%= link_to "Shop", shop_path %><br>
+  <%= link_to "About the Product", "#" %><br>
+  <%= link_to "About the Company", "#" %><br>
+  <%= link_to "Sign out", sign_out_path %><br>
+</div>

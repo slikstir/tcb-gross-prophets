@@ -1,0 +1,15 @@
+<%= form_with model: Attendee.new, data: { turbo: "true" } do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true %>
+  </div>
+  <div>
+    <%= form.label :email %>
+    <%= form.text_field :email, required: true %>
+  </div>
+  <div>
+    <%= form.label :seat_number %>
+    <%= form.text_field :seat_number %>
+  </div>
+  <%= form.submit "Sign In or Sign Up" %>
+<% end %>

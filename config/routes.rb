@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   root 'welcome#index'
+
+  get 'shop', to: 'welcome#shop', as: :shop
+  get 'sign_out', to: 'welcome#sign_out', as: :sign_out
   
   resources :attendees
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
