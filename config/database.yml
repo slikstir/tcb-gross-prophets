@@ -86,7 +86,8 @@ production:
     <<: *default
     database: tcb_gp_production
     username: tcb_gp
-    password: <%= ENV["MYAPP_DATABASE_PASSWORD"] %>
+    url: <%= ENV['DATABASE_URL'] %>
+    # password: <%= ENV["MYAPP_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: tcb_gp_production_cache
