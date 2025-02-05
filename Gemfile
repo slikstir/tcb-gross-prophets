@@ -1,4 +1,4 @@
-ruby '3.2.7' # Example version, update as needed
+ruby '3.2.6' # Example version, update as needed
 
 source "https://rubygems.org"
 
