@@ -1,0 +1,2 @@
+class AttendeeController < ApplicationController
+end
