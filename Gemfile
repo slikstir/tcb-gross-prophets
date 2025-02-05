@@ -12,7 +12,6 @@ gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 
 gem 'importmap-rails', '~> 1.0'
-gem "dartsass-rails"
 gem "bootstrap", "~> 5.3.3"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
