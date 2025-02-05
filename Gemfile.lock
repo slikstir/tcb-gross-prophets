@@ -73,15 +73,10 @@ GEM
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
     ast (2.4.2)
-    autoprefixer-rails (10.4.19.0)
-      execjs (~> 2)
     base64 (0.2.0)
     bcrypt_pbkdf (1.1.1)
     benchmark (0.4.0)
     bigdecimal (3.1.9)
-    bootstrap (5.3.3)
-      autoprefixer-rails (>= 9.1.0)
-      popper_js (>= 2.11.8, < 3)
     brakeman (7.0.0)
       racc
     builder (3.3.0)
@@ -98,7 +93,6 @@ GEM
     erubi (1.13.1)
     et-orbi (1.2.11)
       tzinfo
-    execjs (2.10.0)
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -106,10 +100,6 @@ GEM
       activesupport (>= 6.1)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
-    importmap-rails (1.2.3)
-      actionpack (>= 6.0.0)
-      activesupport (>= 6.0.0)
-      railties (>= 6.0.0)
     io-console (0.8.0)
     irb (1.15.1)
       pp (>= 0.6.0)
@@ -165,7 +155,6 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.9)
-    popper_js (2.11.8)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -298,10 +287,8 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  bootstrap (~> 5.3.3)
   brakeman
   debug
-  importmap-rails (~> 1.0)
   kamal
   pg (~> 1.1)
   propshaft
