@@ -1,0 +1,35 @@
+<!-- filepath: /Users/ricky/RailsApp/tcb-gross-prophets/app/views/admin/attendees/show.html.erb -->
+<h1>Attendee Details</h1>
+
+<p>
+  <strong>Name:</strong>
+  <%= @attendee.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @attendee.email %>
+</p>
+
+<p>
+  <strong>Chuds Balance:</strong>
+  <%= @attendee.chuds %>
+</p>
+
+<p>
+  <strong>Seat Number:</strong>
+  <%= @attendee.seat_number %>
+</p>
+
+<p>
+  <strong>Performance Points:</strong>
+  <%= @attendee.performance_points %>
+</p>
+
+<p>
+  <strong>Level:</strong>
+  <%= @attendee.level %>
+</p>
+
+<%= link_to 'Edit', edit_admin_attendee_path(@attendee), class: 'btn btn-primary' %>
+<%= link_to 'Back', admin_attendees_path, class: 'btn btn-secondary' %>

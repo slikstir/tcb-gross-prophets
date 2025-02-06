@@ -1,0 +1,15 @@
+<div class="col-12 col-md-6">
+  <%= bootstrap_form_with(model: [:admin, @attendee], local: true) do |form| %>
+
+    <%= form.text_field :name %>
+    <%= form.email_field :email %>
+    <%= form.number_field :chuds %>
+    <%= form.text_field :seat_number %>
+    <%= form.number_field :performance_points %>
+    <%= form.number_field :level %>
+
+    <div class="actions">
+      <%= form.submit nil, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

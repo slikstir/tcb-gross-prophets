@@ -22,11 +22,17 @@
   </head>
 
   <body class="text-center">
+
+
     <div class="container">
       <p>Tin Can Bros Presents</p>
       <h1><%= link_to "Gross prophets", root_path %></h1>
       <%= link_to "Program", "#" %>
     </div>
+    
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
     <%= yield %> 
 
     <div  id="login-container" class="container text-center content p-4 alert alert-info">

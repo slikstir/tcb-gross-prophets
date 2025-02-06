@@ -1,10 +1,19 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
+  devise_for :users
+
   get 'shop', to: 'welcome#shop', as: :shop
   get 'sign_out', to: 'welcome#sign_out', as: :sign_out
   
   resources :attendees
+  
+  namespace :admin do
+    resources :attendees
+    resources :users
+    get '/', to: 'admin#index'
+  end
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

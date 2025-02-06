@@ -1,0 +1,30 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Seat No.</th>
+      <th>Chuds</th>
+      <th>Level</th>
+      <th>Performance Points</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @attendees.each do |attendee| %>
+      <tr>
+        <td><%= attendee.name %></td>
+        <td><%= attendee.email %></td>
+        <td><%= attendee.seat_number %></td>
+        <td><%= attendee.chuds %></td>
+        <td><%= attendee.level %></td>
+        <td><%= attendee.performance_points %></td>
+        <td>
+          <%= link_to 'Show', admin_attendee_path(attendee) %>
+          <%= link_to 'Edit', edit_admin_attendee_path(attendee) %>
+          <%= link_to 'Destroy', admin_attendee_path(attendee), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
