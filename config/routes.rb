@@ -9,8 +9,7 @@ Rails.application.routes.draw do
   resources :attendees
   
   namespace :admin do
-    resources :attendees
-    resources :users
+    resources :attendees, :performers, :users, :vouchers
     get '/', to: 'admin#index'
   end
   

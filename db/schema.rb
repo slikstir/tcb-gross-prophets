@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_06_192017) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_06_205023) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "attendee_vouchers", force: :cascade do |t|
+    t.bigint "attendee_id"
+    t.bigint "voucher_id"
+    t.date "redeemed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attendee_id"], name: "index_attendee_vouchers_on_attendee_id"
+    t.index ["voucher_id"], name: "index_attendee_vouchers_on_voucher_id"
+  end
 
   create_table "attendees", force: :cascade do |t|
     t.string "email"
@@ -21,6 +31,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_06_192017) do
     t.string "seat_number"
     t.integer "performance_points"
     t.integer "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "performers", force: :cascade do |t|
+    t.string "name"
+    t.integer "performance_points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -43,5 +60,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_06_192017) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "vouchers", force: :cascade do |t|
+    t.string "code"
+    t.integer "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 end

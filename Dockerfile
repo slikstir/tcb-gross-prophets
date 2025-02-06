@@ -16,4 +16,7 @@ COPY . .
 # Expose the Rails port
 EXPOSE 3000
 
+# bundle exec shorthand
+RUN echo 'alias be="bundle exec"' >> ~/.bashrc
+
 CMD ["rails", "server", "-b", "0.0.0.0"]

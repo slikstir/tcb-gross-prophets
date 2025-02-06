@@ -1,0 +1,24 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Amount</th>
+      <th>Uses</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @vouchers.each do |voucher| %>
+      <tr>
+        <td><%= voucher.code %></td>
+        <td><%= voucher.amount %></td>
+        <td><%= voucher.attendee_vouchers.count %></td>
+        <td>
+          <%= link_to 'Show', admin_voucher_path(voucher) %>
+          <%= link_to 'Edit', edit_admin_voucher_path(voucher) %>
+          <%= link_to 'Destroy', admin_voucher_path(voucher), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
