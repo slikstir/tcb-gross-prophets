@@ -17,7 +17,7 @@
     <link rel="apple-touch-icon" href="/icon.ico">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
   </head>
 
   <body class="text-center">
@@ -27,5 +27,37 @@
       <%= link_to "Program", "#" %>
     </div>
     <%= yield %> 
+
+    <div  id="login-container" class="container text-center content p-4 alert alert-info">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login First</button>
+    </div>
+
+        <!-- 🚀 Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Enter Your Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+
+                <div class="modal-body">
+                    <form id="user-form">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name:</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
   </body>
 </html>
