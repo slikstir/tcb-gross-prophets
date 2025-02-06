@@ -1,0 +1,12 @@
+<div class="col-12 col-md-6">
+  <%= bootstrap_form_with(model: [:admin, @user], local: true) do |form| %>
+
+    <%= form.text_field :email %>
+    <%= form.password_field :password %>
+    <%= form.password_field :password_confirmation %>
+    
+    <div class="actions">
+      <%= form.submit nil, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
