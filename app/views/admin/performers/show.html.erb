@@ -1,0 +1,19 @@
+<!-- filepath: /Users/ricky/RailsApp/tcb-gross-prophets/app/views/admin/performers/show.html.erb -->
+<h1>Performer Details
+  <% if !@performer.active? %>
+    <span class="badge bg-warning xs">Inactive</span>
+<% end %>
+</h1>
+
+<p>
+  <strong>Name:</strong>
+  <%= @performer.name %>
+</p>
+
+<p>
+  <strong>Performance Points:</strong>
+  <%= @performer.performance_points %>
+</p>
+
+<%= link_to 'Edit', edit_admin_performer_path(@performer), class: 'btn btn-primary' %>
+<%= link_to 'Back', admin_performers_path, class: 'btn btn-secondary' %>

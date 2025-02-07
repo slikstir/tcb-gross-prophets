@@ -1,0 +1,24 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Name</th>
+      <th>Performance Points</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @performers.each do |performer| %>
+      <tr>
+        <td><%= performer.active? ? "Active" : "Inactive" %></td>
+        <td><%= performer.name %></td>
+        <td><%= performer.performance_points %></td>
+        <td>
+          <%= link_to 'Show', admin_performer_path(performer) %>
+          <%= link_to 'Edit', edit_admin_performer_path(performer) %>
+          <%= link_to 'Destroy', admin_performer_path(performer), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

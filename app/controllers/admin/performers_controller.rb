@@ -54,7 +54,7 @@ module Admin
 
       # Only allow a list of trusted parameters through.
       def performer_params
-        params.require(:performer).permit(:name, :email, :performance_points, :level)
+        params.require(:performer).permit(:name, :performance_points, :active)
       end
   end
 end
