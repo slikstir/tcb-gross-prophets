@@ -7,6 +7,15 @@ Rails.application.routes.draw do
   get 'sign_out', to: 'welcome#sign_out', as: :sign_out
   
   resources :attendees
+  resources :performers, only: :index do 
+    collection do
+      get :status
+      get :vote, as: :vote
+      post :vote
+      get :pay, as: :pay
+      post :pay
+    end
+  end
   resources :vouchers, only: [:index]
   
   namespace :admin do

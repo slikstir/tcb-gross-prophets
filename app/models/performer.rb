@@ -14,4 +14,12 @@
 #  index_performers_on_active  (active)
 #
 class Performer < ApplicationRecord
+  has_many :votes, dependent: :destroy
+  has_many :payments, dependent: :destroy
+
+  scope :active, -> { where(active: true) }
+
+  def self.max_performance_points
+    self.active.maximum(:performance_points)
+  end
 end

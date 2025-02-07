@@ -22,7 +22,7 @@
   </head>
   <div class="alert alert-info text-center m-0 fixed-top" role="alert">
     📢 <%= link_to "Special Announcement: It's time to spend your chuds!", 
-                    "#" %> 🎉
+                    pay_performers_path %> 🎉
 </div>
 
   <body class="container text-center">
@@ -47,12 +47,19 @@
     <p>
         <%= link_to "Shop", shop_path, class: "btn btn-secondary w-100" %>
     </p>
+    
+    <p>
+        <%= link_to "Home", root_path, class: "btn btn-secondary w-100" %>
+    </p>
+    
     <p>
     <%= link_to "About the Product", "#" , class: "btn btn-secondary w-100"%>
     </p>
+    
     <p>
     <%= link_to "About the Company", "#", class: "btn btn-secondary w-100" %>
     </p>
+    
     <p>
     <%= link_to "Sign out", sign_out_path, class: "btn btn-secondary w-100" %>
     </p>

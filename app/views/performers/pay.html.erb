@@ -1,0 +1,26 @@
+<h1 class="text-capitalize">
+  Time to spend your chuds
+</h1>
+<div class="m-5">
+
+  <%= render "shared/chuds_status" %>
+  <%= bootstrap_form_with url: pay_performers_path, local: true, class: 'row g-3' do |f|  %>
+
+      <table class="table">
+        <% @performers.each do |performer| %>
+          <tr>
+            <td><%= performer.name %></td>
+            <td><%= number_field_tag "performer[#{performer.id}]", "0", min: 0 %></td>
+            <td></td>
+          </tr>
+        <% end %>
+      </table>
+
+      <div class="alert alert-warning">
+        <h3>New Chuds Balance</h3>
+        <p><span id="new-chuds-amount">0</span> CHUDS</p>
+      </div>
+
+      <%= f.submit "Send Chuds", class: 'btn btn-success' %>
+    <% end %>
+</div>

@@ -1,0 +1,9 @@
+<div  id="login-container" class="text-uppercase text-center alert alert-primary">
+  <% if @attendee.blank? %>
+    <p>Chuds Balance</p>  
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login First</button>
+  <% else %>
+    <p><%= @attendee.name %>'s Chuds Balance</p>
+    <p><%= @attendee.chuds_balance %> CHUDS</p>
+  <% end %>
+</div>

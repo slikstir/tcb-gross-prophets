@@ -37,7 +37,7 @@ class Voucher < ApplicationRecord
           redeemed_at: Date.today
       )
       attendee_voucher.save
-      attendee.update(chuds: attendee.chuds + self.amount)
+      attendee.update(chuds: attendee.chuds_balance + self.amount)
     end
   end
 

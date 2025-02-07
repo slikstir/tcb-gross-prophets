@@ -6,6 +6,5 @@ class ApplicationController < ActionController::Base
 
   def set_attendee
     @attendee = Attendee.find_by(email: session[:email])
-
   end
 end

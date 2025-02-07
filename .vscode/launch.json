@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // {
+    //   "type": "rdbg",
+    //   "name": "Attach with rdbg local",
+    //   "request": "attach",
+    //   "debugPort": "12345"
+    // },
+    // {
+    //   "type": "rdbg",
+    //   "name": "Attach with rdbg (tcp 12345)", // Specify your favorite name
+    //   "request": "attach",
+    //   "debugPort": "localhost:12345",
+    //   "localfsMap": "/app:${workspaceFolder}"
+    // },
+    // {
+    //   "name": "Rails Debug in Docker (rdbg)",
+    //   "type": "rdbg",
+    //   "request": "attach",
+    //   "cwd": "/app",
+    //   "remoteHost": "localhost",
+    //   "remotePort": 12345,
+    //   "remoteWorkspaceRoot": "/app",
+    //   "showDebuggerOutput": true
+    // }
+  ]
+}

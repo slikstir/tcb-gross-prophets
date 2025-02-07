@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="text-center container">
+    <table class="table">
+      <% @performers.each do |performer| %>
+        <tr>
+          <td class="align-middle" style="width: 200px;">
+            <strong><%= performer.name %></strong><br>
+            Level 12<br>
+            <%= performer.performance_points %>
+          </td>
+          <td class="align-middle" style="width: 250px;">
+            <%= image_tag "landscape-placeholder.svg", class: "rounded-circle", style: "width: 200px; height: 200px;" %>
+          </td>
+          <td class="align-middle">
+            <div class="progress" style="height: 30px;">
+              <div class="progress-bar" 
+                    role="progressbar" 
+                      style="width: <%= (performer.performance_points * 1.0) / ( @max_performance_points * 1.0) * 100.0 %>%;" 
+                      aria-valuenow="<%= performer.performance_points %>" aria-valuemin="0" aria-valuemax="<%= @max_performance_points %>">
+                <%= performer.performance_points %>%
+              </div>
+            </div>
+            <%= performer.performance_points %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

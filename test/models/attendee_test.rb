@@ -3,7 +3,7 @@
 # Table name: attendees
 #
 #  id                 :bigint           not null, primary key
-#  chuds              :integer
+#  chuds_balance      :integer
 #  email              :string
 #  level              :integer
 #  name               :string
