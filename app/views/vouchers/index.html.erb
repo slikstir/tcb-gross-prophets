@@ -1,0 +1,10 @@
+<h1>Redeem Voucher</h1>
+
+<%= bootstrap_form_with url: vouchers_path, method: :get, local: true, class: 'row g-3' do %>
+  <div class="col-auto">
+    <%= text_field_tag :code, params[:code], class: 'form-control', placeholder: 'Enter voucher code' %>
+  </div>
+  <div class="col-auto">
+    <%= submit_tag 'Redeem', class: 'btn btn-primary' %>
+  </div>
+<% end %>

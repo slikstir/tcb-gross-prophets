@@ -1,15 +1,13 @@
-<hr>
-<div class="text-uppercase">
+
+<div  id="login-container" class="text-uppercase text-center alert alert-primary">
   <% if @attendee.blank? %>
     <p>Chuds Balance</p>  
-    <%= link_to "Login first", new_attendee_path %>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login First</button>
   <% else %>
     <p><%= @attendee.name %>'s Chuds Balance</p>
     <p><%= @attendee.chuds %> CHUDS</p>
   <% end %>
 </div>
-
-<hr>
 
 <div>
   <%= image_tag "landscape-placeholder.svg" %>
@@ -17,11 +15,4 @@
   <p>
     Some in world copy about the seminar blah blah blah
   </p>
-</div>
-
-<div>
-  <%= link_to "Shop", shop_path %><br>
-  <%= link_to "About the Product", "#" %><br>
-  <%= link_to "About the Company", "#" %><br>
-  <%= link_to "Sign out", sign_out_path %><br>
 </div>

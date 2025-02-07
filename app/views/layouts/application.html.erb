@@ -20,26 +20,47 @@
     <%= stylesheet_link_tag 'bootstrap', 'application', media: 'all' %>
     <%= javascript_importmap_tags %>
   </head>
+  <div class="alert alert-info text-center m-0 fixed-top" role="alert">
+    📢 <%= link_to "Special Announcement: It's time to spend your chuds!", 
+                    "#" %> 🎉
+</div>
 
-  <body class="text-center">
-
-
-    <div class="container">
-      <p>Tin Can Bros Presents</p>
-      <h1><%= link_to "Gross prophets", root_path %></h1>
-      <%= link_to "Program", "#" %>
+  <body class="container text-center">
+    <div class="p-5 bg-body-tertiary rounded-3">
+      <div class="py-5">
+        <h2 class="fw-bold">Tin Can Bros Presents</h2>
+        <h1 class="display-2 fw-bold">Gross Prophets</h1>
+        <%= link_to "Program", "#", class: "btn btn-primary" %>
+      </div>
     </div>
-    
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+
+    <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
+          <%= value %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
 
     <%= yield %> 
 
-    <div  id="login-container" class="container text-center content p-4 alert alert-info">
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login First</button>
+    <div>
+    <p>
+        <%= link_to "Shop", shop_path, class: "btn btn-secondary w-100" %>
+    </p>
+    <p>
+    <%= link_to "About the Product", "#" , class: "btn btn-secondary w-100"%>
+    </p>
+    <p>
+    <%= link_to "About the Company", "#", class: "btn btn-secondary w-100" %>
+    </p>
+    <p>
+    <%= link_to "Sign out", sign_out_path, class: "btn btn-secondary w-100" %>
+    </p>
     </div>
 
-        <!-- 🚀 Login Modal -->
+
+
+<!-- 🚀 Login Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -48,19 +69,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-
                 <div class="modal-body">
-                    <form id="user-form">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name:</label>
-                            <input type="text" id="name" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email:</label>
-                            <input type="email" id="email" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Submit</button>
-                    </form>
+                    <%= render 'attendees/form' %>
                 </div>
             </div>
         </div>
