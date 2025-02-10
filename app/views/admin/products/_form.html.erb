@@ -1,0 +1,11 @@
+<div class="col-12 col-md-6">
+  <%= bootstrap_form_with(model: [:admin, @product], local: true) do |form| %>
+
+    <%= form.text_field :sku %>
+    <%= form.number_field :chuds %>
+
+    <div class="actions">
+      <%= form.submit nil, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

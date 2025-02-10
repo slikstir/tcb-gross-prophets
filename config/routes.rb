@@ -19,7 +19,8 @@ Rails.application.routes.draw do
   resources :vouchers, only: [:index]
   
   namespace :admin do
-    resources :attendees, :performers, :users, :vouchers
+    resources :attendees, :performers, 
+              :users, :vouchers, :products
     get '/', to: 'admin#index'
   end
 

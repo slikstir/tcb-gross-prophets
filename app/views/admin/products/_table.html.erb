@@ -1,0 +1,22 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>SKU</th>
+      <th>CHUDs</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.sku %></td>
+        <td><%= product.chuds %></td>
+        <td>
+          <%= link_to 'Show', admin_product_path(product) %>
+          <%= link_to 'Edit', edit_admin_product_path(product) %>
+          <%= link_to 'Destroy', admin_product_path(product), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
