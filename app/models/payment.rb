@@ -35,6 +35,7 @@ class Payment < ApplicationRecord
 
   def update_performance_points
     performer.update_column(:performance_points, performer.performance_points + amount)
+    attendee.update_column(:performance_points, attendee.performance_points + amount)
   end
 
 end

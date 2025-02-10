@@ -48,7 +48,10 @@ module Admin
     end
 
     def attendee_params
-      params.require(:attendee).permit(:name, :email) # Modify as needed
+      params.require(:attendee).permit(:name, :email, 
+        :chuds_balance, :seat_number, :performance_points, 
+        :level
+        ) 
     end
   end
 end
