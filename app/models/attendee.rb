@@ -13,6 +13,8 @@
 #  updated_at         :datetime         not null
 #
 class Attendee < ApplicationRecord
+  paginates_per 100
+
   after_initialize :set_defaults
 
   default_scope { order(:email) }

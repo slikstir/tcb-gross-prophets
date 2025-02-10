@@ -3,7 +3,11 @@ module Admin
     before_action :set_attendee, only: [:show, :edit, :update, :destroy]
 
     def index
-      @attendees = Attendee.all
+      @attendees = if params[:search].present?
+        Attendee.where("name ILIKE ? OR email ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
+      else
+        Attendee.all
+      end.page(params[:page] ||= 1)   
     end
 
     def show; end

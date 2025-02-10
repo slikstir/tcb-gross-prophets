@@ -45,3 +45,5 @@ gem "importmap-rails", "~> 2.1"
 gem 'devise', '~> 4.9', '>= 4.9.4'
 gem 'annotaterb'
 gem "bootstrap_form", "~> 5.4"
+
+gem 'kaminari'
