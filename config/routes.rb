@@ -22,6 +22,11 @@ Rails.application.routes.draw do
     resources :attendees, :performers, :users, :vouchers
     get '/', to: 'admin#index'
   end
+
+  namespace :api do 
+    get '/', to: 'api#index'
+    post 'chuds/buy', to: 'chuds#buy'
+  end
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

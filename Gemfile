@@ -47,3 +47,4 @@ gem 'annotaterb'
 gem "bootstrap_form", "~> 5.4"
 
 gem 'kaminari'
+gem "rspec-rails", "~> 7.1"
