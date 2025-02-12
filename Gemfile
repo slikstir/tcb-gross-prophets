@@ -48,4 +48,5 @@ gem 'annotaterb'
 gem "bootstrap_form", "~> 5.4"
 
 gem 'kaminari'
+gem 'redis', '~> 4.3', '>= 4.3.1'
 
