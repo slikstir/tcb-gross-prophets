@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   get "product", to: "welcome#product", as: :product
   get "closed", to: "welcome#closed", as: :closed
 
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
 
   get "shop", to: "welcome#shop", as: :shop
   get "sign_out", to: "welcome#sign_out", as: :sign_out

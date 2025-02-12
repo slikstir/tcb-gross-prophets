@@ -2,6 +2,7 @@ module Admin
   class AdminController < ApplicationController
     before_action :authenticate_user!
     skip_before_action :check_if_logged_in
+    skip_before_action :check_if_live
 
     layout "admin"
 
