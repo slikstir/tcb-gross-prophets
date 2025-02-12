@@ -27,6 +27,9 @@ require 'rspec/rails'
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
+require 'factory_bot_rails'
+
+
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
@@ -68,7 +71,9 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  config.before(:each) do
+  config.before(:each, type: :request) do
     host! "localhost"
   end
+
+  config.include FactoryBot::Syntax::Methods
 end

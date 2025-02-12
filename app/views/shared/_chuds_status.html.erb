@@ -6,6 +6,6 @@
     <p><%= @attendee.name %>'s Chuds Balance</p>
     <p><%= @attendee.chuds_balance %> CHUDS</p>
     <p><%= @attendee.performance_points %> Performance Points</p>
-    <p>You are a level <%= @attendee.level %></p>
+    <p>You are a level <%= Attendee::LEVELS[@attendee.level] %></p>
   <% end %>
 </div>

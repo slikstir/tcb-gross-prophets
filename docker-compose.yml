@@ -11,7 +11,7 @@ services:
       - "3000:3000"
       - "12345:12345" # Debugger port
     environment:
-      - RAILS_ENV=development
+      - RAILS_ENV=${RAILS_ENV}
       - DEBUGGER=true
     depends_on:
       - db

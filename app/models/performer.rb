@@ -4,8 +4,10 @@
 #
 #  id                 :bigint           not null, primary key
 #  active             :boolean          default(TRUE)
+#  chuds_balance      :integer          default(100)
 #  name               :string
 #  performance_points :integer
+#  chuds_balance      :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
@@ -17,9 +19,11 @@ class Performer < ApplicationRecord
   has_many :votes, dependent: :destroy
   has_many :payments, dependent: :destroy
 
+  default_scope { order(:name) }
+
   scope :active, -> { where(active: true) }
 
-  def self.max_performance_points
-    self.active.maximum(:performance_points)
+  def self.max_chuds_balance
+    self.active.maximum(:chuds_balance)
   end
 end

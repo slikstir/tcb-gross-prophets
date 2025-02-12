@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   root 'welcome#index'
+  get "login", to: "welcome#login", as: :login
+  get "company", to: "welcome#company", as: :company
+  get "product", to: "welcome#product", as: :product
 
   devise_for :users
 

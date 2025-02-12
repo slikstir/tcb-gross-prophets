@@ -3,6 +3,7 @@
     <tr>
       <th>Status</th>
       <th>Name</th>
+      <th>Chuds</th>
       <th>Performance Points</th>
       <th>Actions</th>
     </tr>
@@ -12,6 +13,7 @@
       <tr>
         <td><%= performer.active? ? "Active" : "Inactive" %></td>
         <td><%= performer.name %></td>
+        <td><%= performer.chuds_balance %></td>
         <td><%= performer.performance_points %></td>
         <td>
           <%= link_to 'Show', admin_performer_path(performer) %>

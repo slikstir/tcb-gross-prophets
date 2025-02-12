@@ -48,3 +48,5 @@ gem "bootstrap_form", "~> 5.4"
 
 gem 'kaminari'
 gem "rspec-rails", "~> 7.1"
+
+gem "factory_bot_rails", "~> 6.4", :group => :test

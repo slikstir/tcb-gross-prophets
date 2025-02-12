@@ -26,16 +26,27 @@ class Payment < ApplicationRecord
   validates :attendee, :performer, presence: true
   validates :amount, numericality: { greater_than_or_equal_to: 0 }
 
-  after_create :update_performance_points
-  after_create :update_attendee_balance
-  
-  def update_attendee_balance
-    attendee.update_column(:chuds_balance, attendee.chuds_balance - amount)
-  end
+  after_create :process_chud_transfer
 
-  def update_performance_points
-    performer.update_column(:performance_points, performer.performance_points + amount)
-    attendee.update_column(:performance_points, attendee.performance_points + amount)
-  end
+  def process_chud_transfer
+    ActiveRecord::Base.transaction do
+      attendee.lock! # Lock the attendee row
+      performer.lock! # Lock the performer row
 
+      discounted_chuds = amount * 0.75
+
+      # Always fetch fresh values inside the transaction
+      new_attendee_balance = attendee.chuds_balance - amount
+      new_performance_points = attendee.performance_points + amount
+      new_performer_balance = performer.chuds_balance + discounted_chuds
+
+      if new_attendee_balance < 0
+        raise ActiveRecord::Rollback, "Not enough chuds!"
+      end
+
+      # Apply updates within the transaction
+      attendee.update!(chuds_balance: new_attendee_balance, performance_points: new_performance_points)
+      performer.update!(chuds_balance: new_performer_balance)
+    end
+  end
 end

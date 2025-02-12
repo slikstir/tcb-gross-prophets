@@ -15,12 +15,12 @@
             <div class="progress" style="height: 30px;">
               <div class="progress-bar" 
                     role="progressbar" 
-                      style="width: <%= (performer.performance_points * 1.0) / ( @max_performance_points * 1.0) * 100.0 %>%;" 
-                      aria-valuenow="<%= performer.performance_points %>" aria-valuemin="0" aria-valuemax="<%= @max_performance_points %>">
-                <%= performer.performance_points %>%
+                      style="width: <%= (performer.chuds_balance * 1.0) / ( @max_chuds_balance * 1.0) * 100.0 %>%;" 
+                      aria-valuenow="<%= performer.chuds_balance %>" aria-valuemin="0" aria-valuemax="<%= @max_chuds_balance %>">
+                <%= performer.chuds_balance %>%
               </div>
             </div>
-            <%= performer.performance_points %>
+            <%= performer.chuds_balance %>
           </td>
         </tr>
       <% end %>

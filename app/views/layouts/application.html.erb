@@ -17,7 +17,7 @@
     <link rel="apple-touch-icon" href="/icon.ico">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag 'bootstrap', 'application', media: 'all' %>
+    <%= stylesheet_link_tag 'bootstrap', 'application',  "data-turbo-track": "reload" %> %>
     <%= javascript_importmap_tags %>
   </head>
   <div class="alert alert-info text-center m-0 fixed-top" role="alert">
@@ -53,11 +53,11 @@
     </p>
     
     <p>
-    <%= link_to "About the Product", "#" , class: "btn btn-secondary w-100"%>
+    <%= link_to "About the Product", product_path , class: "btn btn-secondary w-100"%>
     </p>
     
     <p>
-    <%= link_to "About the Company", "#", class: "btn btn-secondary w-100" %>
+    <%= link_to "About the Company", company_path, class: "btn btn-secondary w-100" %>
     </p>
     
     <p>

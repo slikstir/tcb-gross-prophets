@@ -20,7 +20,7 @@ class PerformersController < ApplicationController
   end
 
   def status
-    @max_performance_points = Performer.max_performance_points
+    @max_chuds_balance = Performer.max_chuds_balance
   end
 
   def vote; end

@@ -25,6 +25,20 @@ class Attendee < ApplicationRecord
   has_many :payments, dependent: :destroy
   has_many :votes, dependent: :destroy
 
+  LEVELS = 
+  {
+    1 => "Brand Warrior", 
+    2 => "Product Pioneer ", 
+    3 => "Senior Product Pioneer", 
+    4 => "Consultant", 
+    5 => "Specialist Consultant", 
+    6 => "Executive Consultant", 
+    7 => "Specialist", 
+    8 => "Consultant Specialist", 
+    9 => "Executive Specialist",
+    10 => "Model Executive Specialist"
+  }
+
   def set_defaults
     self.chuds_balance = 100 if self.chuds_balance.blank?
     self.level = 1 if self.level.blank?
