@@ -35,8 +35,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem "factory_bot_rails", "~> 6.4"
+  gem "rspec-rails", "~> 7.1"
 end
-
 
 gem "turbo-rails", "~> 2.0"
 
@@ -47,6 +48,4 @@ gem 'annotaterb'
 gem "bootstrap_form", "~> 5.4"
 
 gem 'kaminari'
-gem "rspec-rails", "~> 7.1"
 
-gem "factory_bot_rails", "~> 6.4", :group => :test

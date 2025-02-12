@@ -20,7 +20,7 @@ module Admin
       @setting = Setting.new(setting_params)
 
       if @setting.save
-        redirect_to admin_settings_path, notice: "Setting was successfully created."
+        redirect_to admin_path, notice: "Setting was successfully created."
       else
         render :new
       end
@@ -28,7 +28,7 @@ module Admin
 
     def update
       if @setting.update(setting_params)
-        redirect_to admin_settings_path, notice: "Setting was successfully updated."
+        redirect_to admin_path, notice: "Setting was successfully updated."
       else
         render :edit
       end

@@ -17,15 +17,20 @@
     <link rel="apple-touch-icon" href="/icon.ico">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag 'bootstrap', 'application',  "data-turbo-track": "reload" %> %>
+    <%= stylesheet_link_tag 'bootstrap', 'application',  "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-  <div class="alert alert-info text-center m-0 fixed-top" role="alert">
-    📢 <%= link_to "Special Announcement: It's time to spend your chuds!", 
-                    pay_performers_path %> 🎉
-</div>
 
   <body class="container text-center">
+
+  <%= turbo_stream_from 'chud_checkpoint_alert' %>
+  <div id="chud_checkpoint_alert">
+      <% if @chud_checkpoint_time %>
+        <%= render 'shared/chuds_checkpoint', checkpoint_time: @chud_checkpoint_time %>
+      <% end %>
+  </div>
+
+
     <div class="p-5 bg-body-tertiary rounded-3">
       <div class="py-5">
         <h2 class="fw-bold">Tin Can Bros Presents</h2>

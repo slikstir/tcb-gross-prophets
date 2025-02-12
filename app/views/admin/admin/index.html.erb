@@ -1,2 +1,56 @@
 <h1>Tin Can Brothers</h1>
-<h2>Gross Prophets CHUDs Administration</h2>
+<h2>Gross Prophets Admin Dashboard</h2>
+
+<h3 class="mt-5">Attendee Actions</h3>
+<div class="row mb-5">
+  <div class="col d-flex align-items-center">
+    <%= link_to "Wipe out attendee chuds", "#", class: "btn btn-warning btn-lg w-100" %>
+  </div>
+  <div class="col d-flex align-items-center">
+    <%= link_to "Wipe out attendee performance points", "#", class: "btn btn-warning btn-lg w-100" %>
+  </div>
+  <div class="col d-flex align-items-center">
+    <%= link_to "Gift attendees chuds", "#", class: "btn btn-success btn-lg w-100" %>
+  </div>
+</div>
+
+
+<h3>Performer Actions</h3>
+<div class="row mb-5">
+  <div class="col d-flex align-items-center">
+    <%= link_to "Wipe out performer chuds", "#", class: "btn btn-warning btn-lg w-100" %>
+  </div>
+  <div class="col d-flex align-items-center">
+    <%= link_to "Wipe out performer performance points", "#", class: "btn btn-warning btn-lg w-100" %>
+  </div>
+  <div class="col d-flex align-items-center">
+    <%= link_to "Gift performers chuds", "#", class: "btn btn-success btn-lg w-100" %>
+  </div>
+</div>
+
+<h3>Show Actions</h3>
+<div class="row">
+  <div class="col d-flex align-items-center">
+    <%= bootstrap_form_with model: [:admin, @chud_time_setting], class: "w-100" do |f| %>
+      <% if @chud_checkpoint_time %>
+        <%= f.hidden_field :value, value: 'false'%>
+        <%= f.submit "Deactivate Chud Checkpoint", class: "btn btn-warning btn-lg w-100" %>
+      <% else %>
+        <%= f.hidden_field :value, value: 'true'%>
+        <%= f.submit "Activate Chud Checkpoint", class: "btn btn-success btn-lg w-100" %>
+      <% end %>
+    <% end %>
+  </div>
+  
+  <div class="col d-flex align-items-center">
+    <%= bootstrap_form_with model: [:admin, @open_setting], class: "w-100" do |f| %>
+      <% if @live %>
+        <%= f.hidden_field :value, value: 'false'%>
+        <%= f.submit "Close for Maintenance", class: "btn btn-warning btn-lg w-100" %>
+      <% else %>
+        <%= f.hidden_field :value, value: 'true'%>
+        <%= f.submit "Open Website", class: "btn btn-success btn-lg w-100" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

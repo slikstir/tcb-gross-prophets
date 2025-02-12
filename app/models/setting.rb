@@ -16,5 +16,21 @@
 #  index_settings_on_code  (code)
 #
 class Setting < ApplicationRecord
+  include Turbo::Broadcastable
+
   default_scope { order(:name) }
+
+  after_commit :broadcast_chud_checkpoint_time, if: -> { code == 'chud_checkpoint_time' }
+
+  private
+
+  def broadcast_chud_checkpoint_time
+    Turbo::StreamsChannel.broadcast_replace_to(
+      'chud_checkpoint_alert',
+      target: 'chud_checkpoint_alert',
+      partial: 'shared/chuds_checkpoint_wrapper',
+      locals: { checkpoint_time: value == 'true' }
+    )
+  end
+
 end

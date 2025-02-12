@@ -1,5 +1,6 @@
 class WelcomeController < ApplicationController
   layout :set_layout
+  skip_before_action :check_if_logged_in, only: [:login, :sign_out, :closed]
 
   def sign_out
     session[:email] = nil
@@ -14,7 +15,6 @@ class WelcomeController < ApplicationController
   end
 
   private
-
 
   def set_layout
     case action_name
