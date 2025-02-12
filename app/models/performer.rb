@@ -7,7 +7,6 @@
 #  chuds_balance      :integer          default(100)
 #  name               :string
 #  performance_points :integer
-#  chuds_balance      :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #

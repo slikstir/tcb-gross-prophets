@@ -12,15 +12,14 @@
             <%= image_tag "landscape-placeholder.svg", class: "rounded-circle", style: "width: 200px; height: 200px;" %>
           </td>
           <td class="align-middle">
-            <div class="progress" style="height: 30px;">
+            <div class="progress" style="height: 40px; font-size: 30px">
               <div class="progress-bar" 
                     role="progressbar" 
                       style="width: <%= (performer.chuds_balance * 1.0) / ( @max_chuds_balance * 1.0) * 100.0 %>%;" 
                       aria-valuenow="<%= performer.chuds_balance %>" aria-valuemin="0" aria-valuemax="<%= @max_chuds_balance %>">
-                <%= performer.chuds_balance %>%
+                $<%= performer.chuds_balance %>
               </div>
             </div>
-            <%= performer.chuds_balance %>
           </td>
         </tr>
       <% end %>

@@ -1,16 +1,17 @@
 Rails.application.routes.draw do
-  root 'welcome#index'
+  root "welcome#index"
   get "login", to: "welcome#login", as: :login
   get "company", to: "welcome#company", as: :company
   get "product", to: "welcome#product", as: :product
+  get "closed", to: "welcome#closed", as: :closed
 
   devise_for :users
 
-  get 'shop', to: 'welcome#shop', as: :shop
-  get 'sign_out', to: 'welcome#sign_out', as: :sign_out
-  
+  get "shop", to: "welcome#shop", as: :shop
+  get "sign_out", to: "welcome#sign_out", as: :sign_out
+
   resources :attendees
-  resources :performers, only: :index do 
+  resources :performers, only: :index do
     collection do
       get :status
       get :vote, as: :vote
@@ -19,19 +20,20 @@ Rails.application.routes.draw do
       post :pay
     end
   end
-  resources :vouchers, only: [:index]
-  
+  resources :vouchers, only: [ :index ]
+
   namespace :admin do
-    resources :attendees, :performers, 
-              :users, :vouchers, :products
-    get '/', to: 'admin#index'
+    resources :attendees, :performers,
+              :users, :vouchers, :products,
+              :settings
+    get "/", to: "admin#index"
   end
 
-  namespace :api do 
-    get '/', to: 'api#index'
-    post 'chuds/buy', to: 'chuds#buy'
+  namespace :api do
+    get "/", to: "api#index"
+    post "chuds/buy", to: "chuds#buy"
   end
-  
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

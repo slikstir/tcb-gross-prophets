@@ -2,6 +2,7 @@ class PerformersController < ApplicationController
   layout :set_layout
 
   before_action :set_performers
+  skip_before_action :check_if_live, only: [ :status ]
 
   def index
     redirect_to root_path
@@ -14,7 +15,7 @@ class PerformersController < ApplicationController
         performer = Performer.find(performer_id)
         performer.payments.create(amount: amount, attendee: @attendee)
       end
-      flash[:notice] = 'Thank you for your payment!'
+      flash[:notice] = "Thank you for your payment!"
       redirect_to root_path
     end
   end
@@ -33,10 +34,10 @@ class PerformersController < ApplicationController
 
   def set_layout
     case action_name
-    when 'status'
-      'minimum'
+    when "status"
+      "minimum"
     else
-      'application'
+      "application"
     end
   end
 end
