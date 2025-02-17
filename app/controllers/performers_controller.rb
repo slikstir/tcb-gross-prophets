@@ -3,6 +3,7 @@ class PerformersController < ApplicationController
 
   before_action :set_performers
   skip_before_action :check_if_live, only: [ :status ]
+  skip_before_action :check_if_logged_in, only: [ :status ]
 
   def index
     redirect_to root_path
