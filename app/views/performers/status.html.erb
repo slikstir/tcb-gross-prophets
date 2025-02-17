@@ -9,11 +9,15 @@
             <%= performer.performance_points %>
           </td>
           <td class="align-middle" style="width: 250px;">
-            <%= image_tag "landscape-placeholder.svg", class: "rounded-circle", style: "width: 200px; height: 200px;" %>
+            <% if performer.photo.attached? %>
+              <%= image_tag performer.photo, class: "rounded-circle", style: "max-height: 250px;" %>
+            <% else %>
+              <%= image_tag "landscape-placeholder.svg", class: "rounded-circle", style: "width: 200px; height: 200px;" %>
+            <% end %>
           </td>
           <td class="align-middle">
             <div class="progress" style="height: 40px; font-size: 30px">
-              <div class="progress-bar" 
+              <div class="progress-bar bg-success" 
                     role="progressbar" 
                       style="width: <%= (performer.chuds_balance * 1.0) / ( @max_chuds_balance * 1.0) * 100.0 %>%;" 
                       aria-valuenow="<%= performer.chuds_balance %>" aria-valuemin="0" aria-valuemax="<%= @max_chuds_balance %>">

@@ -18,6 +18,8 @@ class Performer < ApplicationRecord
   has_many :votes, dependent: :destroy
   has_many :payments, dependent: :destroy
 
+  has_one_attached :photo
+
   default_scope { order(:name) }
 
   scope :active, -> { where(active: true) }

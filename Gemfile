@@ -1,4 +1,4 @@
-ruby '3.2.6' # Example version, update as needed
+ruby "3.2.6" # Example version, update as needed
 
 source "https://rubygems.org"
 
@@ -27,8 +27,8 @@ gem "thruster", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug"
-  gem 'pry-byebug'
-  gem 'byebug'
+  gem "pry-byebug"
+  gem "byebug"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
@@ -43,10 +43,10 @@ gem "turbo-rails", "~> 2.0"
 
 gem "importmap-rails", "~> 2.1"
 
-gem 'devise', '~> 4.9', '>= 4.9.4'
-gem 'annotaterb'
+gem "devise", "~> 4.9", ">= 4.9.4"
+gem "annotaterb"
 gem "bootstrap_form", "~> 5.4"
 
-gem 'kaminari'
-gem 'redis', '~> 4.3', '>= 4.3.1'
-
+gem "kaminari"
+gem "redis", "~> 4.3", ">= 4.3.1"
+gem "aws-sdk-s3", require: false

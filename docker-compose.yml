@@ -7,6 +7,8 @@ services:
     #command: rdbg --open --port=12345 --host=0.0.0.0 -- bin/rails server -b 0.0.0.0
     volumes:
       - .:/app
+      - rubygems:/bundle
+      - ./storage:/app/storage
     ports:
       - "3000:3000"
       - "12345:12345" # Debugger port
@@ -24,3 +26,6 @@ services:
       POSTGRES_DB: tcb_gp_development
     ports:
       - "5432:5432"
+volumes:
+  rubygems:
+    name: tcb_gp_gems

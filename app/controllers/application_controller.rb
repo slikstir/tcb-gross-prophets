@@ -7,16 +7,16 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   def check_chud_checkpoint_time
-    @chud_checkpoint_time = Setting.find_by(code: "chud_checkpoint_time").try(:value) == 'true'
+    @chud_checkpoint_time = Setting.find_by(code: "chud_checkpoint_time").try(:value) == "true"
   end
 
   def check_if_live
     @live = Setting.find_by(code: "system_live").try(:value) == "true"
-    
-    return if request.path == "/closed" || request.path.include?('/admin')
+
+    return if request.path == "/closed" || request.path.include?("/admin")
 
     unless @live
-      redirect_to closed_path, notice: "Sorry, but the system is currently down for maintenance."
+      redirect_to closed_path
     end
   end
 

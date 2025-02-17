@@ -1,6 +1,6 @@
 module Admin
-  class PerformersController < AdminController  
-    before_action :set_performer, only: [:show, :edit, :update, :destroy]
+  class PerformersController < AdminController
+    before_action :set_performer, only: [ :show, :edit, :update, :destroy ]
 
     # GET /admin/performers
     def index
@@ -25,7 +25,7 @@ module Admin
       @performer = Performer.new(performer_params)
 
       if @performer.save
-        redirect_to [:admin, @performer], notice: 'Performer was successfully created.'
+        redirect_to [ :admin, @performer ], notice: "Performer was successfully created."
       else
         render :new
       end
@@ -34,7 +34,7 @@ module Admin
     # PATCH/PUT /admin/performers/1
     def update
       if @performer.update(performer_params)
-        redirect_to [:admin, @performer], notice: 'Performer was successfully updated.'
+        redirect_to [ :admin, @performer ], notice: "Performer was successfully updated."
       else
         render :edit
       end
@@ -43,7 +43,7 @@ module Admin
     # DELETE /admin/performers/1
     def destroy
       @performer.destroy
-      redirect_to admin_performers_url, notice: 'Performer was successfully destroyed.'
+      redirect_to admin_performers_url, notice: "Performer was successfully destroyed."
     end
 
     private
@@ -54,7 +54,7 @@ module Admin
 
       # Only allow a list of trusted parameters through.
       def performer_params
-        params.require(:performer).permit(:name, :performance_points, :chuds_balance, :active)
+        params.require(:performer).permit(:name, :performance_points, :chuds_balance, :active, :photo)
       end
   end
 end

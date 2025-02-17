@@ -9,6 +9,8 @@
   <%= @performer.name %>
 </p>
 
+<%= image_tag(@performer.photo, class: "img-fluid") if  @performer.photo.attached? %>
+
 <p>
   <strong>Performance Points:</strong>
   <%= @performer.performance_points %>

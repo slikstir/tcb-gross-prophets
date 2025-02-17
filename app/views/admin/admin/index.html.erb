@@ -44,7 +44,8 @@
   
   <div class="col d-flex align-items-center">
     <%= bootstrap_form_with model: [:admin, @open_setting], class: "w-100" do |f| %>
-      <% if @live %>
+
+      <% if Setting.find_by(code: "system_live").try(:value) == "true" %>
         <%= f.hidden_field :value, value: 'false'%>
         <%= f.submit "Close for Maintenance", class: "btn btn-warning btn-lg w-100" %>
       <% else %>

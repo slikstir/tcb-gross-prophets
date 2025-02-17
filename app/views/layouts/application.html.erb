@@ -13,15 +13,55 @@
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
-    <link rel="icon" href="/icon.ico" type="image/png">
-    <link rel="apple-touch-icon" href="/icon.ico">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/favicon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag 'bootstrap', 'application',  "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="container text-center">
+  <body class="container-fluid text-center">
+    <% if @attendee %>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <%= link_to root_path,  class: 'navbar-brand w-50 w-md-10' do  %>
+          <%= image_tag 'TheCompany-Wordmark.png', style: 'max-height: 50px;' %>
+        <% end %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <%= link_to "Shop", shop_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "The Product", product_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "The Company", company_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Sign Out", sign_out_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Show Program", "#", class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to  "Logout", destroy_user_session_path, method: :delete,  class: "nav-link" %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <% else %>
+      <div class="d-flex justify-content-center">
+        <div class="w-50 text-center">
+          <%= image_tag 'TheCo.png', class: 'img-fluid w-50' %>
+        </div>
+      </div>
+    <% end %>
 
   <%= turbo_stream_from 'chud_checkpoint_alert' %>
   <div id="chud_checkpoint_alert">
@@ -30,14 +70,6 @@
       <% end %>
   </div>
 
-
-    <div class="p-5 bg-body-tertiary rounded-3">
-      <div class="py-5">
-        <h2 class="fw-bold">Tin Can Bros Presents</h2>
-        <h1 class="display-2 fw-bold">Gross Prophets</h1>
-        <%= link_to "Program", "#", class: "btn btn-primary" %>
-      </div>
-    </div>
 
     <% flash.each do |key, value| %>
         <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
@@ -49,6 +81,8 @@
     <%= yield %> 
 
     <div>
+
+    <!-- 
     <p>
         <%= link_to "Shop", shop_path, class: "btn btn-secondary w-100" %>
     </p>
@@ -69,6 +103,7 @@
     <%= link_to "Sign out", sign_out_path, class: "btn btn-secondary w-100" %>
     </p>
     </div>
+    -->
 
 
 
@@ -88,5 +123,10 @@
         </div>
     </div>
 
+      <footer class="footer mt-auto py-3 bg-light mt-10">
+        <div class="container text-center">
+          <span class="text-muted">© 2014-<%= Time.now.strftime("%Y")%> The Tin Can Brothers</span><br>
+        </div>
+      </footer>
   </body>
 </html>
