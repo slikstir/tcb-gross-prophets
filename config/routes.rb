@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount ActionCable.server => '/cable'
+  mount ActionCable.server => "/cable"
 
   root "welcome#index"
   get "login", to: "welcome#login", as: :login
@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get "closed", to: "welcome#closed", as: :closed
 
   devise_for :users, controllers: {
-    sessions: 'users/sessions'
+    sessions: "users/sessions"
   }
 
   get "shop", to: "welcome#shop", as: :shop
@@ -27,8 +27,14 @@ Rails.application.routes.draw do
   resources :vouchers, only: [ :index ]
 
   namespace :admin do
-    resources :attendees, :performers,
-              :users, :vouchers, :products,
+    resources :attendees, :performers do
+      collection do
+        post "reset_chuds_balance/(:amount)", action: :reset_chuds_balance, as: :reset_chuds_balance
+        post "reset_performance_points/(:amount)", action: :reset_performance_points, as: :reset_performance_points
+        post "gift_chuds/(:amount)", action: :gift_chuds, as: :gift_chuds
+      end
+    end
+    resources :users, :vouchers, :products,
               :settings
     get "/", to: "admin#index"
   end

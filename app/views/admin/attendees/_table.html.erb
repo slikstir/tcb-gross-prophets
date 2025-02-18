@@ -19,7 +19,9 @@
         <td><%= attendee.email %></td>
         <td><%= attendee.seat_number %></td>
         <td><%= attendee.chuds_balance %></td>
-        <td><%= attendee.level %></td>
+        <td> <%= attendee.level_name %><br>
+            <%= attendee.level_index %>
+        </td>
         <td><%= attendee.performance_points %></td>
         <td>
           <%= link_to 'Show', admin_attendee_path(attendee) %>

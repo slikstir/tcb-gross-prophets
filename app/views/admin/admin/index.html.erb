@@ -4,13 +4,22 @@
 <h3 class="mt-5">Attendee Actions</h3>
 <div class="row mb-5">
   <div class="col d-flex align-items-center">
-    <%= link_to "Wipe out attendee chuds", "#", class: "btn btn-warning btn-lg w-100" %>
+    <%= bootstrap_form_tag url: reset_chuds_balance_admin_attendees_path, class: "w-100" do |f| %>
+      <%= f.number_field :amount, value: 0 %>
+      <%= f.submit  "Reset Attendee Chuds", class: "btn btn-warning btn-lg w-100" %>
+    <% end %>
   </div>
   <div class="col d-flex align-items-center">
-    <%= link_to "Wipe out attendee performance points", "#", class: "btn btn-warning btn-lg w-100" %>
+    <%= bootstrap_form_tag url: reset_performance_points_admin_attendees_path, class: "w-100" do |f| %>
+      <%= f.number_field :amount, value: 0 %>
+      <%= f.submit  "Reset Attendee Performance Points", class: "btn btn-warning btn-lg w-100" %>
+    <% end %>
   </div>
   <div class="col d-flex align-items-center">
-    <%= link_to "Gift attendees chuds", "#", class: "btn btn-success btn-lg w-100" %>
+    <%= bootstrap_form_tag url: gift_chuds_admin_attendees_path, class: "w-100" do |f| %>
+      <%= f.number_field :amount, value: 0 %>
+      <%= f.submit  "Gift Attendee Chuds", class: "btn btn-success btn-lg w-100" %>
+    <% end %>
   </div>
 </div>
 
@@ -18,13 +27,22 @@
 <h3>Performer Actions</h3>
 <div class="row mb-5">
   <div class="col d-flex align-items-center">
-    <%= link_to "Wipe out performer chuds", "#", class: "btn btn-warning btn-lg w-100" %>
+    <%= bootstrap_form_tag url: reset_chuds_balance_admin_performers_path, class: "w-100" do |f| %>
+      <%= f.number_field :amount, value: 0 %>
+      <%= f.submit  "Reset Performer Chuds", class: "btn btn-warning btn-lg w-100" %>
+    <% end %>
   </div>
   <div class="col d-flex align-items-center">
-    <%= link_to "Wipe out performer performance points", "#", class: "btn btn-warning btn-lg w-100" %>
+    <%= bootstrap_form_tag url: reset_performance_points_admin_performers_path, class: "w-100" do |f| %>
+      <%= f.number_field :amount, value: 0 %>
+      <%= f.submit  "Reset Performer Performance Points", class: "btn btn-warning btn-lg w-100" %>
+    <% end %>
   </div>
   <div class="col d-flex align-items-center">
-    <%= link_to "Gift performers chuds", "#", class: "btn btn-success btn-lg w-100" %>
+    <%= bootstrap_form_tag url: gift_chuds_admin_performers_path, class: "w-100" do |f| %>
+      <%= f.number_field :amount, value: 0 %>
+      <%= f.submit  "Gift performers chuds", class: "btn btn-success btn-lg w-100" %>
+    <% end %>
   </div>
 </div>
 

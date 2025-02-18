@@ -27,4 +27,19 @@ class Performer < ApplicationRecord
   def self.max_chuds_balance
     self.active.maximum(:chuds_balance)
   end
+
+  def self.reset_chuds_balance(amount = 0)
+    Performer.all.update_all(chuds_balance: amount)
+  end
+
+  def self.reset_performance_points(amount = 0)
+    Performer.all.update_all(performance_points: amount)
+  end
+
+  def self.gift_performers_chuds(amount = 0)
+    Performer.all.each do |performer|
+      performer.chuds_balance += amount
+      performer.save
+    end
+  end
 end

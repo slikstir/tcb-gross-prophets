@@ -46,6 +46,24 @@ module Admin
       redirect_to admin_performers_url, notice: "Performer was successfully destroyed."
     end
 
+    def reset_chuds_balance
+      amount = params[:amount].to_i || 0
+      Performer.reset_chuds_balance(amount)
+      redirect_to admin_performers_url, notice: "Chuds balance was successfully reset to #{amount}."
+    end
+
+    def reset_performance_points
+      amount = params[:amount].to_i  || 0
+      Performer.reset_performance_points(amount)
+      redirect_to admin_performers_url, notice: "Performance points were successfully reset. #{amount}"
+    end
+
+    def gift_chuds
+      amount = params[:amount].to_i  || 0
+      Performer.gift_performers_chuds(amount)
+      redirect_to admin_performers_url, notice: "#{amount} Chuds were successfully gifted."
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_performer

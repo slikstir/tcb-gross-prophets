@@ -7,8 +7,8 @@
       <h3>Welcome to the program, <%= @attendee.name %></h3>
       <p><i>You've got <span id="chuds-balance"><%= @attendee.chuds_balance %></span> CHUDS to spend. <br>
         Congratulations on your <%= @attendee.performance_points %> 
-        Performance Points! You are a 
-        <%= Attendee::LEVELS[@attendee.level] %></i></p>
+        Performance Points! You are <%= a_or_an(@attendee.level_name) %>
+        <%= @attendee.level_name %></i></p>
     <% end %>
   </div>
 </div>
