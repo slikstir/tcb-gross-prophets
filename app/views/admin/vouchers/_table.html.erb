@@ -10,7 +10,7 @@
   <tbody>
     <% @vouchers.each do |voucher| %>
       <tr>
-        <td><%= voucher.code %></td>
+        <td><%= link_to voucher.code, admin_voucher_path(voucher) %></td>
         <td><%= voucher.amount %></td>
         <td><%= voucher.attendee_vouchers.count %></td>
         <td>

@@ -7,7 +7,19 @@
 </p>
 
 <p>
-  <strong>Email:</strong>
+  <strong>Redemption URL:</strong>
+  <%= @voucher.url %>
+</p>
+
+<p>
+  <strong>QR Code:</strong>
+</p>
+<div>
+  <img src="data:image/png;base64,<%= @voucher.qr_png %>" alt="QR Code"> 
+</div>
+
+<p>
+  <strong>Amount:</strong>
   <%= @voucher.amount %>
 </p>
 

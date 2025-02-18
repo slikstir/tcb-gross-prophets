@@ -59,10 +59,13 @@ Rails.application.configure do
 
   config.active_storage.service = :amazon
 
+  Rails.application.routes.default_url_options[:host] = "chuds.money"
+
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
+  #   "tcb-gross-prophets-84fc9425a7c9.herokuapp.com",
+  #   "chuds.money",
+  #   /.*\.chuds\.money/
   # ]
   #
   # Skip DNS rebinding protection for the default health check endpoint.
