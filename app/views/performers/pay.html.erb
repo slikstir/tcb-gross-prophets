@@ -23,11 +23,13 @@
               <%= number_field_tag "performer[#{performer.id}]", "0", min: 0, class: 'chuds-amount',
                 data: { chuds_target: "input", action: "input->chuds#updateTotal" } %>
 
-              <%= link_to "#", class: 'btn btn-secondary btn-lg rounded-circle' do %>
+              <%= link_to "#", class: 'btn btn-secondary btn-lg rounded-circle', 
+                    data: { action: "click->chuds#decrement" } do %>
                 <%= icon 'minus' %>
               <% end %>
 
-              <%= link_to "#", class: 'btn btn-warning btn-lg rounded-circle' do %>
+              <%= link_to "#", class: 'btn btn-warning btn-lg rounded-circle', 
+                    data: { action: "click->chuds#increment" } do %>
                 <%= icon 'plus' %>
               <% end %>
 
@@ -36,11 +38,16 @@
         <% end %>
       </table>
 
-      <div class="alert alert-info">
+      <div class="alert alert-secondary">
         <h3>New Chuds Balance</h3>
-        <p><span id="new-chuds-amount" data-chuds-target="amount">0</span> CHUDS</p>
-      </div>
+        <p><span id="new-chuds-amount" data-chuds-target="amount"><%= @attendee.chuds_balance %></span> CHUDS</p>
 
-      <%= f.submit "Send Chuds", class: 'btn btn-success' %>
+      </div>
+      <p class="alert alert-danger text-danger d-none" data-chuds-target="warning">
+          You don't have enough Chuds to spend this much!
+      </p>
+
+      <%= f.submit "Send Chuds", class: 'btn btn-success', data: { chuds_target: "submit" } %>
+
     <% end %>
 </div>
