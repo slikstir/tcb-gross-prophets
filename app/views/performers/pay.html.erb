@@ -8,21 +8,22 @@
   <%= bootstrap_form_with url: pay_performers_path, local: true, class: 'row g-3', 
         data: { controller: 'chuds', "chuds-balance-value": @attendee.chuds_balance  } do |f|  %>
 
-      <table class="table">
+      <table class="table table-condensed">
         <% @performers.each do |performer| %>
           <tr>
             <td >
               <% if performer.photo.attached? %>
-                <%= image_tag performer.photo, class: "rounded-circle", style: "max-height: 250px;" %>
+                <%= image_tag performer.photo, class: "rounded-circle", style: "max-height: 250px; max-width: 100px;" %>
               <% else %>
-                <%= image_tag "landscape-placeholder.svg", class: "rounded-circle", style: "width: 200px; height: 200px;" %>
+                <%= image_tag "landscape-placeholder.svg", class: "rounded-circle", style: "width: 100px; height: 100px;" %>
               <% end %><br>
               <%= performer.name %>
             </td>
-            <td valign="middle" style="min-width: 250px;">
+            <td valign="middle">
               <%= number_field_tag "performer[#{performer.id}]", "0", min: 0, class: 'chuds-amount',
                 data: { chuds_target: "input", action: "input->chuds#updateTotal" } %>
-
+            </td>
+            <td valign="middle" style="min-width: 140px;">
               <%= link_to "#", class: 'btn btn-secondary btn-lg rounded-circle', 
                     data: { action: "click->chuds#decrement" } do %>
                 <%= icon 'minus' %>
