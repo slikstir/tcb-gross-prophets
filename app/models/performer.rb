@@ -36,7 +36,7 @@ class Performer < ApplicationRecord
     Performer.all.update_all(performance_points: amount)
   end
 
-  def self.gift_performers_chuds(amount = 0)
+  def self.gift_chuds(amount = 0)
     Performer.all.each do |performer|
       performer.chuds_balance += amount
       performer.save

@@ -42,6 +42,20 @@ Rails.application.routes.draw do
   namespace :api do
     get "/", to: "api#index"
     post "chuds/buy", to: "chuds#buy"
+    post "show/:start_or_stop", to: "api#show"
+    post "checkpoint/:start_or_stop", to: "api#checkpoint"
+
+    namespace "performers" do
+      post "reset_chuds_balance/(:amount)", action: :reset_chuds_balance
+      post "reset_performance_points/(:amount)", action: :reset_performance_points
+      post "gift_chuds/(:amount)", action: :gift_chuds
+    end
+
+    namespace "attendees" do
+      post "reset_chuds_balance/(:amount)", action: :reset_chuds_balance
+      post "reset_performance_points/(:amount)", action: :reset_performance_points
+      post "gift_chuds/(:amount)", action: :gift_chuds
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
