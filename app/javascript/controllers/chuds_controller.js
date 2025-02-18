@@ -27,7 +27,7 @@ export default class extends Controller {
 
   increment(event) {
     event.preventDefault()
-    let input = event.currentTarget.closest("td").querySelector(".chuds-amount")
+    let input = event.currentTarget.closest("tr").querySelector(".chuds-amount")
     if (input) {
       input.value = parseInt(input.value, 10) + 1
       this.updateTotal()
@@ -36,7 +36,7 @@ export default class extends Controller {
 
   decrement(event) {
     event.preventDefault()
-    let input = event.currentTarget.closest("td").querySelector(".chuds-amount")
+    let input = event.currentTarget.closest("tr").querySelector(".chuds-amount")
     if (input && parseInt(input.value, 10) > 0) {
       input.value = parseInt(input.value, 10) - 1
       this.updateTotal()
