@@ -21,17 +21,18 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="container-fluid text-center">
+  <body>
+    <div class="container-fluid" style="padding: 0;">
     <% if @attendee %>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-        <%= link_to root_path,  class: 'navbar-brand w-50 w-md-10' do  %>
+        <%= link_to root_path,  class: 'navbar-brand' do  %>
           <%= image_tag 'TheCompany-Wordmark.png', style: 'max-height: 50px;' %>
         <% end %>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse text-center" id="navbarNav">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
               <%= link_to "Shop", shop_path, class: "nav-link" %>
@@ -43,13 +44,12 @@
               <%= link_to "The Company", company_path, class: "nav-link" %>
             </li>
             <li class="nav-item">
-              <%= link_to "Sign Out", sign_out_path, class: "nav-link" %>
-            </li>
-            <li class="nav-item">
               <%= link_to "Show Program", "#", class: "nav-link" %>
             </li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <%= link_to  "Logout", destroy_user_session_path, method: :delete,  class: "nav-link" %>
+              <%= link_to "Sign Out", sign_out_path, class: "nav-link" %>
             </li>
           </ul>
         </div>
@@ -78,36 +78,12 @@
         </div>
       <% end %>
 
-    <%= yield %> 
-
-    <div>
-
-    <!-- 
-    <p>
-        <%= link_to "Shop", shop_path, class: "btn btn-secondary w-100" %>
-    </p>
-    
-    <p>
-        <%= link_to "Home", root_path, class: "btn btn-secondary w-100" %>
-    </p>
-    
-    <p>
-    <%= link_to "About the Product", product_path , class: "btn btn-secondary w-100"%>
-    </p>
-    
-    <p>
-    <%= link_to "About the Company", company_path, class: "btn btn-secondary w-100" %>
-    </p>
-    
-    <p>
-    <%= link_to "Sign out", sign_out_path, class: "btn btn-secondary w-100" %>
-    </p>
+    <div class="text-center">
+      <%= yield %> 
     </div>
-    -->
 
 
-
-<!-- 🚀 Login Modal -->
+    <!-- 🚀 Login Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -128,5 +104,6 @@
           <span class="text-muted">© 2014-<%= Time.now.strftime("%Y")%> The Tin Can Brothers</span><br>
         </div>
       </footer>
+      </div>
   </body>
 </html>

@@ -40,6 +40,7 @@ group :development, :test do
 end
 
 gem "turbo-rails", "~> 2.0"
+gem 'stimulus-rails'
 
 gem "importmap-rails", "~> 2.1"
 
@@ -50,3 +51,5 @@ gem "bootstrap_form", "~> 5.4"
 gem "kaminari"
 gem "redis", "~> 4.3", ">= 4.3.1"
 gem "aws-sdk-s3", require: false
+
+gem "rails_icons", "~> 1.1"

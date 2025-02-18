@@ -8,3 +8,10 @@
   list-style: none;
   padding: 0;
 }
+
+.chuds-amount {
+  border: 0px;
+  font-size: 2em;
+  text-align: center;
+  max-width: 100px;
+}
