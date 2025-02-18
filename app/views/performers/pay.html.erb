@@ -25,15 +25,14 @@
             </td>
             <td valign="middle" style="min-width: 140px;">
               <%= link_to "#", class: 'btn btn-secondary btn-lg rounded-circle', 
-                    data: { action: "click->chuds#decrement" } do %>
+                    data: { action: "click->chuds#decrement touchstart->chuds#decrement" } do %>
                 <%= icon 'minus' %>
               <% end %>
 
               <%= link_to "#", class: 'btn btn-warning btn-lg rounded-circle', 
-                    data: { action: "click->chuds#increment" } do %>
+                    data: { action: "click->chuds#increment touchstart->chuds#increment" } do %>
                 <%= icon 'plus' %>
               <% end %>
-
             </td>
           </tr>
         <% end %>
