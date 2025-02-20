@@ -1,0 +1,3 @@
+<% unless (analytics_code = Setting.find_by(code: "analytics_code").try(:value)).blank? %>
+  <%= raw analytics_code %>
+<% end %>
