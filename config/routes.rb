@@ -44,11 +44,20 @@ Rails.application.routes.draw do
     post "chuds/buy", to: "chuds#buy"
     post "show/:start_or_stop", to: "api#show"
     post "checkpoint/:start_or_stop", to: "api#checkpoint"
+    post "show_code/:code", to: "api#show_code"
 
-    namespace "performers" do
-      post "reset_chuds_balance/(:amount)", action: :reset_chuds_balance
-      post "reset_performance_points/(:amount)", action: :reset_performance_points
-      post "gift_chuds/(:amount)", action: :gift_chuds
+    resources :performers, only: [:index, :show] do
+      member do 
+        post "reset_chuds_balance/:amount", action: :reset_chuds_balance
+        post "reset_performance_points/:amount", action: :reset_performance_points
+        post "gift_chuds/:amount", action: :gift_chuds
+      end
+
+      collection do 
+        post "reset_chuds_balance/:amount", action: :reset_chuds_balance
+        post "reset_performance_points/:amount", action: :reset_performance_points
+        post "gift_chuds/:amount", action: :gift_chuds
+      end
     end
 
     namespace "attendees" do

@@ -9,6 +9,16 @@ module Api
       render json: { success: true, message: "Welcome to the Chuds API" }, status: :ok
     end
 
+    def show_code
+      show_code = Setting.find_by(code: "show_code")
+      if params[:code].blank?
+        render json: { success: false, message: "Show code is required" }, status: :bad_request
+      else
+        show_code.update(value: params[:code])
+        render json: { success: true, message: "Show code has been updated to '#{params[:code]}'" }, status: :ok
+      end
+    end
+
     def show
       show_setting = Setting.find_by(code: "system_live")
 
