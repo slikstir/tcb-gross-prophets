@@ -1,18 +1,52 @@
 <h1>Tin Can Brothers</h1>
 <h2>Gross Prophets Admin Dashboard</h2>
 
+
+<h3>Show Actions</h3>
+<div class="row">
+  <div class="col d-flex align-items-center">
+    <%= bootstrap_form_with model: [:admin, @chud_time_setting], class: "w-100" do |f| %>
+      <%= f.text_field :value, 
+                value: (@chud_time_setting.value == 'true' ? "Active" : "Inactive"), 
+                disabled: true, hide_label: true %>
+      <% if @chud_checkpoint_time %>
+        <%= f.hidden_field :value, value: 'false'%>
+        <%= f.submit "Deactivate Chud Checkpoint", class: "btn btn-warning btn-lg w-100" %>
+      <% else %>
+        <%= f.hidden_field :value, value: 'true'%>
+        <%= f.submit "Activate Chud Checkpoint", class: "btn btn-success btn-lg w-100" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="col d-flex align-items-center">
+    <%= bootstrap_form_with model: [:admin, @show_code], class: "w-100" do |f| %>
+      <%= f.text_field :value, hide_label: true %>
+      <%= f.submit  "Update Show Password", class: "btn btn-warning btn-lg w-100" %>
+    <% end %>
+  </div>
+  
+  <div class="col d-flex align-items-center">
+    <%= bootstrap_form_with model: [:admin, @open_setting], class: "w-100" do |f| %>
+      <%= f.text_field :value, 
+                value: (@open_setting.value == 'true' ? "Open" : "Closed"), 
+                disabled: true, hide_label: true %>
+      <% if Setting.find_by(code: "system_live").try(:value) == "true" %>
+        <%= f.hidden_field :value, value: 'false'%>
+        <%= f.submit "Close for Maintenance", class: "btn btn-warning btn-lg w-100" %>
+      <% else %>
+        <%= f.hidden_field :value, value: 'true'%>
+        <%= f.submit "Open Website", class: "btn btn-success btn-lg w-100" %>
+      <% end %>
+    <% end %>
+  </div>
+
 <h3 class="mt-5">Attendee Actions</h3>
 <div class="row mb-5">
   <div class="col d-flex align-items-center">
     <%= bootstrap_form_tag url: reset_chuds_balance_admin_attendees_path, class: "w-100" do |f| %>
       <%= f.number_field :amount, value: 0 %>
       <%= f.submit  "Reset Attendee Chuds", class: "btn btn-warning btn-lg w-100" %>
-    <% end %>
-  </div>
-  <div class="col d-flex align-items-center">
-    <%= bootstrap_form_tag url: reset_performance_points_admin_attendees_path, class: "w-100" do |f| %>
-      <%= f.number_field :amount, value: 0 %>
-      <%= f.submit  "Reset Attendee Performance Points", class: "btn btn-warning btn-lg w-100" %>
     <% end %>
   </div>
   <div class="col d-flex align-items-center">
@@ -23,6 +57,13 @@
   </div>
 </div>
 
+
+<h3>Performers</h3>
+<div class="row">
+  <div class="col d-flex align-items-center">
+      <%= render 'admin/shared/performer_status' %>
+  </div>
+</div>
 
 <h3>Performer Actions</h3>
 <div class="row mb-5">
@@ -46,30 +87,4 @@
   </div>
 </div>
 
-<h3>Show Actions</h3>
-<div class="row">
-  <div class="col d-flex align-items-center">
-    <%= bootstrap_form_with model: [:admin, @chud_time_setting], class: "w-100" do |f| %>
-      <% if @chud_checkpoint_time %>
-        <%= f.hidden_field :value, value: 'false'%>
-        <%= f.submit "Deactivate Chud Checkpoint", class: "btn btn-warning btn-lg w-100" %>
-      <% else %>
-        <%= f.hidden_field :value, value: 'true'%>
-        <%= f.submit "Activate Chud Checkpoint", class: "btn btn-success btn-lg w-100" %>
-      <% end %>
-    <% end %>
-  </div>
-  
-  <div class="col d-flex align-items-center">
-    <%= bootstrap_form_with model: [:admin, @open_setting], class: "w-100" do |f| %>
-
-      <% if Setting.find_by(code: "system_live").try(:value) == "true" %>
-        <%= f.hidden_field :value, value: 'false'%>
-        <%= f.submit "Close for Maintenance", class: "btn btn-warning btn-lg w-100" %>
-      <% else %>
-        <%= f.hidden_field :value, value: 'true'%>
-        <%= f.submit "Open Website", class: "btn btn-success btn-lg w-100" %>
-      <% end %>
-    <% end %>
-  </div>
 </div>

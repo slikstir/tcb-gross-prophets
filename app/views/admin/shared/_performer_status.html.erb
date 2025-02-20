@@ -1,0 +1,20 @@
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Performer</th>
+      <th>Chuds Balance</th>
+      <th>Performance Points</th>
+      <th>Commissions</th>
+    </tr>
+  </thead>
+  <% @performers.each do |performer| %>
+    <tr>
+      <td><%= performer.id %></td>
+      <td><%= performer.name %></td>
+      <td><%= performer.chuds_balance %></td>
+      <td><%= performer.performance_points %></td>
+      <td>TODO</td>
+    </tr>
+  <% end %>
+</table>

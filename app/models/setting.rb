@@ -6,7 +6,7 @@
 #  code        :string
 #  description :text
 #  name        :string
-#  value       :string
+#  value       :text
 #  value_type  :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -18,9 +18,25 @@
 class Setting < ApplicationRecord
   include Turbo::Broadcastable
 
+  has_one_attached :image
+
   default_scope { order(:name) }
 
   after_commit :broadcast_chud_checkpoint_time, if: -> { code == 'chud_checkpoint_time' }
+
+  VALUE_TYPES = %w[
+    string
+    text
+    integer
+    image
+    boolean
+  ]
+
+  VALUE_TYPES.each do |vt|
+    define_method("#{vt}?") do
+      value_type == vt
+    end
+  end
 
   private
 

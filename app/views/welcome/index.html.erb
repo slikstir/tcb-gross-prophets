@@ -1,7 +1,11 @@
 <%= render "shared/chuds_status" %>
 
 <div>
-  <%= image_tag "GrossProphets-Trio-v2.png", class: "img-fluid" %>
+  <% if @homepage_image.image? && @homepage_image.image.attached? %>
+     <%= image_tag @homepage_image.image, class: "img-fluid" %>
+  <% else %>
+    <%= image_tag "GrossProphets-Trio-v2.png", class: "img-fluid" %>
+  <% end %>
   <h2 class="text-uppercase mt-5">Be the best you!</h2>
   <p>
     Some in world copy about the seminar blah blah blah

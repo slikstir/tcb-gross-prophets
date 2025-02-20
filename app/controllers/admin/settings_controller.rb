@@ -49,7 +49,9 @@ module Admin
           :name,
           :code,
           :value_type,
-          :value)
+          :value, 
+          :image
+        )
       end
   end
 end

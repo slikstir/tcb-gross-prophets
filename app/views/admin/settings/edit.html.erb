@@ -1,5 +1,8 @@
 <h1>Change Setting: <%= @setting.name %></h1>
-<%= bootstrap_form_with model: [:admin, @setting] do |f| %>
+<%= bootstrap_form_with model: [:admin, @setting], multipart: true do |f| %>
+  <% if @setting.image? && @setting.image.attached? %>
+     <%= image_tag @setting.image, class: "img-fluid", style: "max-height: 250px;" %>
+  <% end %>
   <%= render_setting_field @setting, f %>
   <%= f.submit %>
 <% end %>

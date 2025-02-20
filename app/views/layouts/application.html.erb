@@ -24,37 +24,45 @@
   <body>
     <div class="container-fluid" style="padding: 0;">
     <% if @attendee %>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <%= link_to root_path,  class: 'navbar-brand' do  %>
-          <%= image_tag 'TheCompany-Wordmark.png', style: 'max-height: 50px;' %>
-        <% end %>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse text-center" id="navbarNav">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <%= link_to "Shop", shop_path, class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "The Product", product_path, class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "The Company", company_path, class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Show Program", "#", class: "nav-link" %>
-            </li>
-          </ul>
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <%= link_to "Sign Out", sign_out_path, class: "nav-link" %>
-            </li>
-          </ul>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <%= link_to root_path,  class: 'navbar-brand' do  %>
+            <%= image_tag 'TheCompany-Wordmark.png', style: 'max-height: 50px;' %>
+          <% end %>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse text-center" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <%= link_to "Shop", shop_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "The Product", product_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "The Company", company_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Show Program", "#", class: "nav-link" %>
+              </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <%= link_to "Sign Out", sign_out_path, class: "nav-link" %>
+              </li>
+            </ul>
+          </div>
         </div>
+      </nav>
+
+      <%= turbo_stream_from 'chud_checkpoint_alert' %>
+      <div id="chud_checkpoint_alert">
+          <% if @chud_checkpoint_time %>
+            <%= render 'shared/chuds_checkpoint', checkpoint_time: @chud_checkpoint_time %>
+          <% end %>
       </div>
-    </nav>
+
     <% else %>
       <div class="d-flex justify-content-center">
         <div class="w-50 text-center">
@@ -62,13 +70,6 @@
         </div>
       </div>
     <% end %>
-
-  <%= turbo_stream_from 'chud_checkpoint_alert' %>
-  <div id="chud_checkpoint_alert">
-      <% if @chud_checkpoint_time %>
-        <%= render 'shared/chuds_checkpoint', checkpoint_time: @chud_checkpoint_time %>
-      <% end %>
-  </div>
 
 
     <% flash.each do |key, value| %>
@@ -101,7 +102,9 @@
 
       <footer class="footer mt-auto py-3 bg-light mt-10">
         <div class="container text-center">
+          <span class="text-muted">The Company™ Portal Presented By The Tin Can Brothers</span><br>
           <span class="text-muted">© 2014-<%= Time.now.strftime("%Y")%> The Tin Can Brothers</span><br>
+          <span class="text-muted">Show Code: <%= session[:show_code] %></span>
         </div>
       </footer>
       </div>

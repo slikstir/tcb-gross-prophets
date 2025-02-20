@@ -9,6 +9,8 @@ module Admin
     def index
       @open_setting = Setting.find_by(code: "system_live")
       @chud_time_setting = Setting.find_by(code: "chud_checkpoint_time")
+      @show_code = Setting.find_by(code: "show_code")
+      @performers = Performer.active
     end
   end
 end

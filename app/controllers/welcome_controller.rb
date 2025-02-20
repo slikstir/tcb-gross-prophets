@@ -2,6 +2,10 @@ class WelcomeController < ApplicationController
   layout :set_layout
   skip_before_action :check_if_logged_in, only: [:login, :sign_out, :closed]
 
+  def index
+    @homepage_image = Setting.find_by(code: "homepage_image")
+  end
+
   def sign_out
     session[:email] = nil
     redirect_to root_path

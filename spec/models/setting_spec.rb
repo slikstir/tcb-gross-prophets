@@ -6,7 +6,7 @@
 #  code        :string
 #  description :text
 #  name        :string
-#  value       :string
+#  value       :text
 #  value_type  :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

@@ -10,6 +10,8 @@ class AttendeesController < ApplicationController
     @attendee.name = permitted_params[:name]
     @attendee.seat_number = permitted_params[:seat_number] if permitted_params[:seat_number].present?
     @attendee.save
+    
+    session[:show_code] = params[:show_code].downcase
     session[:email] = @attendee.email
 
     redirect_to root_path

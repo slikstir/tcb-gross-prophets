@@ -21,9 +21,24 @@ class ApplicationController < ActionController::Base
   end
 
   def check_if_logged_in
+    
     @attendee = Attendee.find_by(email: session[:email])
     if @attendee.blank?
       redirect_to login_path, notice: "Please log in to continue."
     end
+
+    @show_code = Setting.find_by(code: "show_code").try(:value).try(:downcase)
+    if @show_code.blank?
+      session[:email] = nil
+      redirect_to login_path, notice: "A show code has not been set up. Please contact the event organizer."
+    end
+
+    if @show_code!= session[:show_code]
+      message = "Your show code, #{session[:show_code]}, does not match the event's show code. Please provide an updated show code"
+      session[:email] = nil
+      session[:show_code] = nil
+      redirect_to login_path, notice: message
+    end
+
   end
 end

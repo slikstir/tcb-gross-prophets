@@ -1,6 +1,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>ID</th>
       <th>Status</th>
       <th>Name</th>
       <th>Chuds</th>
@@ -11,6 +12,7 @@
   <tbody>
     <% @performers.each do |performer| %>
       <tr>
+        <td><%= performer.id %></td>
         <td><%= performer.active? ? "Active" : "Inactive" %></td>
         <td><%= performer.name %></td>
         <td><%= performer.chuds_balance %></td>

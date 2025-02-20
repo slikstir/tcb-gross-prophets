@@ -7,6 +7,8 @@ module Admin::SettingsHelper
       form.text_area :value, class: "form-control"
     when "integer"
       form.number_field :value, class: "form-control"
+    when "image"
+      form.file_field :image, class: "form-control"
     when "boolean"
       form.select :value, [ [ "Yes", "true" ], [ "No", "false" ] ], { hide_label: true }, class: "form-control"
     end

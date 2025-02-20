@@ -1,8 +1,15 @@
-<%= bootstrap_form_with model: Attendee.new, data: { turbo: "true" } do |form| %>
-    <%= form.text_field :name, required: true, 
+<%= bootstrap_form_with model: Attendee.new, data: { turbo: "true" } do |f| %>
+    <%= f.text_field :name, required: true, 
       help: 'What would you like to be referred to as.' %>
-    <%= form.text_field :email, required: true, 
+    <%= f.text_field :email, required: true, 
       help: 'This should match the email you intend to use to checkout' %>
-    <%= form.text_field :seat_number, help: "If you have assigned seating. This is optional." %>
-  <%= form.submit "Sign In or Sign Up", class: "btn btn-success" %>
+
+    <div class="mb-3">
+      <%= label_tag :show_code, "Show Code", class: 'form-label' %>
+      <%= text_field_tag :show_code, params[:code], class: 'form-control', required: true %>
+      <small class="form-text text-muted">A unique code provided for your performance</small>
+    </div>
+
+    <%= f.text_field :seat_number, help: "If you have assigned seating. This is optional." %>
+    <%= f.submit "Sign In or Sign Up", class: "btn btn-success" %>
 <% end %>
