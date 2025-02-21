@@ -1,0 +1,12 @@
+<li>
+  <span><%= activity.created_at.strftime("%Y-%m-%d %I:%m:%S %P") %></span><br>
+  <p><%= activity.trackable_type %> <%= link_to admin_performer_path(activity.trackable) do  %>
+    <strong><i><%= activity.trackable.name %></i></strong>
+  <% end %> Was Updated
+  <ul>
+  <% activity.parameters.each do |p, val| %>
+    <% next if val.blank? %>
+    <li><i><%= p %></i> updated from <strong><%= val[0] %></strong> to <strong><%= val[1] %></strong></li>
+  <% end %>
+  </ul>
+</li>

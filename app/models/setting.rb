@@ -17,6 +17,12 @@
 #
 class Setting < ApplicationRecord
   include Turbo::Broadcastable
+  include PublicActivity::Model
+
+  tracked only: [:update],
+          params: {
+            :value => proc {|controller, model_instance| ( model_instance.saved_change_to_value? ? model_instance.saved_change_to_value: nil ) }          
+          }
 
   has_one_attached :image
 

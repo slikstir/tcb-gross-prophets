@@ -13,6 +13,9 @@
 #  updated_at         :datetime         not null
 #
 class Attendee < ApplicationRecord
+  include PublicActivity::Model
+  tracked
+  
   paginates_per 100
 
   after_initialize :set_defaults

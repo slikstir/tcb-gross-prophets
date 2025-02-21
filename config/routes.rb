@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   resources :vouchers, only: [ :index ]
 
   namespace :admin do
+    resources :activities, only: [:index]
     resources :attendees, :performers do
       collection do
         post "reset_chuds_balance/(:amount)", action: :reset_chuds_balance, as: :reset_chuds_balance

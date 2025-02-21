@@ -13,4 +13,13 @@ module Admin::SettingsHelper
       form.select :value, [ [ "Yes", "true" ], [ "No", "false" ] ], { hide_label: true }, class: "form-control"
     end
   end
+
+  def present_activity_values(setting, value)
+    case setting.value_type
+    when 'boolean'
+      value == 'true' ? 'Yes' : 'No'
+    else
+      value
+    end
+  end
 end
