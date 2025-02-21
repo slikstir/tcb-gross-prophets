@@ -55,3 +55,5 @@ gem "aws-sdk-s3", require: false
 gem "rails_icons", "~> 1.1"
 gem "rqrcode"
 gem "chunky_png"
+
+gem 'public_activity'
