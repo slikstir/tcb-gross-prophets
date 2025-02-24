@@ -4,7 +4,7 @@ module Admin::SettingsHelper
     when "string"
       form.text_field :value, class: "form-control"
     when "text"
-      form.text_area :value, class: "form-control"
+      form.text_area :value, class: "form-control", rows: 50
     when "integer"
       form.number_field :value, class: "form-control"
     when "image"
@@ -16,8 +16,8 @@ module Admin::SettingsHelper
 
   def present_activity_values(setting, value)
     case setting.value_type
-    when 'boolean'
-      value == 'true' ? 'Yes' : 'No'
+    when "boolean"
+      value == "true" ? "Yes" : "No"
     else
       value
     end

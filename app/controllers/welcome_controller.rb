@@ -1,6 +1,6 @@
 class WelcomeController < ApplicationController
   layout :set_layout
-  skip_before_action :check_if_logged_in, only: [:login, :sign_out, :closed]
+  skip_before_action :check_if_logged_in, only: [ :login, :sign_out, :closed ]
 
   def index
     @homepage_image = Setting.find_by(code: "homepage_image")
@@ -16,6 +16,10 @@ class WelcomeController < ApplicationController
     if setting.present? && setting.value == "true"
       redirect_to root_path
     end
+  end
+
+  def shop
+    @shop = Setting.find_by(code: "shop")
   end
 
   private
