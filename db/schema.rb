@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_20_232733) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_23_235745) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -82,6 +82,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_232733) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "line_items", force: :cascade do |t|
+    t.string "order_id"
+    t.string "email"
+    t.bigint "attendee_id"
+    t.string "sku"
+    t.bigint "performer_id"
+    t.bigint "product_id"
+    t.decimal "unit_price", precision: 10, scale: 2
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attendee_id"], name: "index_line_items_on_attendee_id"
+    t.index ["email"], name: "index_line_items_on_email"
+    t.index ["order_id"], name: "index_line_items_on_order_id"
+    t.index ["performer_id"], name: "index_line_items_on_performer_id"
+    t.index ["product_id"], name: "index_line_items_on_product_id"
+    t.index ["sku"], name: "index_line_items_on_sku"
+  end
+
   create_table "payments", force: :cascade do |t|
     t.integer "amount", default: 1
     t.bigint "attendee_id", null: false
@@ -99,6 +118,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_232733) do
     t.datetime "updated_at", null: false
     t.boolean "active", default: true
     t.integer "chuds_balance", default: 100
+    t.decimal "commission_balance", precision: 10, scale: 2, default: "0.0"
     t.index ["active"], name: "index_performers_on_active"
   end
 
@@ -107,6 +127,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_232733) do
     t.integer "chuds"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "commissions_performer_id"
+    t.index ["commissions_performer_id"], name: "index_products_on_commissions_performer_id"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -151,4 +173,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_232733) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "payments", "attendees"
   add_foreign_key "payments", "performers"
+  add_foreign_key "products", "performers", column: "commissions_performer_id"
 end

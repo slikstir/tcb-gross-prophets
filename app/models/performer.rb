@@ -5,6 +5,7 @@
 #  id                 :bigint           not null, primary key
 #  active             :boolean          default(TRUE)
 #  chuds_balance      :integer          default(100)
+#  commission_balance :decimal(10, 2)   default(0.0)
 #  name               :string
 #  performance_points :integer
 #  created_at         :datetime         not null

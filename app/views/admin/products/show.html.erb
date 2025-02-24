@@ -5,11 +5,27 @@
   <strong>SKU:</strong>
   <%= @product.sku %>
 </p>
+<p>
+
+  <strong>Performer who receives commissions:</strong>
+  <%= @product.commissions_performer.try(:name) %>
+</p>
 
 <p>
-  <strong>CHUDs:</strong>
+  <strong>How many chuds does the purchaser receive?:</strong>
   <%= @product.chuds %>
 </p>
 
 <%= link_to 'Edit', edit_admin_product_path(@product), class: 'btn btn-primary' %>
 <%= link_to 'Back', admin_products_path, class: 'btn btn-secondary' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>SKU</th>
+      <th>CHUDs</th>
+      <th>Commissions Credited To</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+</table>

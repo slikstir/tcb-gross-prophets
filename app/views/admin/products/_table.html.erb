@@ -3,6 +3,7 @@
     <tr>
       <th>SKU</th>
       <th>CHUDs</th>
+      <th>Commissions Credited To</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -11,6 +12,7 @@
       <tr>
         <td><%= product.sku %></td>
         <td><%= product.chuds %></td>
+        <td><%= product.commissions_performer.try(:name) %></td>
         <td>
           <%= link_to 'Show', admin_product_path(product) %>
           <%= link_to 'Edit', edit_admin_product_path(product) %>

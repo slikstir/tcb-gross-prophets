@@ -2,6 +2,7 @@
   <%= bootstrap_form_with(model: [:admin, @product], local: true) do |form| %>
 
     <%= form.text_field :sku %>
+    <%= form.select :commissions_performer_id, @performers.map{|x| [x.name, x.id]}, include_blank: true  %>
     <%= form.number_field :chuds %>
 
     <div class="actions">

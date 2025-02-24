@@ -42,10 +42,11 @@ module Admin
     private
       def set_product
         @product = Product.find(params[:id])
+        @performers = Performer.all
       end
 
       def product_params
-        params.require(:product).permit(:sku, :chuds)
+        params.require(:product).permit(:sku, :chuds, :commissions_performer_id)
       end
   end
 end
