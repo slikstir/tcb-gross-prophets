@@ -14,7 +14,12 @@
 #
 class Attendee < ApplicationRecord
   include PublicActivity::Model
-  tracked
+  tracked only: [ :update ],
+  params: {
+    chuds_balance: proc { |controller, model_instance| (model_instance.saved_change_to_chuds_balance? ? model_instance.saved_change_to_chuds_balance : nil) },
+    performance_points: proc { |controller, model_instance| (model_instance.saved_change_to_performance_points? ? model_instance.saved_change_to_performance_points : nil) },
+    level: proc { |controller, model_instance| (model_instance.saved_change_to_level? ? model_instance.saved_change_to_level : nil) }
+  }
 
   paginates_per 100
 

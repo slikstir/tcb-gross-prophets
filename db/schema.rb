@@ -83,8 +83,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_24_183413) do
   end
 
   create_table "line_items", force: :cascade do |t|
-    t.string "remote_order_id"
-    t.string "remote_line_item_id"
+    t.string "order_id"
     t.string "email"
     t.bigint "attendee_id"
     t.string "sku"
@@ -96,10 +95,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_24_183413) do
     t.datetime "updated_at", null: false
     t.index ["attendee_id"], name: "index_line_items_on_attendee_id"
     t.index ["email"], name: "index_line_items_on_email"
+    t.index ["order_id"], name: "index_line_items_on_order_id"
     t.index ["performer_id"], name: "index_line_items_on_performer_id"
     t.index ["product_id"], name: "index_line_items_on_product_id"
-    t.index ["remote_line_item_id"], name: "index_line_items_on_remote_line_item_id"
-    t.index ["remote_order_id"], name: "index_line_items_on_remote_order_id"
     t.index ["sku"], name: "index_line_items_on_sku"
   end
 
