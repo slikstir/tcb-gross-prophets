@@ -1,7 +1,8 @@
 class CreateLineItems < ActiveRecord::Migration[8.0]
   def change
     create_table :line_items do |t|
-      t.string :order_id, index: true
+      t.string :remote_order_id, index: true
+      t.string :remote_line_item_id, index: true
       t.string :email, index: true
       t.references :attendee
       t.string :sku, index: true

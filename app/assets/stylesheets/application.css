@@ -48,3 +48,11 @@ ul.timeline > li:before {
   height: 20px;
   z-index: 400;
 }
+
+.icon-text-white {
+  /* 
+    https://isotropic.co/tool/hex-color-to-css-filter/
+  */
+  
+  filter: invert(97%) sepia(98%) saturate(64%) hue-rotate(271deg) brightness(115%) contrast(100%);
+}

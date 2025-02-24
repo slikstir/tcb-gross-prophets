@@ -18,14 +18,16 @@
 class Performer < ApplicationRecord
   include PublicActivity::Model
 
-  tracked only: [:update],
+  tracked only: [ :update ],
           params: {
-            :chuds_balance => proc {|controller, model_instance| ( model_instance.saved_change_to_chuds_balance? ? model_instance.saved_change_to_chuds_balance : nil ) },
-            :performance_points => proc {|controller, model_instance| ( model_instance.saved_change_to_performance_points? ? model_instance.saved_change_to_performance_points : nil ) }
+            chuds_balance: proc { |controller, model_instance| (model_instance.saved_change_to_chuds_balance? ? model_instance.saved_change_to_chuds_balance : nil) },
+            performance_points: proc { |controller, model_instance| (model_instance.saved_change_to_performance_points? ? model_instance.saved_change_to_performance_points : nil) }
           }
 
   has_many :votes, dependent: :destroy
   has_many :payments, dependent: :destroy
+  has_many :line_items, dependent: :destroy
+  has_many :products, foreign_key: :commissions_performer_id
 
   has_one_attached :photo
 

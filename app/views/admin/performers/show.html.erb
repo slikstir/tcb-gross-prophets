@@ -4,17 +4,54 @@
 <% end %>
 </h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @performer.name %>
-</p>
 
-<%= image_tag(@performer.photo, class: "img-fluid") if  @performer.photo.attached? %>
+<div class="row">
+  <div class="col">
+    <p>
+      <strong>Name:</strong>
+      <%= @performer.name %>
+    </p>
 
-<p>
-  <strong>Performance Points:</strong>
-  <%= @performer.performance_points %>
-</p>
+    <%= image_tag(@performer.photo, class: "img-fluid") if  @performer.photo.attached? %>
+  </div>
+  <div class="col">
+          <p>
+        <strong>Performance Points:</strong>
+        <%= @performer.performance_points %>
+      </p>
+      <p>
+        <strong>CHUDs:</strong>
+        <%= @performer.chuds_balance %>
+      </p>
+
+      <h4>Products</h4>
+      <ul>
+        <% @performer.products.each do |product| %>
+        <li>
+          <%= link_to product.sku, admin_product_path(product) %>
+        </li>
+        <% end %>
+      </ul>
+
+      <h4>Commissions</h4>
+      <p>
+        <strong>Balance:</strong>
+        <%= number_to_currency @performer.commission_balance, unit: "€" %>
+      </p>
+      <p>
+        <strong>Line Items:</strong>
+        <ul>
+        <% @performer.line_items.each do |line_item| %>
+          <li>
+            <%= line_item.remote_order_id %> // <%= line_item.sku %> // <%= line_item.quantity %> @ <%= line_item.unit_price %>
+          </li>
+        <% end %>
+        </ul>
+      </p>
+   </div>
+</div>
+
+
 
 <%= link_to 'Edit', edit_admin_performer_path(@performer), class: 'btn btn-primary' %>
 <%= link_to 'Back', admin_performers_path, class: 'btn btn-secondary' %>

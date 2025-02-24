@@ -40,7 +40,7 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
 
-    # Allow requests from localhost and test domains
+  # Allow requests from localhost and test domains
   config.hosts << "localhost"
   config.hosts << "example.com" # If you’re simulating requests to this domain
 
@@ -48,4 +48,5 @@ Rails.application.configure do
   config.logger = ActiveSupport::Logger.new(Rails.root.join("log/test.log"))
   config.logger.formatter = Logger::Formatter.new
 
+  config.active_storage.service = :local
 end

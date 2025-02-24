@@ -5,14 +5,17 @@ require 'base64'
 RSpec.describe "Chuds Webhook", type: :request do
   let(:webhook_url) { "/api/chuds/buy" }
   let(:shopify_secret) { ENV['SHOPIFY_WEBHOOK_SECRET'] || Rails.application.credentials.dig(:shopify, :webhook_secret) }
+  let(:performer) { create(:performer) }
 
   let(:valid_payload) do
     {
+      id: 12345678910,
       email: "customer@example.com",
       billing_address: { first_name: "John" },
+      order_number: 1234,
       line_items: [
-        { sku: "SHIRT-TT-S", quantity: 2 },
-        { sku: "SHIRT-OOPSIE-XS", quantity: 1 }
+        { id: 12345, sku: "SHIRT-TT-S", quantity: 2, price: "4.99" },
+        { id: 67890, sku: "SHIRT-OOPSIE-XS", quantity: 1, price: "17.99" }
       ]
     }.to_json
   end
@@ -25,8 +28,8 @@ RSpec.describe "Chuds Webhook", type: :request do
 
   before do
     # Ensure Product exists in DB
-    Product.create!(sku: "SHIRT-TT-S", chuds: 10)
-    Product.create!(sku: "SHIRT-OOPSIE-XS", chuds: 5)
+    Product.create!(sku: "SHIRT-TT-S", chuds: 10, commissions_performer: performer)
+    Product.create!(sku: "SHIRT-OOPSIE-XS", chuds: 5, commissions_performer: performer)
 
     # Ensure Attendee model exists
     Attendee.create!(email: "customer@example.com", name: "John", chuds_balance: 0)
@@ -46,14 +49,34 @@ RSpec.describe "Chuds Webhook", type: :request do
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)["message"]).to include("allocated 25 new chuds")
     end
+
+    it 'creates a line item and allocates commissions to the performer' do
+      hmac = generate_hmac(valid_payload, shopify_secret)
+
+      expect {
+        post webhook_url, params: valid_payload, headers: {
+          "X-Shopify-Hmac-SHA256" => hmac,
+          "CONTENT_TYPE" => "application/json"
+        }
+      }.to change { Performer.find(performer.id).commission_balance }.by((2 * 4.99) + (1* 17.99)).
+        and change { LineItem.count }.by(2)
+
+        byebug
+
+      expect(response).to have_http_status(:ok)
+    end
   end
 
   context "with a new attendee" do
     it "creates a new attendee and allocates chuds" do
       new_payload = {
+        id: 12345678910,
         email: "new_attendee@example.com",
         billing_address: { first_name: "Steve" },
-        line_items: [{ sku: "SHIRT-TT-S", quantity: 1 }]
+        order_number: 1234,
+        line_items: [
+          { id: 12345, sku: "SHIRT-TT-S", quantity: 1, price: "4.99" }
+        ]
       }.to_json
 
       hmac = generate_hmac(new_payload, shopify_secret)
@@ -91,7 +114,7 @@ RSpec.describe "Chuds Webhook", type: :request do
       payload_with_no_chuds = {
         email: "customer@example.com",
         billing_address: { first_name: "John" },
-        line_items: [{ sku: "NON_EXISTENT_SKU", quantity: 3 }]
+        line_items: [ { sku: "NON_EXISTENT_SKU", quantity: 3 } ]
       }.to_json
 
       hmac = generate_hmac(payload_with_no_chuds, shopify_secret)
