@@ -3,6 +3,7 @@ import 'src/main'
 import 'src/bootstrap.bundle'
 import "@hotwired/turbo-rails"
 import "controllers"
+// import "custom/notifications";
 
 
 import Rails from '@rails/ujs';

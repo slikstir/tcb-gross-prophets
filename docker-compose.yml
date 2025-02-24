@@ -15,8 +15,10 @@ services:
     environment:
       - RAILS_ENV=${RAILS_ENV}
       - DEBUGGER=true
+      - REDIS_URL=redis://redis:6379/1
     depends_on:
       - db
+      - redis
 
   db:
     image: postgres:15
@@ -26,6 +28,13 @@ services:
       POSTGRES_DB: tcb_gp_development
     ports:
       - "5432:5432"
+  
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+
 volumes:
   rubygems:
     name: tcb_gp_gems

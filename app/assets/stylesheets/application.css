@@ -56,3 +56,8 @@ ul.timeline > li:before {
   
   filter: invert(97%) sepia(98%) saturate(64%) hue-rotate(271deg) brightness(115%) contrast(100%);
 }
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}

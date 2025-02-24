@@ -23,6 +23,10 @@
   <%= render 'shared/analytics_code' %>
 
   <body>
+
+    <%= turbo_stream_from 'notifications' %>
+    <%= render "shared/notifications" %>
+
     <div class="container-fluid" style="padding: 0;">
     <% if @attendee %>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">

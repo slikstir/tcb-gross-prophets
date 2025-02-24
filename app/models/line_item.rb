@@ -31,6 +31,7 @@ class LineItem < ApplicationRecord
   belongs_to :attendee, optional: true
 
   after_create :update_performer_commissions
+  after_create_commit :broadcast_notification
 
   def total_price
     unit_price * quantity
@@ -43,6 +44,32 @@ class LineItem < ApplicationRecord
       performer.lock! # Lock the performer row
       performer.commission_balance = performer.commission_balance + total_price
       performer.save
+    end
+  end
+
+  def broadcast_notification
+    Turbo::StreamsChannel.broadcast_append_to(
+      "notifications",
+      target: "notifications",
+      partial: "shared/notification",
+      locals: { message: broadcast_message }
+    )
+  end
+
+  def broadcast_message
+    message = ""
+    if self.attendee.present?
+      message = "#{self.attendee.name} purchased #{self.product.sku}"
+    else
+      message = "#{self.product.sku} was purchased"
+    end
+
+    if self.performer.present?
+      message = "#{message} from #{self.performer.name}"
+    end
+
+    if self.product.try(:chuds).present?
+      message = "#{message} and earned €#{self.product.chuds} CHUDs"
     end
   end
 end
