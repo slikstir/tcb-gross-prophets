@@ -49,9 +49,13 @@ module Admin
           :name,
           :code,
           :value_type,
-          :value, 
+          :value,
           :image
         )
+      end
+
+      def broadcast_activity(activity)
+        nil unless activity
       end
   end
 end

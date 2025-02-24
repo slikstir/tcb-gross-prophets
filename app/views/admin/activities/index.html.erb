@@ -1,12 +1,15 @@
+<%= turbo_stream_from 'timeline' %>
+
 <div class="container mt-5 mb-5">
 	<div class="row">
 		<div class="col-md-8 offset-md-2">
 			<h4>Latest Activities</h4>
-			<ul class="timeline">
+			<ul class="timeline" id="timeline">
         <%= render_activities(@activities) %>
 			</ul>
 		</div>
 	</div>
 </div>
+
 
 

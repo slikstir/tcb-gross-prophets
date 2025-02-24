@@ -15,7 +15,7 @@
 class Attendee < ApplicationRecord
   include PublicActivity::Model
   tracked
-  
+
   paginates_per 100
 
   after_initialize :set_defaults
@@ -44,6 +44,9 @@ class Attendee < ApplicationRecord
 
   def self.reset_chuds_balance(amount = 0)
     Attendee.all.update_all(chuds_balance: amount)
+    create_and_broadcast_bulk_activity(
+        { chuds_balance: amount.to_s }
+    )
   end
 
   def self.reset_performance_points(amount = 0)
@@ -69,5 +72,26 @@ class Attendee < ApplicationRecord
 
   def level_index
     LEVELS[LEVELS.keys.select { |l| l <= self.performance_points }.max][:index] rescue 1
+  end
+
+  def self.create_and_broadcast_bulk_activity(opts)
+    activity = create_bulk_update_activity(opts)
+    broadcast_bulk_update(activity)
+  end
+
+  def self.create_bulk_update_activity(opts)
+    Attendee.first.create_activity(
+        action: "bulk_update",
+        parameters: opts
+    )
+  end
+
+  def self.broadcast_bulk_update(activity)
+    Turbo::StreamsChannel.broadcast_prepend_to(
+      "timeline",
+      target: "timeline",
+      partial: "public_activity/attendee/bulk_update",
+      locals: { object: self, activity: activity }
+    )
   end
 end

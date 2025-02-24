@@ -1,0 +1,9 @@
+<li>
+  <span><%= activity.created_at.strftime("%Y-%m-%d %I:%m:%S %P") %></span><br>
+  <p>Attendees 
+    <% activity.parameters.map do |key, val| %>
+      <i><%= key %></i> were all updated to <strong><%= val %></strong>
+    <% end.join(", ") %>
+  </p>
+
+</li>

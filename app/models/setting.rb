@@ -18,17 +18,19 @@
 class Setting < ApplicationRecord
   include Turbo::Broadcastable
   include PublicActivity::Model
+  include ActivityBroadcaster
 
-  tracked only: [:update],
+
+  tracked only: [ :update ],
           params: {
-            :value => proc {|controller, model_instance| ( model_instance.saved_change_to_value? ? model_instance.saved_change_to_value: nil ) }          
+            value: proc { |controller, model_instance| (model_instance.saved_change_to_value? ? model_instance.saved_change_to_value: nil) }
           }
 
   has_one_attached :image
 
   default_scope { order(:name) }
 
-  after_commit :broadcast_chud_checkpoint_time, if: -> { code == 'chud_checkpoint_time' }
+  after_commit :broadcast_chud_checkpoint_time, if: -> { code == "chud_checkpoint_time" }
 
   VALUE_TYPES = %w[
     string
@@ -48,11 +50,10 @@ class Setting < ApplicationRecord
 
   def broadcast_chud_checkpoint_time
     Turbo::StreamsChannel.broadcast_replace_to(
-      'chud_checkpoint_alert',
-      target: 'chud_checkpoint_alert',
-      partial: 'shared/chuds_checkpoint_wrapper',
-      locals: { checkpoint_time: value == 'true' }
+      "chud_checkpoint_alert",
+      target: "chud_checkpoint_alert",
+      partial: "shared/chuds_checkpoint_wrapper",
+      locals: { checkpoint_time: value == "true" }
     )
   end
-
 end

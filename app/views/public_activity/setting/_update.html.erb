@@ -5,6 +5,10 @@
   <% end %>  
   <% activity.parameters.each do |p, val| %>
     <% next if val.blank? %>
+    <% if activity.trackable.value_type == 'text' %>
+       was updated
+    <% else %>
        was set to <strong><%=  present_activity_values(activity.trackable, val[1])%></strong>
+    <% end %>
   <% end %>
 </li>

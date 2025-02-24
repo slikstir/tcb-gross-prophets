@@ -17,6 +17,8 @@
 #
 class Performer < ApplicationRecord
   include PublicActivity::Model
+  include ActivityBroadcaster
+
 
   tracked only: [ :update ],
           params: {
