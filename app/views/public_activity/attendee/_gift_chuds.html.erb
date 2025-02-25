@@ -3,8 +3,7 @@
     data-highlight-duration-value="2000">
   <span><%= activity.created_at.strftime("%Y-%m-%d %I:%m:%S %P") %></span><br>
   <p>Attendees 
-    <% activity.parameters.map do |key, val| %>
-      <i><%= key %></i> were all updated to <strong><%= val %></strong>
+    <% activity.parameters.map do |key, val| %> were all gifted <strong><%= val %></strong> chuds
     <% end.join(", ") %>
   </p>
 </li>

@@ -19,7 +19,6 @@ class Performer < ApplicationRecord
   include PublicActivity::Model
   include ActivityBroadcaster
 
-
   tracked only: [ :update ],
           params: {
             chuds_balance: proc { |controller, model_instance| (model_instance.saved_change_to_chuds_balance? ? model_instance.saved_change_to_chuds_balance : nil) },
@@ -43,16 +42,49 @@ class Performer < ApplicationRecord
 
   def self.reset_chuds_balance(amount = 0)
     Performer.all.update_all(chuds_balance: amount)
+    create_and_broadcast_activity(
+       "bulk_update", { chuds_balance: amount.to_s }
+    )
   end
 
   def self.reset_performance_points(amount = 0)
     Performer.all.update_all(performance_points: amount)
+    create_and_broadcast_activity(
+       "bulk_update", { chuds_balance: amount.to_s }
+    )
   end
 
   def self.gift_chuds(amount = 0)
+    Performer.public_activity_off
     Performer.all.each do |performer|
       performer.chuds_balance += amount
       performer.save
     end
+    Performer.public_activity_on
+
+    create_and_broadcast_activity(
+       "gift_chuds", { chuds_balance: amount.to_s }
+    )
+  end
+
+  def self.create_and_broadcast_activity(action, opts)
+    activity = create_activity(action, opts)
+    broadcast_activity(action, activity)
+  end
+
+  def self.create_activity(action, opts)
+    Performer.first.create_activity(
+        action: action,
+        parameters: opts
+    )
+  end
+
+  def self.broadcast_activity(action, activity)
+    Turbo::StreamsChannel.broadcast_prepend_to(
+      "timeline",
+      target: "timeline",
+      partial: "public_activity/performer/#{action}",
+      locals: { object: self, activity: activity }
+    )
   end
 end
