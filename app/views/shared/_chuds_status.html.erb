@@ -1,14 +1,12 @@
-<div class="d-flex justify-content-center mb-5 mt-5">
-  <div class="text-center alert alert-primary xs-col-12 col-md-6">
-    <% if @attendee.blank? %>
-      <p>Chuds Balance</p>  
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login First</button>
-    <% else %>
-      <h3>Welcome to the program, <%= @attendee.name %></h3>
-      <p><i>You've got <span id="chuds-balance"><%= @attendee.chuds_balance %></span> CHUDS to spend. <br>
-        Congratulations on your <%= @attendee.performance_points %> 
-        Performance Points! You are <%= a_or_an(@attendee.level_name) %>
-        <%= @attendee.level_name %></i></p>
-    <% end %>
+<%= turbo_stream_from "#{dom_id(attendee)}_chuds_status" %>
+<div id="<%= dom_id(attendee) %>_chuds_status">
+  <div class="d-flex justify-content-center mb-5 mt-5">
+    <div class="text-center alert alert-primary xs-col-12 col-md-6">
+      <h3>Welcome to the program, <%= attendee.name %></h3>
+      <p><i>You've got <span id="chuds-balance"><%= attendee.chuds_balance %></span> CHUDS to spend. <br>
+        Congratulations on your <%= attendee.performance_points %> 
+        Performance Points! You are <%= a_or_an(attendee.level_name) %>
+        <%= attendee.level_name %></i></p>
+    </div>
   </div>
 </div>

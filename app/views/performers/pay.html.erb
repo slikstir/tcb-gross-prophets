@@ -1,6 +1,10 @@
+<%= render "shared/chuds_status", attendee: @attendee %>
 
 
-<%= render "shared/chuds_status" %>
+<%= turbo_stream_from 'redirect_checkpoint_closed' %>
+<div id="redirect_checkpoint_closed"></div>
+
+
 <div class="col-xs-12 col-md-6 offset-md-3">
       <h1 class="text-capitalize">
         Time to spend your chuds

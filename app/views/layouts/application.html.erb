@@ -23,9 +23,15 @@
   <%= render 'shared/analytics_code' %>
 
   <body>
+    <%= turbo_stream_from 'page_reload' %>
+    <div id="page_reload"></div>
 
+    <%= turbo_stream_from 'global_redirect' %>
+    <div id="global_redirect"></div>
+    
     <%= turbo_stream_from 'notifications' %>
     <%= render "shared/notifications" %>
+    
 
     <div class="container-fluid" style="padding: 0;">
     <% if @attendee %>

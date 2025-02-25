@@ -36,16 +36,16 @@ class Attendee < ApplicationRecord
 
   LEVELS =
   {
-    30 => { index: 1, name: "Brand Warrior" },
-    60 => { index: 2, name: "Product Pioneer" },
-    90 => { index: 3, name: "Senior Product Pioneer" },
-    120 => { index: 4, name: "Consultant" },
-    150 => { index: 5, name: "Specialist Consultant" },
-    180 => { index: 6, name: "Executive Consultant" },
-    210 => { index: 7, name: "Specialist" },
-    240 => { index: 8, name: "Consultant Specialist" },
-    270 => { index: 9, name: "Executive Specialist" },
-    300 => { index: 10, name: "Model Executive Specialist" }
+    12 => { index: 1, name: "Brand Warrior" },
+    24 => { index: 2, name: "Product Pioneer" },
+    36 => { index: 3, name: "Senior Product Pioneer" },
+    48 => { index: 4, name: "Consultant" },
+    60 => { index: 5, name: "Specialist Consultant" },
+    72 => { index: 6, name: "Executive Consultant" },
+    84 => { index: 7, name: "Specialist" },
+    96 => { index: 8, name: "Consultant Specialist" },
+    108 => { index: 9, name: "Executive Specialist" },
+    120 => { index: 10, name: "Model Executive Specialist" }
   }
 
   def self.reset_chuds_balance(amount = 0)
@@ -53,6 +53,7 @@ class Attendee < ApplicationRecord
     create_and_broadcast_activity(
        "bulk_update", { chuds_balance: amount.to_s }
     )
+    broadcast_page_reload
   end
 
   def self.reset_performance_points(amount = 0)
@@ -60,6 +61,7 @@ class Attendee < ApplicationRecord
     create_and_broadcast_activity(
        "bulk_update", { chuds_balance: amount.to_s }
     )
+    broadcast_page_reload
   end
 
   def self.gift_chuds(amount = 0)
@@ -73,6 +75,7 @@ class Attendee < ApplicationRecord
     create_and_broadcast_activity(
        "gift_chuds", { chuds_balance: amount.to_s }
     )
+    broadcast_page_reload
   end
 
   def set_defaults
