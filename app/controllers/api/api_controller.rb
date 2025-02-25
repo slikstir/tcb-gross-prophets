@@ -25,14 +25,14 @@ module Api
       if params[:start_or_stop].downcase == "start"
         show_setting.update(value: "true")
         render json: { success: true, message: "Show has begun" }, status: :ok
-        
+
       elsif params[:start_or_stop].downcase == "stop"
         show_setting.update(value: "false")
         render json: { success: true, message: "Show has ended" }, status: :ok
-        
+
       elsif params[:start_or_stop].downcase == "status"
         render json: { success: true, message: "Show status is #{show_setting.value == 'true' ? 'active' : 'inactive' }" }, status: :ok
-        
+
       else
         render json: { success: false, message: "Invalid checkpoint action" }, status: :bad_request
       end
@@ -73,6 +73,16 @@ module Api
         Rails.logger.warn "Unauthorized webhook request - Signature mismatch"
         render json: { success: false, message: "Unauthorized" }, status: :unauthorized
       end
+    end
+
+
+    def broadcast_performer_reload
+      Turbo::StreamsChannel.broadcast_replace_to(
+        "performer_page_reload",
+        target: "performer_page_reload",
+        partial: "shared/reload",
+        locals: { which: "performer_page_reload" }
+      )
     end
   end
 end

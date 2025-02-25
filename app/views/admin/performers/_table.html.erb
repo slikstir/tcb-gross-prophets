@@ -21,7 +21,7 @@
           <% end %>
         </td>
         <td><%= performer.chuds_balance %></td>
-        <td><%= number_to_currency performer.commission_balance, unit: "€" %></td>
+        <td><%= number_to_currency performer.commission_balance, unit: "¢" %></td>
         <td><%= performer.performance_points %></td>
         <td>
           <%= link_to admin_performer_path(performer), class: "btn btn-sm btn-success" do %>

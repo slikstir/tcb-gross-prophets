@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   resources :vouchers, only: [ :index ]
 
   namespace :admin do
-    resources :activities, only: [:index] do 
+    resources :activities, only: [ :index ] do
       collection do
         delete :destroy_all, as: :destroy_all
       end
@@ -51,17 +51,19 @@ Rails.application.routes.draw do
     post "checkpoint/:start_or_stop", to: "api#checkpoint"
     post "show_code/:code", to: "api#show_code"
 
-    resources :performers, only: [:index, :show] do
-      member do 
+    resources :performers, only: [ :index, :show ] do
+      member do
         post "reset_chuds_balance/:amount", action: :reset_chuds_balance
         post "reset_performance_points/:amount", action: :reset_performance_points
         post "gift_chuds/:amount", action: :gift_chuds
+        post "gift_performance_points/:amount", action: :gift_performance_points
       end
 
-      collection do 
+      collection do
         post "reset_chuds_balance/:amount", action: :reset_chuds_balance
         post "reset_performance_points/:amount", action: :reset_performance_points
         post "gift_chuds/:amount", action: :gift_chuds
+        post "gift_performance_points/:amount", action: :gift_performance_points
       end
     end
 

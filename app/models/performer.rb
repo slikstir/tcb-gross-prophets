@@ -36,6 +36,8 @@ class Performer < ApplicationRecord
 
   scope :active, -> { where(active: true) }
 
+  after_update_commit :broadcast_performer_reload
+
   def self.max_chuds_balance
     self.active.maximum(:chuds_balance)
   end
@@ -67,6 +69,20 @@ class Performer < ApplicationRecord
     )
   end
 
+  def self.gift_performance_points(amount = 0)
+    Performer.public_activity_off
+    Performer.all.each do |performer|
+      performer.performance_points += amount
+      performer.save
+    end
+    Performer.public_activity_on
+
+    create_and_broadcast_activity(
+       "gift_performance_points", { performance_points: amount.to_s }
+    )
+  end
+
+
   def self.create_and_broadcast_activity(action, opts)
     activity = create_activity(action, opts)
     broadcast_activity(action, activity)
@@ -86,5 +102,16 @@ class Performer < ApplicationRecord
       partial: "public_activity/performer/#{action}",
       locals: { object: self, activity: activity }
     )
+  end
+
+  def broadcast_performer_reload
+    if self.saved_change_to_chuds_balance? || self.saved_change_to_performance_points?
+      Turbo::StreamsChannel.broadcast_replace_to(
+        "performer_page_reload",
+        target: "performer_page_reload",
+        partial: "shared/reload",
+        locals: { which: "performer_page_reload" }
+      )
+    end
   end
 end

@@ -4,7 +4,7 @@
     <%= form.file_field :photo %>
     <%= form.number_field :performance_points %>
     <%= form.number_field :chuds_balance %>
-    <%= form.number_field :commission_balance, prepend: "€", step: 0.01 %>
+    <%= form.number_field :commission_balance, prepend: "¢", step: 0.01 %>
     <%= form.select :active, [["Yes", true], ["No", false]] %>
     
     <div class="actions">

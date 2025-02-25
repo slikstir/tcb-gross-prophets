@@ -1,0 +1,9 @@
+<li id="activity_<%= activity.id %>" 
+    data-controller="highlight" 
+    data-highlight-duration-value="2000">
+  <span><%= activity.created_at.strftime("%Y-%m-%d %I:%m:%S %P") %></span><br>
+  <p>Performers 
+    <% activity.parameters.map do |key, val| %> were all gifted <strong><%= val %></strong> chuds
+    <% end.join(", ") %>
+  </p>
+</li>

@@ -1,3 +1,6 @@
+<%= turbo_stream_from 'performer_page_reload' %>
+<div id="performer_page_reload"></div>
+
 <div class="d-flex justify-content-center align-items-center vh-100">
   <div class="text-center container">
     <table class="table">
@@ -21,7 +24,7 @@
                     role="progressbar" 
                       style="width: <%= (performer.chuds_balance * 1.0) / ( @max_chuds_balance * 1.0) * 100.0 %>%;" 
                       aria-valuenow="<%= performer.chuds_balance %>" aria-valuemin="0" aria-valuemax="<%= @max_chuds_balance %>">
-                $<%= performer.chuds_balance %>
+                ¢<%= performer.chuds_balance %>
               </div>
             </div>
           </td>

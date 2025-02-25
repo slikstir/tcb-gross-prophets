@@ -8,14 +8,14 @@ module Api
     end
 
     def show
-      begin 
+      begin
         performer = Performer.find(params[:id])
         render json: performer, status: :ok
       rescue ActiveRecord::RecordNotFound
         render json: { error: "Performer not found" }, status: :not_found
       end
     end
-    
+
 
     def reset_chuds_balance
       amount = params[:amount].to_i || 0
@@ -26,6 +26,7 @@ module Api
         begin
           performer = Performer.find(params[:id])
           performer.update(chuds_balance: amount)
+          broadcast_performer_reload
           render json: { success: true, message: "#{performer.name}'s Chuds balance was successfully reset to #{amount}." }, status: :ok
         rescue ActiveRecord::RecordNotFound
           render json: { error: "Performer not found" }, status: :not_found
@@ -42,6 +43,7 @@ module Api
         begin
           performer = Performer.find(params[:id])
           performer.update(performance_points: amount)
+          broadcast_performer_reload
           render json: { success: true, message: "#{performer.name}'s Performance points were successfully reset to #{amount}" }, status: :ok
         rescue ActiveRecord::RecordNotFound
           render json: { error: "Performer not found" }, status: :not_found
@@ -55,11 +57,31 @@ module Api
         Performer.gift_chuds(amount)
         render json: { success: true, message: "Performers have all been gifted #{amount}" }, status: :ok
       else
-        begin 
+        begin
           performer = Performer.find(params[:id])
           performer.chuds_balance += amount
           performer.save
+          broadcast_performer_reload
           render json: { success: true, message: "#{performer.name} has been gifted #{amount} chuds" }, status: :ok
+        rescue ActiveRecord::RecordNotFound
+          render json: { error: "Performer not found" }, status: :not_found
+        end
+      end
+    end
+
+
+    def gift_performance_points
+      amount = params[:amount].to_i  || 0
+      if params[:id].blank?
+        Performer.gift_performance_points(amount)
+        render json: { success: true, message: "Performers have all been gifted #{amount} performance points" }, status: :ok
+      else
+        begin
+          performer = Performer.find(params[:id])
+          performer.performance_points += amount
+          performer.save
+          broadcast_performer_reload
+          render json: { success: true, message: "#{performer.name} has been gifted #{amount} performance_points" }, status: :ok
         rescue ActiveRecord::RecordNotFound
           render json: { error: "Performer not found" }, status: :not_found
         end
