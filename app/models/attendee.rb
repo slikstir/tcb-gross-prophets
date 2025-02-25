@@ -76,7 +76,7 @@ class Attendee < ApplicationRecord
   end
 
   def set_defaults
-    self.chuds_balance = 100 if self.chuds_balance.blank?
+    self.chuds_balance = 0 if self.chuds_balance.blank?
     self.level = 1 if self.level.blank?
     self.performance_points = 0 if self.performance_points.blank?
   end
