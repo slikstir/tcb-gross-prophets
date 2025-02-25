@@ -14,4 +14,26 @@ module ApplicationHelper
       "a"
     end
   end
+
+  def homepage_url
+    ["http://", Rails.application.routes.default_url_options[:host], "/login?code=", @show_code.value].join
+  end
+
+  def homepage_qr_code
+    qr = RQRCode::QRCode.new(homepage_url)
+    png = qr.as_png(
+      bit_depth: 1,
+      border_modules: 0,
+      color_mode: ChunkyPNG::COLOR_GRAYSCALE,
+      color: "black",
+      file: nil,
+      fill: "white",
+      module_px_size: 6,
+      resize_exactly_to: false,
+      resize_gte_to: false,
+      size: 400
+    )
+
+    Base64.strict_encode64(png.to_s)
+  end
 end
