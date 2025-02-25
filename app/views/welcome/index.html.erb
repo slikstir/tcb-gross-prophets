@@ -6,8 +6,13 @@
   <% else %>
     <%= image_tag "GrossProphets-Trio-v2.png", class: "img-fluid" %>
   <% end %>
-  <h2 class="text-uppercase mt-5">Be the best you!</h2>
-  <p>
-    Some in world copy about the seminar blah blah blah
-  </p>
+
+  <% unless @homepage_text.blank? %>
+     <%= raw @homepage_text.value %>
+  <% else %>
+    <h2 class="text-uppercase mt-5">Be the best you!</h2>
+    <p>
+      Welcome to the greatest seminar on the planet! We are here to help you become the best you that you can be.
+    </p>
+  <% end %>
 </div>

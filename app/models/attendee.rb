@@ -36,15 +36,15 @@ class Attendee < ApplicationRecord
 
   LEVELS =
   {
-    20 => { index: 1, name: "Brand Warrior" },
-    40 => { index: 2, name: "Product Pioneer" },
-    80 => { index: 3, name: "Senior Product Pioneer" },
+    30 => { index: 1, name: "Brand Warrior" },
+    60 => { index: 2, name: "Product Pioneer" },
+    90 => { index: 3, name: "Senior Product Pioneer" },
     120 => { index: 4, name: "Consultant" },
     150 => { index: 5, name: "Specialist Consultant" },
     180 => { index: 6, name: "Executive Consultant" },
-    200 => { index: 7, name: "Specialist" },
-    220 => { index: 8, name: "Consultant Specialist" },
-    250 => { index: 9, name: "Executive Specialist" },
+    210 => { index: 7, name: "Specialist" },
+    240 => { index: 8, name: "Consultant Specialist" },
+    270 => { index: 9, name: "Executive Specialist" },
     300 => { index: 10, name: "Model Executive Specialist" }
   }
 

@@ -4,6 +4,7 @@ class WelcomeController < ApplicationController
 
   def index
     @homepage_image = Setting.find_by(code: "homepage_image")
+    @homepage_text = Setting.find_by(code: "homepage_text")
   end
 
   def sign_out
