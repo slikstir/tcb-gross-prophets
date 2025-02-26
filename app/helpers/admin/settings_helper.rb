@@ -11,6 +11,8 @@ module Admin::SettingsHelper
       form.file_field :image, class: "form-control"
     when "boolean"
       form.select :value, [ [ "Yes", "true" ], [ "No", "false" ] ], { hide_label: true }, class: "form-control"
+    when 'html'
+      form.rich_text_area :html
     end
   end
 

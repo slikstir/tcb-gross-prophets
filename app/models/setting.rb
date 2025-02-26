@@ -27,6 +27,7 @@ class Setting < ApplicationRecord
           }
 
   has_one_attached :image
+  has_rich_text :html
 
   default_scope { order(:name) }
 
@@ -39,6 +40,7 @@ class Setting < ApplicationRecord
     integer
     image
     boolean
+    html
   ]
 
   VALUE_TYPES.each do |vt|

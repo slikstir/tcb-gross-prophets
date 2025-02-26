@@ -50,7 +50,8 @@ module Admin
           :code,
           :value_type,
           :value,
-          :image
+          :image,
+          :html
         )
       end
 

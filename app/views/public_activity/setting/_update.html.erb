@@ -12,5 +12,5 @@
     <% else %>
        was set to <strong><%=  present_activity_values(activity.trackable, val[1])%></strong>
     <% end %>
-  <% end %>
+  <% end unless activity.parameters.blank? %>
 </li>

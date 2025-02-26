@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   root "welcome#index"
   get "login", to: "welcome#login", as: :login
   get "company", to: "welcome#company", as: :company
-  get "product", to: "welcome#product", as: :product
   get "closed", to: "welcome#closed", as: :closed
+  get "faqs", to: "welcome#faqs", as: :faqs
+  get "terms", to: "welcome#terms", as: :terms
 
   devise_for :users, controllers: {
     sessions: "users/sessions"

@@ -1,7 +1,7 @@
 <%= bootstrap_form_with model: Attendee.new, data: { turbo: "true" } do |f| %>
     <%= f.text_field :name, required: true, 
       help: 'What would you like to be referred to as.' %>
-    <%= f.text_field :email, required: true, 
+    <%= f.email_field :email, required: true, 
       help: 'This should match the email you intend to use to checkout' %>
 
     <div class="mb-3">
@@ -11,5 +11,14 @@
     </div>
 
     <%= f.text_field :seat_number, help: "If you have assigned seating. This is optional." %>
-    <%= f.submit "Sign In or Sign Up", class: "btn btn-success" %>
+    
+    <div class="mb-3">
+      <%= f.checkbox :agree_to_terms_of_service, required: true, style: "transform: scale(2.0); margin: 10px" %>
+
+      <%= f.label :agree_to_terms_of_service do %>
+        I agree to the <%= link_to "terms of service", terms_path, target: :_blank %> 
+      <% end %>
+    </div>
+
+    <%= f.submit "Sign In or Sign Up", class: "btn btn-success btn-lg w-100" %>
 <% end %>

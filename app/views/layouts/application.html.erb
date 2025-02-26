@@ -46,24 +46,41 @@
           <div class="collapse navbar-collapse text-center" id="navbarNav">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <%= link_to "Shop", shop_path, class: "nav-link" %>
+                <%= link_to root_path, class: "nav-link" do %>
+                  <% icon 'home' %> Home
+                <% end %>
               </li>
               <li class="nav-item">
-                <%= link_to "The Product", product_path, class: "nav-link" %>
+                <%= link_to shop_path, class: "nav-link" do %>
+                  <% icon 'cart' %> Shop
+                <% end %>
               </li>
               <li class="nav-item">
-                <%= link_to "The Company", company_path, class: "nav-link" %>
+                <%= link_to company_path, class: "nav-link" do %>
+                  <% icon 'pyramid' %> The Company 
+                <% end %>
               </li>
               <li class="nav-item">
-                <%= link_to "Redeem Voucher", vouchers_path, class: "nav-link" %>
+                <%= link_to vouchers_path, class: "nav-link" do %>
+                  <% icon 'wallet' %> Redeem Voucher
+                <% end %>
               </li>
               <li class="nav-item">
-                <%= link_to "Show Program", "#", class: "nav-link" %>
+                <%= link_to "#", class: "nav-link" do %>
+                  <% icon 'book' %> Show Program
+                <% end %>
+              </li>
+              <li class="nav-item">
+                <%= link_to faqs_path, class: "nav-link" do %>
+                  <% icon 'book' %> FAQs
+                <% end %>
               </li>
             </ul>
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <%= link_to "Sign Out", sign_out_path, class: "nav-link" %>
+                <%= link_to sign_out_path, class: "nav-link", data: { turbo: false} do  %>
+                  <%= icon 'log-out-circle' %> Log Out
+                <% end %>
               </li>
             </ul>
           </div>
@@ -86,12 +103,14 @@
     <% end %>
 
 
+    <div class="d-flex justify-content-center">
     <% flash.each do |key, value| %>
-        <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
+        <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show xs-col-12 col-md-6" role="alert">
           <%= value %>
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       <% end %>
+    </div>
 
     <div class="text-center">
       <%= yield %> 
@@ -118,6 +137,8 @@
         <div class="container text-center">
           <span class="text-muted">The Company™ Portal Presented By The Tin Can Brothers</span><br>
           <span class="text-muted">© 2014-<%= Time.now.strftime("%Y")%> The Tin Can Brothers</span><br>
+          <span class="text-muted"><%= link_to "Terms of Service", terms_path, target: :_blank %></span><br>
+
           <span class="text-muted">Show Code: <%= session[:show_code] %></span>
         </div>
       </footer>

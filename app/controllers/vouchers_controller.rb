@@ -11,7 +11,7 @@ class VouchersController < ApplicationController
         redirect_to vouchers_path
       else
         @voucher.redeem_for(session[:email])
-        flash[:notice] = "Voucher redeemed!"
+        flash[:notice] = "Voucher redeemed! ¢#{@voucher.amount} chuds have been added to your account."
         redirect_to root_path
       end
     end

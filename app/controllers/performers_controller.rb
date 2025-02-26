@@ -10,24 +10,22 @@ class PerformersController < ApplicationController
   end
 
   def pay
-    unless @chud_checkpoint_time
-      flash[:notice] = "You can only pay performers during the Chud Checkpoint Time."
+    if !@chud_checkpoint_time
+      flash[:notice] = "Looks like you mised the CHUD Checkpoint. You can only pay performers during the CHUD Checkpoint Time."
       redirect_to root_path
-    end
-
-    if request.post?
+    elsif request.post?
       params[:performer].each do |performer_id, amount|
         next if amount.to_i.zero? || amount.to_i < 0
         performer = Performer.find(performer_id)
         performer.payments.create(amount: amount, attendee: @attendee)
       end
-      flash[:notice] = "Thank you for your payment!"
+      flash[:notice] = "Way to spend those chuds! Don't forget you can always get more at our store!"
       redirect_to root_path
     end
   end
 
   def status
-    @max_chuds_balance = [Performer.max_chuds_balance + Performer.max_chuds_balance * 0.20, Setting.find_by(code: "max_performers_chuds").try(:value).to_i].max
+    @max_chuds_balance = [ Performer.max_chuds_balance + Performer.max_chuds_balance * 0.20, Setting.find_by(code: "max_performers_chuds").try(:value).to_i ].max
   end
 
   def vote; end

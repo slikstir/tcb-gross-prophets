@@ -1,6 +1,6 @@
 class WelcomeController < ApplicationController
   layout :set_layout
-  skip_before_action :check_if_logged_in, only: [ :login, :sign_out, :closed ]
+  skip_before_action :check_if_logged_in, only: [ :login, :sign_out, :closed, :terms ]
 
   def index
     @homepage_image = Setting.find_by(code: "homepage_image")
@@ -21,6 +21,18 @@ class WelcomeController < ApplicationController
 
   def shop
     @shop = Setting.find_by(code: "shop")
+  end
+
+  def faqs
+    @faqs = Setting.find_by(code: "faq")
+  end
+
+  def terms
+    @terms = Setting.find_by(code: "terms")
+  end
+
+  def company
+    @company = Setting.find_by(code: "company")
   end
 
   private

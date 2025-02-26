@@ -3,7 +3,11 @@ FROM ruby:3.2.6
 # Install dependencies
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 RUN apt-get update && apt-get install -y vim && rm -rf /var/lib/apt/lists/*
-
+RUN apt-get update && apt-get install -y \
+  libvips \
+  imagemagick \
+  libmagickwand-dev \
+  && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
