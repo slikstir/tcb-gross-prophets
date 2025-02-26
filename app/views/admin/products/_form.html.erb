@@ -1,5 +1,7 @@
+<%= render 'admin/shared/record_errors', record: @product %>
+
 <div class="">
-  <%= bootstrap_form_with(model: [:admin, @product], local: true) do |f| %>
+  <%= bootstrap_form_with(model: [:admin, @product], local: true, data: {turbo: false}) do |f| %>
     <% if @product.image.attached? %>
       <%= image_tag @product.image, class: "img-fluid", style: "max-height: 250px;" %>
     <% end %>
@@ -9,19 +11,57 @@
         <%= f.text_field :name %>
       </div>
       <div class="col-sm-4">
-        <%= f.text_field :sku %>
+        <%= f.fields_for :parent do |ff| %>
+          <%= ff.text_field :sku %>
+        <% end %>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-6">
-        <%= f.number_field :price, step: 0.01, prepend: currency_icon %>
+        <%= f.number_field :price, step: 0.01, prepend: currency_icon, min: 0 %>
       </div>
       <div class="col-sm-6">
-        <%= f.number_field :chuds, label: "How many chuds for purchasing?" %>
+        <%= f.number_field :chuds, label: "How many chuds for purchasing?", step: 1, min: 0 %>
       </div>
     </div>
+
     <%= f.select :availability, Product::AVAILABILITY_OPTIONS.map{|x| [x.humanize, x] } %>
-    <%= f.select :track_inventory, [["No", false], ["Yes", true]] %>
+    <div class="row">
+      <div class="col-sm-6">
+        <%= f.select :track_inventory, [["No", false], ["Yes", true]] %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.fields_for :parent do |ff| %>
+          <%= ff.number_field :stock_level, step: 1, min: 0 %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <%= f.text_field :option_1, label: "Name of Option 1 (i.e. Style)", help: "Leave blank if not used" %>
+      </div>
+      <!--
+      <div class="col-sm-4">
+        <%= f.text_field :option_2, label: "Name of Option 2 (i.e. Color)", help: "Leave blank if not used" %>
+      </div>
+      <div class="col-sm-4">
+        <%= f.text_field :option_3, label: "Name of Option 3 (i.e. Size)", help: "Leave blank if not used" %>
+      </div>
+      -->
+    </div>
+
+    <% if @product.persisted? %>
+      <h3>Variants</h3>
+      <div data-controller="variants" class="mb-5">
+        <div id="variants">
+          <%= f.fields_for :children do |variant_form| %>
+            <%= render 'variant_fields', f: variant_form %>
+          <% end %>
+        </div>
+        <%= button_tag "Add Variant", class: "btn btn-primary", data: { action: "click->variants#add"} %>
+
+      </div>
+    <% end %>
     
     
     <%= f.rich_text_area :description %>

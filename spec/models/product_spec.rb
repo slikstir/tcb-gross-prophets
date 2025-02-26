@@ -6,8 +6,10 @@
 #  availability    :string
 #  chuds           :integer
 #  name            :string
+#  option_1        :string
+#  option_2        :string
+#  option_3        :string
 #  price           :decimal(10, 2)
-#  sku             :string
 #  track_inventory :boolean
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null

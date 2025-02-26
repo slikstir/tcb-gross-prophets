@@ -5,27 +5,36 @@
           <% if product.image.attached? %>
             <%= image_tag product.image, class: "img-fluid", style: "max-height: 250px;" %>
           <% else %>
-            <%= image_tag 'placeholder', class: "img-fluid", style: "max-height: 250px;" %>
+            <%= image_tag 'placeholder.jpg', class: "img-fluid", style: "max-height: 250px;" %>
           <% end %>
         </div>
 
         <!-- Product Details -->
-        <div class="col-md-7">
+        <div class="col-md-7" data-controller="product-options" data-product-options-variants-value="<%= product.children.to_json.html_safe %>">
             <h2><%= product.name %></h2>
-            <p class="text-muted">
-              <i><%= product.sku %></i>
-            </p>
+            <p class="text-muted"><i><%= product.sku %></i></p>
             <p class="fs-4 text-success">
               <%= number_to_currency product.price, units: currency_icon %>
             </p>
           
             <% if defined? f %>
               <!-- Commission Sales Dropdown -->
-              <div class="mb-3">
-                <%= f.select :commissionable_id, @performers.map{|x| [x.name, x.id ]}, 
-                label: "Commission Earned By", prompt: "Choose...", 
-                required: true %>
-              </div>
+              <% if product.availability == 'in_show' %>
+                <div class="mb-3">
+                  <%= f.select :commissionable_id, @performers.map{|x| [x.name, x.id ]}, 
+                  label: "Commission Earned By", prompt: "Choose...", 
+                  required: true, class: "form-select" %>
+                </div>
+              <% end %>
+
+              <% if product.children.any? %>
+                <div class="mb-3">
+                  <%= f.select :variant_id, product.children.pluck(:option_1, :id).uniq, 
+                  { label: product.option_1, prompt: "Choose..." } %>
+                </div>
+              <% else %>
+                <%= f.hidden_field :variant_id, value: product.parent.id %>
+              <% end %>
 
               <!-- Quantity Selector -->
               <div class="mb-3 d-flex align-items-center">
@@ -48,4 +57,3 @@
         </div>
     </div>
 </div>
-

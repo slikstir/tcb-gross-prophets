@@ -1,0 +1,36 @@
+<div class="variant row">
+  <%= f.hidden_field :id %>
+
+  <div class="col">
+    <%= f.text_field :sku, label: "SKU" %>
+  </div>
+
+  <div class="col">
+    <%= f.text_field :option_1 %>
+  </div>
+
+  <!--
+  <div class="col">
+    <%= f.text_field :option_2 %>
+  </div>
+
+  <div class="col">
+    <%= f.text_field :option_3 %>
+  </div>
+  -->
+
+  <div class="col">
+    <%= f.number_field :stock_level %>
+  </div>
+
+  <div class="col d-flex align-items-center justify-content-center">
+    <button type="button" class="btn btn-danger" data-action="click->variants#remove" data-variant-target="variant">
+      Remove
+    </button>
+  </div>
+
+
+
+  <%= f.hidden_field :parent, value: false %>
+
+</div>
