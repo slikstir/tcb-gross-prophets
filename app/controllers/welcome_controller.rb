@@ -20,7 +20,8 @@ class WelcomeController < ApplicationController
   end
 
   def shop
-    @shop = Setting.find_by(code: "shop")
+    @products = Product.where(availability: "in_show")
+    @performers = Performer.where(active: true)
   end
 
   def faqs

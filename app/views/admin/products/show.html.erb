@@ -1,31 +1,24 @@
 <h1>Product Details
 </h1>
 
-<p>
-  <strong>SKU:</strong>
-  <%= @product.sku %>
-</p>
-<p>
+<div class="alert alert-secondary">
+  <%= render 'shared/product', product: @product %>
+</div>
 
-  <strong>Performer who receives commissions:</strong>
-  <%= @product.commissions_performer.try(:name) %>
-</p>
+<h3>Additional Product Details</h3>
+<dl>
+  <dt>How many chuds does the purchaser receive:</dt>
+  <dd><%= @product.chuds %></dd>
+  <dt>Where is this product available?</dt>
+  <dd><%= @product.availability.humanize %></dd>
+  <dt>Do we track inventory?</dt>
+  <dd><%= @product.track_inventory? ? "Yes" : "No" %></dd>
+</dl>
 
-<p>
-  <strong>How many chuds does the purchaser receive?:</strong>
-  <%= @product.chuds %>
-</p>
 
 <%= link_to 'Edit', edit_admin_product_path(@product), class: 'btn btn-primary' %>
 <%= link_to 'Back', admin_products_path, class: 'btn btn-secondary' %>
 
-<table>
-  <thead>
-    <tr>
-      <th>SKU</th>
-      <th>CHUDs</th>
-      <th>Commissions Credited To</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-</table>
+<div>
+TODO: Add a Table of Sales
+</div>

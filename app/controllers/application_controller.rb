@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :check_if_live
   before_action :check_chud_checkpoint_time
   before_action :check_if_logged_in
+  before_action :set_currency
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -35,5 +36,9 @@ class ApplicationController < ActionController::Base
       session[:show_code] = nil
       redirect_to login_path, notice: message
     end
+  end
+
+  def set_currency 
+    @currency = Setting.find_by(code: "currency").try(:value)
   end
 end

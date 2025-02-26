@@ -1,4 +1,9 @@
-<h1>Shop Show Products</h1>
-<div style="width: 80%; margin: 0 auto;">
-  <%= raw @shop.value %>
-</div>
+<h1>Shop</h1>
+<% @products.each do |product| %>
+  <div class="alert alert-secondary m-3">
+    <%= bootstrap_form_with model: @attendee do |f| %>
+      <%= render 'shared/product', product: product, f: f %>
+    <% end %>
+  </div>
+<% end %>
+

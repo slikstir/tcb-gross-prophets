@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_26_172830) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_26_174906) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -139,8 +139,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_172830) do
     t.integer "chuds"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "commissions_performer_id"
-    t.index ["commissions_performer_id"], name: "index_products_on_commissions_performer_id"
+    t.decimal "price", precision: 10, scale: 2
+    t.string "name"
+    t.string "availability"
+    t.boolean "track_inventory"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -185,5 +187,4 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_172830) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "payments", "attendees"
   add_foreign_key "payments", "performers"
-  add_foreign_key "products", "performers", column: "commissions_performer_id"
 end

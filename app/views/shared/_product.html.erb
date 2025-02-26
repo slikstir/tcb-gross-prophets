@@ -1,0 +1,51 @@
+<div class="container mt-5">
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-5 d-flex justify-content-center align-items-center">
+          <% if product.image.attached? %>
+            <%= image_tag product.image, class: "img-fluid", style: "max-height: 250px;" %>
+          <% else %>
+            <%= image_tag 'placeholder', class: "img-fluid", style: "max-height: 250px;" %>
+          <% end %>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-7">
+            <h2><%= product.name %></h2>
+            <p class="text-muted">
+              <i><%= product.sku %></i>
+            </p>
+            <p class="fs-4 text-success">
+              <%= number_to_currency product.price, units: currency_icon %>
+            </p>
+          
+            <% if defined? f %>
+              <!-- Commission Sales Dropdown -->
+              <div class="mb-3">
+                <%= f.select :commissionable_id, @performers.map{|x| [x.name, x.id ]}, 
+                label: "Commission Earned By", prompt: "Choose...", 
+                required: true %>
+              </div>
+
+              <!-- Quantity Selector -->
+              <div class="mb-3 d-flex align-items-center">
+                  <label class="me-2">Quantity:</label>
+                  <div class="input-group" style="max-width: 150px;">
+                      <button class="btn btn-outline-secondary" type="button" id="decreaseBtn">-</button>
+                      <input type="text" class="form-control text-center" value="1" id="quantityInput">
+                      <button class="btn btn-outline-secondary" type="button" id="increaseBtn">+</button>
+                  </div>
+              </div>
+
+              <!-- Add to Cart Button -->
+              <%= f.submit "Add to Cart", class: "btn btn-warning w-100 btn-lg" %>
+            <% end %>
+
+            <!-- Product Description -->
+            <p class="mt-3">
+              <%= product.description %>
+            </p>
+        </div>
+    </div>
+</div>
+

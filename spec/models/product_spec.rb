@@ -2,20 +2,15 @@
 #
 # Table name: products
 #
-#  id                       :bigint           not null, primary key
-#  chuds                    :integer
-#  sku                      :string
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
-#  commissions_performer_id :bigint
-#
-# Indexes
-#
-#  index_products_on_commissions_performer_id  (commissions_performer_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (commissions_performer_id => performers.id)
+#  id              :bigint           not null, primary key
+#  availability    :string
+#  chuds           :integer
+#  name            :string
+#  price           :decimal(10, 2)
+#  sku             :string
+#  track_inventory :boolean
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 require 'rails_helper'
 

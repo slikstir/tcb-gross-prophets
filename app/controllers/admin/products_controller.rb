@@ -50,7 +50,11 @@ module Admin
       end
 
       def product_params
-        params.require(:product).permit(:sku, :chuds, :commissions_performer_id)
+        params.require(:product).permit(
+          :name, :price, :description, 
+          :image, :availability, :track_inventory, :stock_level,
+          :sku, :chuds
+        )
       end
   end
 end

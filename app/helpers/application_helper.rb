@@ -36,4 +36,32 @@ module ApplicationHelper
 
     Base64.strict_encode64(png.to_s)
   end
+
+  def currency_icon
+    case @currency.downcase
+    when "usd" then "$"   # US Dollar
+    when "eur" then "€"   # Euro
+    when "gbp" then "£"   # British Pound
+    when "jpy" then "¥"   # Japanese Yen
+    when "cny", "rmb" then "¥" # Chinese Yuan (Renminbi)
+    when "aud" then "A$"  # Australian Dollar
+    when "cad" then "C$"  # Canadian Dollar
+    when "chf" then "CHF" # Swiss Franc
+    when "hkd" then "HK$" # Hong Kong Dollar
+    when "sgd" then "S$"  # Singapore Dollar
+    when "nzd" then "NZ$" # New Zealand Dollar
+    when "inr" then "₹"   # Indian Rupee
+    when "brl" then "R$"  # Brazilian Real
+    when "rub" then "₽"   # Russian Ruble
+    when "zar" then "R"   # South African Rand
+    when "krw" then "₩"   # South Korean Won
+    when "mxn" then "MX$" # Mexican Peso
+    when "idr" then "Rp"  # Indonesian Rupiah
+    when "try" then "₺"   # Turkish Lira
+    when "thb" then "฿"   # Thai Baht
+    else
+      currency_code.upcase # Fallback to uppercase currency code
+    end
+  end
+  
 end
