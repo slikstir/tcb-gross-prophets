@@ -37,7 +37,7 @@
               </td>
 
               <!-- Product Name & Price -->
-              <td>
+              <td class="text-start">
                 <strong><%= item.product.name %></strong><br>
                 <% item.variant.options.each do |option, val| %>
                   <strong><%= option %>:</strong> <%= val %><br>
@@ -80,7 +80,7 @@
           <h5 class="mb-3 text-muted">Tax: <%= number_to_currency(@cart.tax_total) %></h5>
         <% end %>
         <h4 class="mb-3">Total: <%= number_to_currency(@cart.total) %></h4>
-        <%= link_to "Check Out", "#", class: "btn btn-success btn-lg" %>
+        <%= link_to "Check Out", "#", class: "btn btn-warning btn-lg" %>
       </div>
     </div>
 
