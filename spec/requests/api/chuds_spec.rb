@@ -61,8 +61,6 @@ RSpec.describe "Chuds Webhook", type: :request do
       }.to change { Performer.find(performer.id).commission_balance }.by((2 * 4.99) + (1* 17.99)).
         and change { LineItem.count }.by(2)
 
-        byebug
-
       expect(response).to have_http_status(:ok)
     end
   end
