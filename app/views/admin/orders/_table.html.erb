@@ -1,0 +1,55 @@
+<%= paginate @orders %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Email</th>
+      <th>Attendee</th>
+      <th>Payment</th>
+      <th>Fulfillment</th>
+      <th>Items</th>
+      <th>Total</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.number %></td>
+        <td><%= order.email %></td>
+        <td>
+          <% if order.attendee.present? %>
+            <%= order.attendee.name %><br>
+            <%= "Seat #{order.attendee.seat_number}" if order.attendee.seat_number.present? %>
+          <% end %>
+        </td>
+        <td>
+          <span class="badge bg-<%= order.payment_state == 'paid' ? 'success' : 'warning' %>">
+            <%= order.payment_state.capitalize %>
+          </span>
+        </td>
+        <td> 
+          <span class="badge bg-<%= fulfillment_badge_class(order.fulfillment_state) %>">
+            <%= order.fulfillment_state.capitalize %>
+          </span>
+        </td>
+        <td>TODO: Line Items</td>
+        <td>Total</td>
+        <td>
+          <%= link_to admin_order_path(order), class: "btn btn-sm btn-success" do %>
+            <%= icon 'folder-open', class: 'icon-text-white' %>
+          <% end %>
+          <%= link_to edit_admin_order_path(order), class: "btn btn-sm btn-warning"  do  %>
+            <%= icon 'edit', class: 'icon-text-white' %>
+          <% end %>
+          <%= link_to admin_order_path(order), method: :delete, 
+                    data: { confirm: 'Are you sure you want to cancel this order?' }, class: "btn btn-sm btn-danger" do %>
+            <%= icon 'x-circle', class: 'icon-text-white' %>
+          <% end %>        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @orders %>

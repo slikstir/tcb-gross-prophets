@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_26_185528) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_27_153947) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -113,6 +113,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_185528) do
     t.index ["sku"], name: "index_line_items_on_sku"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.string "number"
+    t.string "email"
+    t.bigint "attendee_id"
+    t.string "payment_state"
+    t.string "fulfillment_state"
+    t.string "channel"
+    t.string "currency"
+    t.decimal "subtotal", precision: 10, scale: 2, default: "0.0"
+    t.decimal "tax_rate", precision: 5, scale: 4, default: "0.0"
+    t.decimal "tax_total", precision: 10, scale: 2, default: "0.0"
+    t.decimal "total", precision: 10, scale: 2, default: "0.0"
+    t.integer "chuds"
+    t.datetime "fulfilled_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attendee_id"], name: "index_orders_on_attendee_id"
+  end
+
   create_table "payments", force: :cascade do |t|
     t.integer "amount", default: 1
     t.bigint "attendee_id", null: false
@@ -145,6 +164,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_185528) do
     t.string "option_1"
     t.string "option_2"
     t.string "option_3"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.string "session_id", null: false
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
+    t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
   create_table "settings", force: :cascade do |t|

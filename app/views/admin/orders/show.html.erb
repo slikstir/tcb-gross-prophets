@@ -1,0 +1,101 @@
+<!-- filepath: /Users/ricky/RailsApp/tcb-gross-prophets/app/views/admin/orders/show.html.erb -->
+<div class="container mt-4">
+  <!-- Order Header -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>
+      <% if @order.canceled? %>
+        <span class="badge bg-<%= payment_badge_class @order.payment_state %>">
+          <%= @order.payment_state.capitalize %>
+        </span>
+      <% end %>
+      Order <span class="text-muted"><%= @order.number %></span>
+    </h2>
+    <div>
+      <%= link_to "Edit", edit_admin_order_path(@order), class: "btn btn-sm btn-primary" %>
+      <%= link_to "Cancel", admin_order_path(@order), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger ms-2" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Left Column (80%) -->
+    <div class="col-lg-8">
+      <!-- Line Items -->
+      <div class="card mb-3">
+        <div class="card-header">
+          <h5 class="mb-0">Line Items</h5>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Payment Details -->
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Payment Details</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Payment Status:</span>
+              <span class="badge bg-<%= payment_badge_class @order.payment_state %>">
+                <%= @order.payment_state.capitalize %>
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Subtotal:</span>
+              <strong><%= number_to_currency(@order.subtotal) %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Tax (<%= @order.tax_rate %>%) :</span>
+              <strong><%= number_to_currency(@order.tax_total) %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total:</span>
+              <strong><%= number_to_currency(@order.total) %></strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column (20%) -->
+    <div class="col-lg-4">
+      <!-- Customer Details -->
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Customer Details</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between">
+              <span>Fulfillment:</span>
+              <span class="badge bg-<%= fulfillment_badge_class(@order.fulfillment_state) %>">
+                <%= @order.fulfillment_state.capitalize %>
+              </span>
+            </li>
+            <li class="list-group-item"><strong>Email:</strong> <%= @order.email %></li>
+            <% if @order.attendee.present? %>
+              <li class="list-group-item"><strong>Attendee:</strong> <%= @order.attendee.name %></li>
+              <% if @order.attendee.seat_number.present? %>
+                <li class="list-group-item"><strong>Seat:</strong> <%= @order.attendee.seat_number %></li>
+              <% end %>
+            <% end %>
+            <li class="list-group-item"><strong>Channel:</strong> <%= @order.channel.try(:humanize) %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

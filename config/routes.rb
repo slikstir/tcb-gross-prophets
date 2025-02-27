@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   resources :vouchers, only: [ :index ]
 
   namespace :admin do
+    resources :orders
+
     resources :activities, only: [ :index ] do
       collection do
         delete :destroy_all, as: :destroy_all

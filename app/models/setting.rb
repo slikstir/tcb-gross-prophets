@@ -38,6 +38,7 @@ class Setting < ApplicationRecord
     string
     text
     integer
+    decimal
     image
     boolean
     html

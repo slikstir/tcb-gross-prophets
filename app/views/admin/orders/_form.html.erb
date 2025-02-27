@@ -1,0 +1,22 @@
+<%= render 'admin/shared/record_errors', record: @order %>
+
+<div class="col-12 col-md-6">
+  <%= bootstrap_form_with(model: [:admin, @order], local: true, data: { turbo: false }) do |f| %>
+  
+    <%= f.email_field :email %>
+    <%= f.select :currency, Order::CURRENCIES.map{|x| [x.upcase, x] } %>
+    <%= f.select :channel, Product::AVAILABILITY_OPTIONS.map{|x| [x.humanize, x]} %>
+    <% if @order.persisted? %>
+      <%= f.select :payment_state, Order.state_machines[:payment_state].states.map(&:name),
+                    { prompt: "Select Payment State" },
+                    class: "form-select" %>
+      <%= f.select :fulfillment_state, Order.state_machines[:fulfillment_state].states.map(&:name),
+                    { prompt: "Select Fulfillment State" },
+                    class: "form-select" %>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit nil, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

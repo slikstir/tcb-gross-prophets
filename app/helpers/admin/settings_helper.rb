@@ -7,6 +7,8 @@ module Admin::SettingsHelper
       form.text_area :value, class: "form-control", rows: 50
     when "integer"
       form.number_field :value, class: "form-control"
+    when "decimal"
+      form.number_field :value, class: "form-control", step: 0.0001
     when "image"
       form.file_field :image, class: "form-control"
     when "boolean"
