@@ -23,6 +23,7 @@
   <%= render 'shared/analytics_code' %>
 
   <body>
+
     <%= turbo_stream_from 'page_reload' %>
     <div id="page_reload"></div>
 
@@ -78,8 +79,8 @@
             </ul>
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <%= link_to sign_out_path, class: "nav-link", data: { turbo: false} do  %>
-                  <%= icon 'log-out-circle' %> Log Out
+                <%= link_to cart_path, class: "nav-link", data: { turbo: false} do  %>
+                  <%= icon 'cart' %> Cart
                 <% end %>
               </li>
             </ul>
@@ -135,9 +136,12 @@
 
       <footer class="footer mt-auto py-3 bg-light mt-10">
         <div class="container text-center">
+          <span class="text-muted">
+            <%= link_to "Terms of Service", terms_path, target: :_blank %>
+             |  <%= link_to "Log Out", sign_out_path, data: { turbo: false} %>
+          </span><br>
           <span class="text-muted">The Company™ Portal Presented By The Tin Can Brothers</span><br>
           <span class="text-muted">© 2014-<%= Time.now.strftime("%Y")%> The Tin Can Brothers</span><br>
-          <span class="text-muted"><%= link_to "Terms of Service", terms_path, target: :_blank %></span><br>
 
           <span class="text-muted">Show Code: <%= session[:show_code] %></span>
         </div>

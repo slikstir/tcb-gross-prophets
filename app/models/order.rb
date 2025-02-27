@@ -31,10 +31,12 @@ class Order < ApplicationRecord
 
 
   belongs_to :attendee, optional: true
-  validates :currency, presence: true, inclusion: { in: CURRENCIES }
+  has_many :line_items, dependent: :destroy
 
   before_create :assign_number
   before_save   :assign_attendee
+
+  validates :currency, presence: true, inclusion: { in: CURRENCIES }
 
   state_machine :payment_state, initial: :cart do
     state :cart
@@ -78,6 +80,13 @@ class Order < ApplicationRecord
 
   def canceled?
     payment_state == "canceled"
+  end
+
+  def update_totals
+    self.subtotal = line_items.sum(&:total_price)
+    self.tax_total = subtotal * tax_rate
+    self.total = subtotal + tax_total
+    self.save
   end
 
   private

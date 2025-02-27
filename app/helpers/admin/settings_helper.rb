@@ -21,7 +21,7 @@ module Admin::SettingsHelper
   def present_activity_values(setting, value)
     case setting.value_type
     when "boolean"
-      value == "true" ? "Yes" : "No"
+      value == true ? "Yes" : "No"
     else
       value
     end

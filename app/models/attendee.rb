@@ -29,11 +29,13 @@ class Attendee < ApplicationRecord
 
   default_scope { order(:email) }
 
-  validates :name, :email, presence: true
-  validates :email, uniqueness: true
-
   has_many :payments, dependent: :destroy
   has_many :votes, dependent: :destroy
+  has_many :orders, -> { where(payment_state: "paid") }
+  has_many :carts, -> { where(payment_state: "cart") }, class_name: "Order"
+
+  validates :name, :email, presence: true
+  validates :email, uniqueness: true
 
   LEVELS =
   {

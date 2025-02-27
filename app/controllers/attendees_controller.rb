@@ -13,6 +13,11 @@ class AttendeesController < ApplicationController
 
     session[:show_code] = params[:show_code].downcase
     session[:email] = @attendee.email
+    if @attendee.carts.any? 
+      session[:order_id] = @attendee.carts.last.id
+    else
+      session[:order_id] = nil
+    end
     redirect_to root_path
   end
 

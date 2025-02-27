@@ -9,12 +9,13 @@ class WelcomeController < ApplicationController
 
   def sign_out
     session[:email] = nil
+    session[:order_id] = nil
     redirect_to root_path
   end
 
   def closed
     setting = Setting.find_by(code: "system_live")
-    if setting.present? && setting.value == "true"
+    if setting.present? && setting.value == true
       redirect_to root_path
     end
   end
@@ -35,6 +36,11 @@ class WelcomeController < ApplicationController
 
   def company
     @company = Setting.find_by(code: "company")
+  end
+
+  def cart
+    @cart = Order.find_by(id: session[:order_id])
+    @line_items = @cart.line_items if @cart.present?
   end
 
   private

@@ -31,7 +31,7 @@ module Api
         render json: { success: true, message: "Show has ended" }, status: :ok
 
       elsif params[:start_or_stop].downcase == "status"
-        render json: { success: true, message: "Show status is #{show_setting.value == 'true' ? 'active' : 'inactive' }" }, status: :ok
+        render json: { success: true, message: "Show status is #{show_setting.value == true ? 'active' : 'inactive' }" }, status: :ok
 
       else
         render json: { success: false, message: "Invalid checkpoint action" }, status: :bad_request
@@ -48,7 +48,7 @@ module Api
         chud_checkpoint.update(value: "false")
         render json: { success: true, message: "CHUD Checkpoint has ended" }, status: :ok
       elsif params[:start_or_stop].downcase == "status"
-        render json: { success: true, message: "CHUD Checkpoint is #{chud_checkpoint.value == 'true' ? 'active' : 'inactive' }" }, status: :ok
+        render json: { success: true, message: "CHUD Checkpoint is #{chud_checkpoint.value == true ? 'active' : 'inactive' }" }, status: :ok
       else
         render json: { success: false, message: "Invalid checkpoint action" }, status: :bad_request
       end

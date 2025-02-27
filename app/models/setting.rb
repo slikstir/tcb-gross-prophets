@@ -50,6 +50,19 @@ class Setting < ApplicationRecord
     end
   end
 
+  def value
+    case value_type
+    when "integer"
+      super.to_i
+    when "decimal"
+      super.to_f
+    when "boolean"
+      super == "true"
+    else
+      super
+    end
+  end
+
   private
 
   def broadcast_redirect
@@ -78,7 +91,7 @@ class Setting < ApplicationRecord
       "chud_checkpoint_alert",
       target: "chud_checkpoint_alert",
       partial: "shared/chuds_checkpoint_wrapper",
-      locals: { checkpoint_time: value == "true" }
+      locals: { checkpoint_time: value == true }
     )
   end
 end

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get "closed", to: "welcome#closed", as: :closed
   get "faqs", to: "welcome#faqs", as: :faqs
   get "terms", to: "welcome#terms", as: :terms
+  get 'cart', to: "welcome#cart", as: :cart
 
   devise_for :users, controllers: {
     sessions: "users/sessions"
@@ -25,6 +26,9 @@ Rails.application.routes.draw do
       post :pay
     end
   end
+
+  resources :line_items, only: [ :create, :update, :destroy ]
+
   resources :vouchers, only: [ :index ]
 
   namespace :admin do

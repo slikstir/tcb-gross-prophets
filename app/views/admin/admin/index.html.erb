@@ -8,7 +8,7 @@
   <div class="col d-flex align-items-center">
     <%= bootstrap_form_with model: [:admin, @chud_time_setting], class: "w-100" do |f| %>
       <%= f.text_field :value, 
-                value: (@chud_time_setting.value == 'true' ? "Active" : "Inactive"), 
+                value: (@chud_time_setting.value == true ? "Active" : "Inactive"), 
                 disabled: true, hide_label: true %>
       <% if @chud_checkpoint_time %>
         <%= f.hidden_field :value, value: 'false'%>
@@ -30,9 +30,9 @@
   <div class="col d-flex align-items-center">
     <%= bootstrap_form_with model: [:admin, @open_setting], class: "w-100" do |f| %>
       <%= f.text_field :value, 
-                value: (@open_setting.value == 'true' ? "Open" : "Closed"), 
+                value: (@open_setting.value == true ? "Open" : "Closed"), 
                 disabled: true, hide_label: true %>
-      <% if Setting.find_by(code: "system_live").try(:value) == "true" %>
+      <% if Setting.find_by(code: "system_live").try(:value) == true %>
         <%= f.hidden_field :value, value: 'false'%>
         <%= f.submit "Close for Maintenance", class: "btn btn-warning btn-lg w-100" %>
       <% else %>
