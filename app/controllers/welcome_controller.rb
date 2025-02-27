@@ -21,8 +21,7 @@ class WelcomeController < ApplicationController
   end
 
   def shop
-    # @products = Product.where(availability: "in_show")
-    @products = Product.all
+    @products = Product.where(availability: "in_show")
     @performers = Performer.where(active: true)
   end
 

@@ -61,7 +61,6 @@ Rails.application.routes.draw do
 
   namespace :api do
     get "/", to: "api#index"
-    post "chuds/buy", to: "chuds#buy"
     post "show/:start_or_stop", to: "api#show"
     post "checkpoint/:start_or_stop", to: "api#checkpoint"
     post "show_code/:code", to: "api#show_code"
