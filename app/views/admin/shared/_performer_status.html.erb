@@ -14,7 +14,7 @@
       <td><%= performer.name %></td>
       <td><%= performer.chuds_balance %></td>
       <td><%= performer.performance_points %></td>
-      <td><%= number_to_currency performer.commission_balance, units: "¢" %></td>
+      <td><%= number_to_currency performer.commission_balance, unit: "¢" %></td>
     </tr>
   <% end %>
 </table>

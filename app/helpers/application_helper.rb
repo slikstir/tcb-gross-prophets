@@ -16,7 +16,7 @@ module ApplicationHelper
   end
 
   def homepage_url
-    ["http://", Rails.application.routes.default_url_options[:host], "/login?code=", @show_code.value].join
+    [ "http://", Rails.application.routes.default_url_options[:host], "/login?code=", @show_code.value ].join
   end
 
   def homepage_qr_code
@@ -37,8 +37,10 @@ module ApplicationHelper
     Base64.strict_encode64(png.to_s)
   end
 
-  def currency_icon
-    case @currency.downcase
+  def currency_icon(currency_code = nil)
+    currency_code = currency_code || @currency
+
+    case currency_code.downcase
     when "usd" then "$"   # US Dollar
     when "eur" then "€"   # Euro
     when "gbp" then "£"   # British Pound
@@ -63,5 +65,8 @@ module ApplicationHelper
       currency_code.upcase # Fallback to uppercase currency code
     end
   end
-  
+
+  def admin?
+    request.path.start_with?("/admin") rescue false
+  end
 end

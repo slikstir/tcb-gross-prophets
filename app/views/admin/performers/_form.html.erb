@@ -1,8 +1,8 @@
 <div class="col-12 col-md-6">
   <%= bootstrap_form_with(model: [:admin, @performer], local: true) do |f| %>
     <%= f.text_field :name %>
-    <% if @performer.image.attached? %>
-      <%= image_tag @performer.image, class: "img-fluid", style: "max-height: 250px;" %>
+    <% if @performer.photo.attached? %>
+      <%= image_tag @performer.photo, class: "img-fluid", style: "max-height: 250px;" %>
     <% end %>
     <%= f.file_field :photo %>
     <%= f.number_field :performance_points %>

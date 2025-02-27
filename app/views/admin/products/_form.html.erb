@@ -17,10 +17,13 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-5">
         <%= f.number_field :price, step: 0.01, prepend: currency_icon, min: 0 %>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-2">
+        <%= f.select :taxable, [["Yes", true], ["No", false]] %>
+      </div>
+      <div class="col-sm-5">
         <%= f.number_field :chuds, label: "How many chuds for purchasing?", step: 1, min: 0 %>
       </div>
     </div>

@@ -34,15 +34,18 @@ class LineItem < ApplicationRecord
   belongs_to  :attendee, optional: true
 
   delegate :options, to: :variant
+  delegate :chuds, to: :product
 
   before_save :set_price
   after_save  :destroy, if: -> { quantity <= 0 }
   after_save  :update_order_totals
-  # after_create :update_performer_commissions
-  # after_create_commit :broadcast_notification
 
   def total_price
     unit_price * quantity
+  end
+
+  def unit_price_with_tax
+    unit_price * (1 + order.tax_rate.to_f)
   end
 
   def update_performer_commissions
@@ -68,7 +71,7 @@ class LineItem < ApplicationRecord
   def broadcast_message
     message = ""
     if self.attendee.present?
-      message = "#{self.attendee.name} purchased #{self.product.sku}"
+      message = "#{self.attendee.name} purchased #{self.product.name ``}"
     else
       message = "#{self.product.sku} was purchased"
     end
@@ -91,5 +94,4 @@ class LineItem < ApplicationRecord
   def update_order_totals
     self.order.update_totals
   end
-
 end

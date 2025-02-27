@@ -64,3 +64,4 @@ gem 'ruby-vips', '~> 2.2'
 gem 'ffi'
 
 gem 'state_machines-activerecord'
+gem 'stripe'

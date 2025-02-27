@@ -27,8 +27,8 @@ class Performer < ApplicationRecord
 
   has_many :votes, dependent: :destroy
   has_many :payments, dependent: :destroy
-  has_many :line_items, dependent: :destroy
-  has_many :products, foreign_key: :commissions_performer_id
+  has_many :line_items
+  has_many :products, through: :line_items
 
   has_one_attached :photo
 

@@ -43,7 +43,7 @@
                   <strong><%= option %>:</strong> <%= val %><br>
                 <% end %>
                 <span class="text-muted">
-                  <%= number_to_currency(item.product.price) %><br>
+                  <%= number_to_currency(item.product.price, unit: currency_icon) %><br>
                   <% if item.performer.present? %> 
                     <strong>Commission Earned By:</strong><br><%= item.performer.name %>
                   <% end %>
@@ -64,7 +64,7 @@
 
               <!-- Item Subtotal -->
               <td class="text-end">
-                <%= number_to_currency(item.total_price) %>
+                <%= number_to_currency(item.total_price, unit: currency_icon) %>
               </td>
             </tr>
           <% end %>
@@ -76,11 +76,24 @@
     <div class="d-flex justify-content-end mt-4">
       <div class="text-end">
         <% if @cart.tax_rate > 0.0 %>
-          <h5 class="mb-3 text-muted">Subotal: <%= number_to_currency(@cart.subtotal) %></h5>
-          <h5 class="mb-3 text-muted">Tax: <%= number_to_currency(@cart.tax_total) %></h5>
+          <h5 class="mb-3 text-muted">Subotal: <%= number_to_currency(@cart.subtotal, unit: currency_icon) %></h5>
+          <h5 class="mb-3 text-muted">Tax: <%= number_to_currency(@cart.tax_total, unit: currency_icon) %></h5>
         <% end %>
-        <h4 class="mb-3">Total: <%= number_to_currency(@cart.total) %></h4>
-        <%= link_to "Check Out", "#", class: "btn btn-warning btn-lg" %>
+        <h4 class="mb-3">Total: <%= number_to_currency(@cart.total, unit: currency_icon) %></h4>
+        <%= button_to "Checkout", checkout_path(order_id: @cart.id), method: :post, remote: true, 
+                data: { action: "click->checkout#redirect" }, class: "btn btn-warning btn-lg"  %>
+
+        <%= javascript_tag do %>
+          document.addEventListener("turbo:load", function() {
+            document.addEventListener("ajax:success", function(event) {
+              const [data, status, xhr] = event.detail;
+              if (data.url) {
+                window.location = data.url;
+              }
+            });
+          });
+        <% end %>
+
       </div>
     </div>
 

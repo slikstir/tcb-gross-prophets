@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_27_165552) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_27_205114) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -125,6 +125,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_27_165552) do
     t.datetime "fulfilled_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_payment_id"
     t.index ["attendee_id"], name: "index_orders_on_attendee_id"
   end
 
@@ -160,6 +161,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_27_165552) do
     t.string "option_1"
     t.string "option_2"
     t.string "option_3"
+    t.boolean "taxable", default: true
+    t.boolean "requires_fulfillment", default: true
   end
 
   create_table "sessions", force: :cascade do |t|

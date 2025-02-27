@@ -18,16 +18,19 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  attendee_id       :bigint
+#  stripe_payment_id :string
 #
 # Indexes
 #
 #  index_orders_on_attendee_id  (attendee_id)
 #
 class Order < ApplicationRecord
-  CURRENCIES =  %w[ 
-            usd eur gbp jpy cny rmb aud cad chf hkd sgd 
+  CURRENCIES =  %w[
+            usd eur gbp jpy cny rmb aud cad chf hkd sgd
             nzd inr brl rub zar krw mxn idr try thb
             ]
+
+  default_scope { order(created_at: :desc) }
 
 
   belongs_to :attendee, optional: true
@@ -37,6 +40,7 @@ class Order < ApplicationRecord
   before_save   :assign_attendee
 
   validates :currency, presence: true, inclusion: { in: CURRENCIES }
+  validates :stripe_payment_id, uniqueness: true, allow_nil: true
 
   state_machine :payment_state, initial: :cart do
     state :cart
@@ -47,9 +51,13 @@ class Order < ApplicationRecord
       transition cart: :paid
     end
 
-    event :cancel_payment do 
+    event :cancel_payment do
       transition any => :canceled
     end
+
+    after_transition on: :pay, do: :commission_performers
+    after_transition on: :pay, do: :give_attendee_chuds
+    after_transition on: :pay, do: :broadcast_purchase
   end
 
   state_machine :fulfillment_state, initial: :pending do
@@ -63,10 +71,10 @@ class Order < ApplicationRecord
     end
 
     event :deliver do
-      transition [:pending, :packaged] => :delivered
+      transition [ :pending, :packaged ] => :delivered
     end
 
-    event :cancel_fulfillment do 
+    event :cancel_fulfillment do
       transition any => :canceled
     end
 
@@ -90,6 +98,21 @@ class Order < ApplicationRecord
   end
 
   private
+
+  def commission_performers
+    line_items.each(&:update_performer_commissions)
+  end
+
+  def broadcast_purchase
+    line_items.each(&:broadcast_notification)
+  end
+
+  def give_attendee_chuds
+    return unless attendee.present?
+
+    attendee.chuds_balance += line_items.sum(&:chuds)
+    attendee.save
+  end
 
   def assign_number
     last_order = Order.order(:created_at).last

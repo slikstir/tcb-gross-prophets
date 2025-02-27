@@ -43,7 +43,7 @@
         <ul>
         <% @performer.line_items.each do |line_item| %>
           <li>
-            <%= line_item.remote_order_id %> // <%= line_item.sku %> // <%= line_item.quantity %> @ <%= line_item.unit_price %>
+            <%= line_item.order.number %> // <%= line_item.product.name %> // <%= line_item.quantity %> @ <%= line_item.unit_price %>
           </li>
         <% end %>
         </ul>

@@ -7,7 +7,12 @@ Rails.application.routes.draw do
   get "closed", to: "welcome#closed", as: :closed
   get "faqs", to: "welcome#faqs", as: :faqs
   get "terms", to: "welcome#terms", as: :terms
-  get 'cart', to: "welcome#cart", as: :cart
+  get "cart", to: "welcome#cart", as: :cart
+
+  post "/checkout", to: "checkout#create"
+  get "/checkout/success", to: "checkout#success"
+  get "/checkout/cancel", to: "checkout#cancel"
+
 
   devise_for :users, controllers: {
     sessions: "users/sessions"
@@ -17,6 +22,8 @@ Rails.application.routes.draw do
   get "sign_out", to: "welcome#sign_out", as: :sign_out
 
   resources :attendees
+  resources :orders, only: :show
+
   resources :performers, only: :index do
     collection do
       get :status
@@ -33,6 +40,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :orders
+    resources :line_items, except: [ :index ]
 
     resources :activities, only: [ :index ] do
       collection do
@@ -57,6 +65,7 @@ Rails.application.routes.draw do
     post "show/:start_or_stop", to: "api#show"
     post "checkpoint/:start_or_stop", to: "api#checkpoint"
     post "show_code/:code", to: "api#show_code"
+    post "/webhooks/stripe", to: "webhooks#stripe"
 
     resources :performers, only: [ :index, :show ] do
       member do

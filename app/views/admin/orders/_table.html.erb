@@ -35,7 +35,7 @@
           </span>
         </td>
         <td>TODO: Line Items</td>
-        <td>Total</td>
+        <td><%= number_to_currency order.total, unit: currency_icon(order.currency) %></td>
         <td>
           <%= link_to admin_order_path(order), class: "btn btn-sm btn-success" do %>
             <%= icon 'folder-open', class: 'icon-text-white' %>
