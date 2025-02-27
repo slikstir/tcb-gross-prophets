@@ -16,21 +16,21 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #
-class Product < ApplicationRecord 
+class Product < ApplicationRecord
   AVAILABILITY_OPTIONS = %w[ in_show merch_table ]
 
   has_one_attached :image
   has_rich_text :description
-  
-  has_one :parent, 
-      -> { where(parent: true) }, 
-      class_name: "Variant", 
+
+  has_one :parent,
+      -> { where(parent: true) },
+      class_name: "Variant",
       foreign_key: :product_id,
       dependent: :destroy
 
-  has_many :children, 
-      -> { where.not(parent: true ) }, 
-      class_name: "Variant", 
+  has_many :children,
+      -> { where.not(parent: true) },
+      class_name: "Variant",
       foreign_key: :product_id,
       dependent: :destroy
 
@@ -38,14 +38,16 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
 
   delegate :sku, :stock_level, to: :parent
-  
-  after_initialize :build_parent, unless: ->(product) { product.parent.present? }
+
+  after_initialize :build_parent
 
   accepts_nested_attributes_for :parent
-  accepts_nested_attributes_for :children, 
+  accepts_nested_attributes_for :children,
     reject_if: :all_blank, allow_destroy: true
 
   def build_parent(attributes = {})
+    return if parent.present?
+
     super(attributes.merge(parent: true))
   end
 

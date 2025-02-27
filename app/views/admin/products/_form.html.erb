@@ -2,10 +2,14 @@
 
 <div class="">
   <%= bootstrap_form_with(model: [:admin, @product], local: true, data: {turbo: false}) do |f| %>
-    <% if @product.image.attached? %>
-      <%= image_tag @product.image, class: "img-fluid", style: "max-height: 250px;" %>
+    <% if @product.persisted? %>
+      <% if @product.image.attached? %>
+        <%= image_tag @product.image, class: "img-fluid", style: "max-height: 250px;" %>
+      <% end %>
+      <%= f.file_field :image %>
+    <% else %>
+      <%= f.file_field :image, disabled: true, help: "You can add images after creating the product" %>
     <% end %>
-    <%= f.file_field :image %>
     <div class="row">
       <div class="col-sm-8">
         <%= f.text_field :name %>
@@ -30,10 +34,13 @@
 
     <%= f.select :availability, Product::AVAILABILITY_OPTIONS.map{|x| [x.humanize, x] } %>
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <%= f.select :track_inventory, [["No", false], ["Yes", true]] %>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-4">
+        <%= f.select :requires_fulfillment, [["Yes", true], ["No", false]] %>
+      </div>
+      <div class="col-sm-4">
         <%= f.fields_for :parent do |ff| %>
           <%= ff.number_field :stock_level, step: 1, min: 0 %>
         <% end %>
@@ -66,8 +73,11 @@
       </div>
     <% end %>
     
-    
-    <%= f.rich_text_area :description %>
+    <% if @product.persisted? %>
+      <%= f.rich_text_area :description, style: "min-height: 200px" %>
+    <% else %>
+      <%= f.rich_text_area :description, disabled: true, help: "You can add a description after creating the product" %>
+    <% end %>
     
     
 

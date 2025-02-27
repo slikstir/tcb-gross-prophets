@@ -8,6 +8,7 @@ module Admin
     end
 
     def show
+      @performers = Performer.all
     end
 
     def new
@@ -51,7 +52,7 @@ module Admin
 
       def product_params
         params.require(:product).permit(
-          :name, :price, :description, :taxable,
+          :name, :price, :description, :taxable, :requires_fulfillment,
           :image, :availability, :track_inventory, :stock_level,
           :sku, :chuds, :option_1, :option_2, :option_3,
           parent_attributes: [ :id, :sku, :option_1, :option_2, :option_3, :_destroy, :parent, :stock_level ],

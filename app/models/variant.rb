@@ -19,16 +19,18 @@
 #  index_variants_on_product_id  (product_id)
 #
 class Variant < ApplicationRecord
-  belongs_to :product
-  
+  belongs_to :product,
+      inverse_of: :parent,
+      optional: true
+
   validates :sku, presence: true
 
   delegate :name, :price, to: :product
 
   def options
-    { 
-      product.option_1 => option_1, 
-        product.option_2 => option_2, 
+    {
+      product.option_1 => option_1,
+        product.option_2 => option_2,
         product.option_3 => option_3
     }.compact.reject { |k, v| v.blank? || k.blank? }
   end

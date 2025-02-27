@@ -2,7 +2,9 @@
 </h1>
 
 <div class="alert alert-secondary">
-  <%= render 'shared/product', product: @product %>
+  <%= bootstrap_form_with model: LineItem.new do |f| %>
+    <%= render 'shared/product', product: @product, f: f %>
+  <% end %>
 </div>
 
 <h3>Additional Product Details</h3>
