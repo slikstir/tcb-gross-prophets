@@ -1,4 +1,4 @@
-<%= bootstrap_form_with model: Attendee.new, data: { turbo: "false" } do |f| %>
+<%= bootstrap_form_with model: Attendee.new, data: { turbo: "true" } do |f| %>
     <%= f.text_field :name, required: true, 
       help: 'What would you like to be referred to as.' %>
     <%= f.email_field :email, required: true, 

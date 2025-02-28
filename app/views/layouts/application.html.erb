@@ -157,10 +157,13 @@
         </div>
 
         <script>
-          document.addEventListener("DOMContentLoaded", function () {
+          function showLoggedInModal() {
             var loggedInModal = new bootstrap.Modal(document.getElementById("loggedInModal"));
             loggedInModal.show();
-          });
+          }
+
+          document.addEventListener("DOMContentLoaded", showLoggedInModal);
+          document.addEventListener("turbo:load", showLoggedInModal);
         </script>
       <% end %>
 
