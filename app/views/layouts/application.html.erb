@@ -140,21 +140,32 @@
       </div>
 
 
-      <!-- 🚀 Login Modal -->
-      <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="loginModalLabel">Enter Your Details</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
+      <!-- 🚀 Logged In Modal -->
+        <% if @show_logged_in_modal %>
+        <div class="modal fade" id="loggedInModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body text-center bg-success text-white position-relative">
+                        <!-- Close button positioned at the top-right -->
+                        <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                        
+                        <h3>You're ready for the show!</h3>
+                        <%= icon 'check-square', class: 'icon-text-white', width: 150, height: 150 %>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                  <div class="modal-body">
-                      <%= render 'attendees/form' %>
-                  </div>
-              </div>
-          </div>
-      </div>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            var loggedInModal = new bootstrap.Modal(document.getElementById("loggedInModal"));
+            loggedInModal.show();
+          });
+        </script>
+      <% end %>
+
+
+
     </main>
        <!-- footer --> 
       <footer class="footer mt-auto py-3 bg-light mt-10">

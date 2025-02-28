@@ -84,8 +84,10 @@ class Order < ApplicationRecord
   end
 
   def cancel
-    self.cancel_payment
-    self.cancel_fulfillment
+    if cancel_stripe_payment == true
+      self.cancel_payment
+      self.cancel_fulfillment
+    end
   end
 
   def canceled?
@@ -93,7 +95,7 @@ class Order < ApplicationRecord
   end
 
   def update_totals
-    self.chuds = line_items.sum{|x| x.chuds.to_i }
+    self.chuds = line_items.sum { |x| x.chuds.to_i }
     self.subtotal = line_items.sum(&:total_price)
     self.tax_total = subtotal * tax_rate
     self.total = subtotal + tax_total
@@ -101,7 +103,7 @@ class Order < ApplicationRecord
   end
 
   def requires_fulfillment?
-    line_items.map(&:requires_fulfillment?).any?{|x| x == true }
+    line_items.map(&:requires_fulfillment?).any? { |x| x == true }
   end
 
   private
@@ -151,5 +153,25 @@ class Order < ApplicationRecord
     return if attendee.present?
 
     self.attendee = Attendee.find_by_normalized_email(email)
+  end
+
+  def cancel_stripe_payment
+    payment_intent = Stripe::PaymentIntent.retrieve(stripe_payment_id)
+
+    case payment_intent.status
+    when "requires_capture"
+      intent = Stripe::PaymentIntent.cancel(stripe_payment_id)
+      intent.status == "canceled"
+    when "succeeded", "processing"
+      refund = Stripe::Refund.create({
+        payment_intent: stripe_payment_id
+      })
+      refund.status == "succeeded"
+    else
+      Rails.logger.info "PaymentIntent status is #{payment_intent.status}, cannot cancel or refund."
+      nil
+    end
+  rescue Stripe::StripeError => e
+    errors.add(:base, e.message)
   end
 end

@@ -3,7 +3,7 @@
   <div class="row justify-content-center">
     <% @products.each do |product| %>
       <div class="col-lg-6 d-flex align-items-stretch justify-content-center">
-        <div class="alert alert-secondary w-100 d-flex flex-column">
+        <div class="alert bg-light border-dark w-100 d-flex flex-column">
           <%= bootstrap_form_with model: LineItem.new do |f| %>
             <%= render 'shared/product', product: product, f: f %>
           <% end %>

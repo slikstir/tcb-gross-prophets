@@ -1,6 +1,6 @@
 class WelcomeController < ApplicationController
   layout :set_layout
-  skip_before_action :check_if_logged_in, only: [ :login, :sign_out, :closed, :terms ]
+  skip_before_action :check_if_logged_in, only: [ :login, :sign_out, :closed, :terms, :faqs ]
 
   def index
     @homepage_image = Setting.find_by(code: "homepage_image")

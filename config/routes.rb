@@ -64,6 +64,8 @@ Rails.application.routes.draw do
     post "show_code/:code", to: "api#show_code"
     post "/webhooks/stripe", to: "webhooks#stripe"
 
+    resources :settings, only: [ :show, :update ]
+
     resources :performers, only: [ :index, :show ] do
       member do
         post "reset_chuds_balance/:amount", action: :reset_chuds_balance

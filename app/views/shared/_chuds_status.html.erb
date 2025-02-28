@@ -1,24 +1,26 @@
-<div class="container mt-4">
+
+<%= turbo_stream_from "#{dom_id(attendee)}_chuds_status" %>
+<div id="<%= dom_id(attendee) %>_chuds_status" class="container mt-4">
   <div class="card bg-light p-4">
-  <h2 class="text-center mb-3">Welcome Back, User</h2>
+  <h2 class="text-center mb-3">Welcome Back, <%= attendee.name %></h2>
 
   <div class="row text-center">
     <div class="col-md-4">
       <div class="p-3 border rounded bg-light">
         <p class="text-muted mb-1">Level 1</p>
-        <h3>BRAND WARRIOR</h3>
+        <h3><%= attendee.level_name %></h3>
       </div>
     </div>
     <div class="col-md-4">
       <div class="p-3 border rounded bg-light">
         <p class="text-muted mb-1">Performance Points</p>
-        <h3>24</h3>
+        <h3><%= attendee.performance_points %></h3>
       </div>
     </div>
     <div class="col-md-4">
       <div class="p-3 border rounded bg-light">
         <p class="text-muted mb-1">Chud Balance</p>
-        <h3>¢20</h3>
+        <h3 id="chuds-balance"><%= attendee.chuds_balance %></h3>
       </div>
     </div>
   </div>
@@ -29,19 +31,5 @@
     </div>
     <p class="text-center mt-2 fw-bold">50/100</p>
   </div>
-  </div>
-</div>
-
-
-<%= turbo_stream_from "#{dom_id(attendee)}_chuds_status" %>
-<div id="<%= dom_id(attendee) %>_chuds_status">
-  <div class="d-flex justify-content-center mb-5 mt-5">
-    <div class="text-center alert alert-primary xs-col-12 col-md-6">
-      <h3>Welcome to the program, <%= attendee.name %></h3>
-      <p><i>You've got <span id="chuds-balance"><%= attendee.chuds_balance %></span> CHUDS to spend. <br>
-        Congratulations on your <%= attendee.performance_points %> 
-        Performance Points! You are <%= a_or_an(attendee.level_name) %>
-        <%= attendee.level_name %></i></p>
-    </div>
   </div>
 </div>
