@@ -25,7 +25,6 @@ class Performer < ApplicationRecord
             performance_points: proc { |controller, model_instance| (model_instance.saved_change_to_performance_points? ? model_instance.saved_change_to_performance_points : nil) }
           }
 
-  has_many :votes, dependent: :destroy
   has_many :payments, dependent: :destroy
   has_many :line_items
   has_many :products, through: :line_items

@@ -26,9 +26,7 @@ Rails.application.routes.draw do
 
   resources :performers, only: :index do
     collection do
-      get :status
-      get :vote, as: :vote
-      post :vote
+
       get :pay, as: :pay
       post :pay
     end
