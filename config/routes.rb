@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   mount ActionCable.server => "/cable"
 
   root "welcome#index"
+  get "customizations.css", to: "customizations#styles", as: :custom_styles, defaults: { format: :css }
+  
   get "login", to: "welcome#login", as: :login
   get "company", to: "welcome#company", as: :company
   get "closed", to: "welcome#closed", as: :closed

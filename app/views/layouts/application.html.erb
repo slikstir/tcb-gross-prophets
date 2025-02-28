@@ -18,11 +18,12 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag 'bootstrap', 'application',  "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag custom_styles_path + "?v=#{Setting.find_by(name: 'custom_css')&.updated_at.to_i}" %>
     <%= javascript_importmap_tags %>
   </head>
   <%= render 'shared/analytics_code' %>
 
-  <body class="d-flex flex-column min-vh-100">
+  <body class="d-flex flex-column min-vh-100" id="<%= request.path == "/" ? 'welcome-index' : request.path.delete_prefix("/").gsub("/", "-")%>">
 
     <%= turbo_stream_from 'page_reload' %>
     <div id="page_reload"></div>

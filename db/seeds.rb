@@ -143,3 +143,11 @@ Setting.create(
   value_type: "html",
   value: "",
 ) unless Setting.find_by(code: "login_info").present?
+
+Setting.create(
+  name: "Custom CSS Page",
+  code: "custom_css",
+  description: "A page for custom CSS",
+  value_type: "text",
+  value: "",
+) unless Setting.find_by(code: "custom_css").present?
