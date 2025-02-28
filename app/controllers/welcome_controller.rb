@@ -42,6 +42,10 @@ class WelcomeController < ApplicationController
     @line_items = @cart.line_items if @cart.present?
   end
 
+  def login
+    @login_help = Setting.find_by(code: "login_info").try(:html)
+  end
+
   private
 
   def set_layout

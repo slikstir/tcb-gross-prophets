@@ -19,7 +19,7 @@ class AttendeesController < ApplicationController
       session[:order_id] = nil
     end
 
-    redirect_to root_path
+    redirect_to root_path(new_login: true)
   end
 
   def edit

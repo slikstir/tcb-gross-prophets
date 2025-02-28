@@ -134,3 +134,12 @@ Setting.create(
   value_type: "decimal",
   value: "",
 ) unless Setting.find_by(code: "tax_rate").present?
+
+
+Setting.create(
+  name: "Login Page Info",
+  code: "login_info",
+  description: "The Login Page Info beneath the Login Button",
+  value_type: "html",
+  value: "",
+) unless Setting.find_by(code: "login_info").present?

@@ -36,18 +36,17 @@ class Attendee < ApplicationRecord
   validates :name, :email, presence: true
   validates :email, uniqueness: true
 
-  LEVELS =
-  {
-    12 => { index: 1, name: "Brand Warrior" },
-    24 => { index: 2, name: "Product Pioneer" },
-    36 => { index: 3, name: "Senior Product Pioneer" },
-    48 => { index: 4, name: "Consultant" },
-    60 => { index: 5, name: "Specialist Consultant" },
-    72 => { index: 6, name: "Executive Consultant" },
-    84 => { index: 7, name: "Specialist" },
-    96 => { index: 8, name: "Consultant Specialist" },
-    108 => { index: 9, name: "Executive Specialist" },
-    120 => { index: 10, name: "Model Executive Specialist" }
+  LEVELS = {
+    10 => { index: 1, name: "Brand Warrior" },
+    30 => { index: 2, name: "Product Pioneer" },
+    60 => { index: 3, name: "Senior Product Pioneer" },
+    100 => { index: 4, name: "Consultant" },
+    150 => { index: 5, name: "Specialist Consultant" },
+    250 => { index: 6, name: "Executive Consultant" },
+    350 => { index: 7, name: "Specialist" },
+    500 => { index: 8, name: "Consultant Specialist" },
+    750 => { index: 9, name: "Executive Specialist" },
+    2000 => { index: 10, name: "Model Executive Specialist" }
   }
 
   def self.find_by_normalized_email(email)
@@ -100,6 +99,25 @@ class Attendee < ApplicationRecord
   def level_index
     LEVELS[LEVELS.keys.select { |l| l <= self.performance_points }.max][:index] rescue 1
   end
+
+  def level_points
+    current_threshold = LEVELS.keys.select { |l| l <= performance_points }.max || 0
+    next_threshold = LEVELS.keys.select { |l| l > performance_points }.min || 10
+  
+    # Ensure the lowest level (0-9 points) starts at 0 correctly
+    current_threshold = 0 if performance_points < LEVELS.keys.first
+  
+    points_at_level = performance_points - current_threshold
+    points_needed = next_threshold - current_threshold
+  
+    { points_at_level: points_at_level, next_level_points: points_needed }
+  end
+  
+
+  def level_percentage
+    (level_points[:points_at_level] * 1.0) / (level_points[:next_level_points] * 1.0) * 100.0
+  end
+  
 
   def self.create_and_broadcast_activity(action, opts)
     activity = create_activity(action, opts)

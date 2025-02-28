@@ -1,6 +1,6 @@
 <%= render "shared/chuds_status", attendee: @attendee %>
 
-<div>
+<div class="text-center">
   <% if @homepage_image.image? && @homepage_image.image.attached? %>
      <%= image_tag @homepage_image.image, class: "img-fluid" %>
   <% else %>

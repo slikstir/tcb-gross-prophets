@@ -118,9 +118,9 @@
         </div>
 
       <% else %>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center mt-5 mb-5">
           <main class="w-50 text-center">
-            <%= image_tag 'TheCo.png', class: 'img-fluid w-50' %>
+            <%= image_tag 'TheCompany-FullLogo.png', class: 'img-fluid w-50' %>
           </div>
         </div>
       <% end %>
@@ -135,13 +135,13 @@
         <% end %>
       </div>
 
-      <div class="text-center">
+      <div>
         <%= yield %> 
       </div>
 
 
       <!-- 🚀 Logged In Modal -->
-        <% if @show_logged_in_modal %>
+        <% if params[:new_login] %>
         <div class="modal fade" id="loggedInModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
