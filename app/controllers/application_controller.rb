@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :cart_item_count
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  # allow_browser versions: :modern
 
   def check_chud_checkpoint_time
     @chud_checkpoint_time = Setting.find_by(code: "chud_checkpoint_time").try(:value) == true
