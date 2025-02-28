@@ -36,57 +36,78 @@
 
     <div class="container-fluid" style="padding: 0;">
     <% if @attendee %>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-          <%= link_to root_path,  class: 'navbar-brand' do  %>
-            <%= image_tag 'TheCompany-Wordmark.png', style: 'max-height: 50px;' %>
-          <% end %>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <!-- start of navbar -->
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <%= link_to root_path, class: 'navbar-brand' do  %>
+          <%= image_tag 'TheCompany-Wordmark.png', style: 'max-height: 50px;' %>
+        <% end %>
+
+        <div class="d-flex">
+          <!-- Cart Icon in Navbar Toggler (Visible in Mobile) -->
+          <button class="navbar-toggler position-relative me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse text-center" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item">
-                <%= link_to root_path, class: "nav-link" do %>
-                  <% icon 'home' %> Home
-                <% end %>
-              </li>
-              <li class="nav-item">
-                <%= link_to shop_path, class: "nav-link" do %>
-                  <% icon 'cart' %> Shop
-                <% end %>
-              </li>
-              <li class="nav-item">
-                <%= link_to company_path, class: "nav-link" do %>
-                  <% icon 'pyramid' %> The Company 
-                <% end %>
-              </li>
-              <li class="nav-item">
-                <%= link_to vouchers_path, class: "nav-link" do %>
-                  <% icon 'wallet' %> Redeem Voucher
-                <% end %>
-              </li>
-              <li class="nav-item">
-                <%= link_to "#", class: "nav-link" do %>
-                  <% icon 'book' %> Show Program
-                <% end %>
-              </li>
-              <li class="nav-item">
-                <%= link_to faqs_path, class: "nav-link" do %>
-                  <% icon 'book' %> FAQs
-                <% end %>
-              </li>
-            </ul>
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <%= link_to cart_path, class: "nav-link", data: { turbo: false} do  %>
-                  <%= icon 'cart' %> Cart
-                <% end %>
-              </li>
-            </ul>
-          </div>
+          <%= link_to cart_path, class: "nav-link position-relative d-lg-none", data: { turbo: false } do %>
+            <%= icon 'cart' %>
+            <% if @cart_item_count.to_i > 0 %>
+              <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger" id="cart-count-mobile">
+                <%= @cart_item_count || 0 %>
+              </span>
+            <% end %>
+          <% end %>
         </div>
-      </nav>
+
+        <div class="collapse navbar-collapse text-center" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <%= link_to root_path, class: "nav-link" do %>
+                <% icon 'home' %> Home
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to shop_path, class: "nav-link" do %>
+                <% icon 'cart' %> Shop
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to company_path, class: "nav-link" do %>
+                <% icon 'pyramid' %> The Company 
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to vouchers_path, class: "nav-link" do %>
+                <% icon 'wallet' %> Redeem Voucher
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "#", class: "nav-link" do %>
+                <% icon 'book' %> Show Program
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to faqs_path, class: "nav-link" do %>
+                <% icon 'book' %> FAQs
+              <% end %>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <%= link_to cart_path, class: "nav-link position-relative d-none d-lg-block", data: { turbo: false } do %>
+                <%= icon 'cart' %>
+                <% if @cart_item_count.to_i > 0 %>
+                  <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger" id="cart-count-mobile">
+                    <%= @cart_item_count || 0 %>
+                  </span>
+                <% end %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+      <!-- end of navbar -->
 
       <%= turbo_stream_from 'chud_checkpoint_alert' %>
       <div id="chud_checkpoint_alert">

@@ -85,6 +85,10 @@ class LineItem < ApplicationRecord
     end
   end
 
+  def requires_fulfillment?
+    self.product.requires_fulfillment?
+  end
+
   private
 
   def set_price

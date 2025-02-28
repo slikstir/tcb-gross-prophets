@@ -48,7 +48,11 @@
               </div>
 
               <!-- Add to Cart Button -->
-              <%= f.submit "Add to Cart", class: "btn btn-warning w-100 btn-lg" %>
+              <% if admin? %>
+                <%= link_to "Add to Cart", "#", class: "btn btn-warning w-100 btn-lg" %>
+              <% else %>
+                <%= f.submit "Add to Cart", class: "btn btn-warning w-100 btn-lg" %>
+              <% end %>
             <% end %>
 
             <!-- Product Description -->

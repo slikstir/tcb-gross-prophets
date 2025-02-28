@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :check_if_logged_in
   before_action :set_currency
   before_action :set_tax_rate
+  before_action :cart_item_count
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -45,6 +46,10 @@ class ApplicationController < ActionController::Base
   
   def set_tax_rate
     @tax_rate = Setting.find_by(code: "tax_rate").try(:value).to_f
+  end
+  
+  def cart_item_count
+    @cart_item_count = Order.find_by(id: session[:order_id]).try(:line_items).sum(:quantity) rescue 0
   end
   
 end

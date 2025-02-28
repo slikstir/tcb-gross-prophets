@@ -21,6 +21,7 @@
   <div class="row">
     <!-- Left Column (80%) -->
     <div class="col-lg-8">
+
       <!-- Line Items -->
       <div class="card mb-3">
         <div class="card-header">
@@ -117,6 +118,18 @@
 
     <!-- Right Column (20%) -->
     <div class="col-lg-4">
+      <!-- CHUDS Details -->
+      <% if order.chuds.to_i > 0 %>
+        <div class="card mb-3 border-success">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">CHUDs Bonus!</h5>
+          </div>
+          <div class="card-body text-success">
+            This order earned you <strong><%= order.chuds %> CHUDs!</strong>
+          </div>
+        </div>
+      <% end %>
+
       <!-- Customer Details -->
       <div class="card">
         <div class="card-header">

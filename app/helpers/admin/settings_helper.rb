@@ -14,7 +14,7 @@ module Admin::SettingsHelper
     when "boolean"
       form.select :value, [ [ "Yes", "true" ], [ "No", "false" ] ], { hide_label: true }, class: "form-control"
     when 'html'
-      form.rich_text_area :html
+      form.rich_text_area :html, style: "min-height: 500px"
     end
   end
 

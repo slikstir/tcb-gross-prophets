@@ -58,6 +58,8 @@ class Order < ApplicationRecord
     after_transition on: :pay, do: :commission_performers
     after_transition on: :pay, do: :give_attendee_chuds
     after_transition on: :pay, do: :broadcast_purchase
+    after_transition on: :pay, do: :deduct_stock
+    after_transition on: :pay, do: :automatic_fulfillment
   end
 
   state_machine :fulfillment_state, initial: :pending do
@@ -91,10 +93,15 @@ class Order < ApplicationRecord
   end
 
   def update_totals
+    self.chuds = line_items.sum{|x| x.chuds.to_i }
     self.subtotal = line_items.sum(&:total_price)
     self.tax_total = subtotal * tax_rate
     self.total = subtotal + tax_total
     self.save
+  end
+
+  def requires_fulfillment?
+    line_items.map(&:requires_fulfillment?).any?{|x| x == true }
   end
 
   private
@@ -107,20 +114,35 @@ class Order < ApplicationRecord
     line_items.each(&:broadcast_notification)
   end
 
+  def deduct_stock
+    line_items.each do |item|
+      next unless item.variant.product.track_inventory?
+
+      item.variant.update(stock_level: item.variant.stock_level - item.quantity)
+    end
+  end
+
+  def automatic_fulfillment
+    return if requires_fulfillment?
+
+    self.deliver
+  end
+
+
   def give_attendee_chuds
     return unless attendee.present?
 
-    attendee.chuds_balance += line_items.sum(&:chuds)
+    attendee.chuds_balance += self.chuds
     attendee.save
   end
 
   def assign_number
-    last_order = Order.order(:created_at).last
+    last_order = Order.order(number: :desc).first
     next_number = last_order&.number&.scan(/\d+/)&.first.to_i + 1
     self.number = "GP##{next_number.to_s.rjust(5, '0')}"
   end
 
-  def set_fuilfilled_at
+  def set_fulfilled_at
     update_column(:fulfilled_at, Time.current)
   end
 

@@ -15,7 +15,7 @@ class CreateSettings < ActiveRecord::Migration[8.0]
       description: 'Is the system live?',
       value_type: 'boolean',
       value: 'true'
-    )
+    ) unless Setting.find_by(code: 'system_live').present?
 
     Setting.create(
       name: 'Chud Checkpoint Time?',
@@ -23,7 +23,7 @@ class CreateSettings < ActiveRecord::Migration[8.0]
       description: 'Can attendees spend their chuds on peformers?',
       value_type: 'boolean',
       value: 'false'
-    )
+    ) unless Setting.find_by(code: 'chud_checkpoint_time').present?
 
     Setting.create(
       name: 'Attendee Starting Chuds',
@@ -31,7 +31,7 @@ class CreateSettings < ActiveRecord::Migration[8.0]
       description: 'How many chuds do attendees start with?',
       value_type: 'integer',
       value: '0'
-    )
+    ) unless Setting.find_by(code: 'attendee_starting_chuds').present?
 
     Setting.create(
       name: 'Performer Starting Chuds',
@@ -39,7 +39,7 @@ class CreateSettings < ActiveRecord::Migration[8.0]
       description: 'How many chuds do performers start with?',
       value_type: 'integer',
       value: '0'
-    )
+    ) unless Setting.find_by(code: 'performer_starting_chuds').present?
 
     Setting.create(
       name: 'Performer Starting Performance Points',
@@ -47,6 +47,6 @@ class CreateSettings < ActiveRecord::Migration[8.0]
       description: 'How many performance points do performers start with?',
       value_type: 'integer',
       value: '0'
-    )
+    ) unless Setting.find_by(code: 'performer_starting_performance_points').present?
   end
 end
