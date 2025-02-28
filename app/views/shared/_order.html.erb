@@ -99,6 +99,12 @@
                 <%= order.payment_state.capitalize %>
               </span>
             </li>
+            <% if admin? %>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Stripe Payment:</span>
+                <%= link_to order.stripe_payment_id, "https://dashboard.stripe.com/payments/#{order.stripe_payment_id}", target: :_blank %>
+              </li>
+            <% end %>
             <li class="list-group-item d-flex justify-content-between">
               <span>Subtotal:</span>
               <strong><%= number_to_currency(order.subtotal, unit: currency_icon(order.currency)) %></strong>

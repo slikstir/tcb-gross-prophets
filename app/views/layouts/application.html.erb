@@ -22,7 +22,7 @@
   </head>
   <%= render 'shared/analytics_code' %>
 
-  <body>
+  <body class="d-flex flex-column min-vh-100">
 
     <%= turbo_stream_from 'page_reload' %>
     <div id="page_reload"></div>
@@ -34,127 +34,128 @@
     <%= render "shared/notifications" %>
     
 
-    <div class="container-fluid" style="padding: 0;">
-    <% if @attendee %>
-      <!-- start of navbar -->
-     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <%= link_to root_path, class: 'navbar-brand' do  %>
-          <%= image_tag 'TheCompany-Wordmark.png', style: 'max-height: 50px;' %>
-        <% end %>
+  <main class="flex-grow-1 d-flex flex-column">
+      <% if @attendee %>
+        <!-- start of navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <%= link_to root_path, class: 'navbar-brand' do  %>
+            <%= image_tag 'TheCompany-Wordmark.png', style: 'max-height: 50px;' %>
+          <% end %>
 
-        <div class="d-flex">
-          <!-- Cart Icon in Navbar Toggler (Visible in Mobile) -->
-          <button class="navbar-toggler position-relative me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <%= link_to cart_path, class: "nav-link position-relative d-lg-none", data: { turbo: false } do %>
-            <%= icon 'cart' %>
-            <% if @cart_item_count.to_i > 0 %>
-              <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger" id="cart-count-mobile">
-                <%= @cart_item_count || 0 %>
-              </span>
+          <div class="d-flex">
+            <!-- Cart Icon in Navbar Toggler (Visible in Mobile) -->
+            <button class="navbar-toggler position-relative me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <%= link_to cart_path, class: "nav-link position-relative d-lg-none", data: { turbo: false } do %>
+              <%= icon 'cart' %>
+              <% if @cart_item_count.to_i > 0 %>
+                <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger" id="cart-count-mobile">
+                  <%= @cart_item_count || 0 %>
+                </span>
+              <% end %>
             <% end %>
-          <% end %>
-        </div>
+          </div>
 
-        <div class="collapse navbar-collapse text-center" id="navbarNav">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <%= link_to root_path, class: "nav-link" do %>
-                <% icon 'home' %> Home
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= link_to shop_path, class: "nav-link" do %>
-                <% icon 'cart' %> Shop
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= link_to company_path, class: "nav-link" do %>
-                <% icon 'pyramid' %> The Company 
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= link_to vouchers_path, class: "nav-link" do %>
-                <% icon 'wallet' %> Redeem Voucher
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "#", class: "nav-link" do %>
-                <% icon 'book' %> Show Program
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= link_to faqs_path, class: "nav-link" do %>
-                <% icon 'book' %> FAQs
-              <% end %>
-            </li>
-          </ul>
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <%= link_to cart_path, class: "nav-link position-relative d-none d-lg-block", data: { turbo: false } do %>
-                <%= icon 'cart' %>
-                <% if @cart_item_count.to_i > 0 %>
-                  <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger" id="cart-count-mobile">
-                    <%= @cart_item_count || 0 %>
-                  </span>
+          <div class="collapse navbar-collapse text-center" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <%= link_to root_path, class: "nav-link" do %>
+                  <% icon 'home' %> Home
                 <% end %>
-              <% end %>
-            </li>
-          </ul>
+              </li>
+              <li class="nav-item">
+                <%= link_to shop_path, class: "nav-link" do %>
+                  <% icon 'cart' %> Shop
+                <% end %>
+              </li>
+              <li class="nav-item">
+                <%= link_to company_path, class: "nav-link" do %>
+                  <% icon 'pyramid' %> The Company 
+                <% end %>
+              </li>
+              <li class="nav-item">
+                <%= link_to vouchers_path, class: "nav-link" do %>
+                  <% icon 'wallet' %> Redeem Voucher
+                <% end %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "#", class: "nav-link" do %>
+                  <% icon 'book' %> Show Program
+                <% end %>
+              </li>
+              <li class="nav-item">
+                <%= link_to faqs_path, class: "nav-link" do %>
+                  <% icon 'book' %> FAQs
+                <% end %>
+              </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <%= link_to cart_path, class: "nav-link position-relative d-none d-lg-block", data: { turbo: false } do %>
+                  <%= icon 'cart' %>
+                  <% if @cart_item_count.to_i > 0 %>
+                    <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger" id="cart-count-mobile">
+                      <%= @cart_item_count || 0 %>
+                    </span>
+                  <% end %>
+                <% end %>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
 
-      <!-- end of navbar -->
+        <!-- end of navbar -->
 
-      <%= turbo_stream_from 'chud_checkpoint_alert' %>
-      <div id="chud_checkpoint_alert">
-          <% if @chud_checkpoint_time %>
-            <%= render 'shared/chuds_checkpoint', checkpoint_time: @chud_checkpoint_time %>
-          <% end %>
-      </div>
-
-    <% else %>
-      <div class="d-flex justify-content-center">
-        <div class="w-50 text-center">
-          <%= image_tag 'TheCo.png', class: 'img-fluid w-50' %>
+        <%= turbo_stream_from 'chud_checkpoint_alert' %>
+        <div id="chud_checkpoint_alert">
+            <% if @chud_checkpoint_time %>
+              <%= render 'shared/chuds_checkpoint', checkpoint_time: @chud_checkpoint_time %>
+            <% end %>
         </div>
-      </div>
-    <% end %>
 
-
-    <div class="d-flex justify-content-center">
-    <% flash.each do |key, value| %>
-        <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show xs-col-12 col-md-6" role="alert">
-          <%= value %>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <% else %>
+        <div class="d-flex justify-content-center">
+          <main class="w-50 text-center">
+            <%= image_tag 'TheCo.png', class: 'img-fluid w-50' %>
+          </div>
         </div>
       <% end %>
-    </div>
-
-    <div class="text-center">
-      <%= yield %> 
-    </div>
 
 
-    <!-- 🚀 Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Enter Your Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+      <div class="d-flex justify-content-center">
+      <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show xs-col-12 col-md-6" role="alert">
+            <%= value %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% end %>
+      </div>
 
-                <div class="modal-body">
-                    <%= render 'attendees/form' %>
-                </div>
-            </div>
-        </div>
-    </div>
+      <div class="text-center">
+        <%= yield %> 
+      </div>
 
+
+      <!-- 🚀 Login Modal -->
+      <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="loginModalLabel">Enter Your Details</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+
+                  <div class="modal-body">
+                      <%= render 'attendees/form' %>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </main>
+       <!-- footer --> 
       <footer class="footer mt-auto py-3 bg-light mt-10">
         <div class="container text-center">
           <span class="text-muted">
@@ -167,6 +168,5 @@
           <span class="text-muted">Show Code: <%= session[:show_code] %></span>
         </div>
       </footer>
-      </div>
   </body>
 </html>
