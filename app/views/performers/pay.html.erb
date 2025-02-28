@@ -24,7 +24,7 @@
               <%= performer.name %>
             </td>
             <td valign="middle">
-              <%= number_field_tag "performer[#{performer.id}]", "0", min: 0, class: 'chuds-amount',
+              <%= number_field_tag "performer[#{performer.id}]", "0", min: 0, class: 'chuds-amount form-control',
                 data: { chuds_target: "input", action: "input->chuds#updateTotal" } %>
             </td>
             <td valign="middle" style="min-width: 140px;">

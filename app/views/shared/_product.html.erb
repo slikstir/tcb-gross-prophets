@@ -12,7 +12,7 @@
         <!-- Product Details -->
         <div class="col-md-7" data-controller="product-options" data-product-options-variants-value="<%= product.children.to_json.html_safe %>">
             <h2><%= product.name %></h2>
-            <p class="text-muted"><i><%= product.sku %></i></p>
+            <!--<p class="text-muted"><i><%= product.sku %></i></p>-->
             <p class="fs-4 text-success">
               <%= number_to_currency product.price, unit: currency_icon %>
             </p>

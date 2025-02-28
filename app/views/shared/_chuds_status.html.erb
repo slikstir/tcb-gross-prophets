@@ -1,3 +1,38 @@
+<div class="container mt-4">
+  <div class="card bg-light p-4">
+  <h2 class="text-center mb-3">Welcome Back, User</h2>
+
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="p-3 border rounded bg-light">
+        <p class="text-muted mb-1">Level 1</p>
+        <h3>BRAND WARRIOR</h3>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="p-3 border rounded bg-light">
+        <p class="text-muted mb-1">Performance Points</p>
+        <h3>24</h3>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="p-3 border rounded bg-light">
+        <p class="text-muted mb-1">Chud Balance</p>
+        <h3>¢20</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <div class="progress" style="height: 20px;">
+      <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <p class="text-center mt-2 fw-bold">50/100</p>
+  </div>
+  </div>
+</div>
+
+
 <%= turbo_stream_from "#{dom_id(attendee)}_chuds_status" %>
 <div id="<%= dom_id(attendee) %>_chuds_status">
   <div class="d-flex justify-content-center mb-5 mt-5">

@@ -26,8 +26,8 @@ Rails.application.routes.draw do
 
   resources :performers, only: :index do
     collection do
-
       get :pay, as: :pay
+      get :status, as: :status
       post :pay
     end
   end
