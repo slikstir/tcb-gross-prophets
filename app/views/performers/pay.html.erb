@@ -3,13 +3,14 @@
 <div id="redirect_checkpoint_closed"></div>
 
 
-<div class="col-xs-12 col-md-6 offset-md-3 mb-5">
+<div class="col-xs-12 col-md-6 offset-md-3 mb-5 text-center">
       <h1 class="text-capitalize">
         Time to spend your chuds
       </h1>
+      <h3>Who do you want to send Chuds to?</h3>
   <%= bootstrap_form_with url: pay_performers_path, local: true, class: 'row g-3', 
         data: { controller: 'chuds', "chuds-balance-value": @attendee.chuds_balance  } do |f|  %>
-
+    <div class="pt-5">
       <table class="table table-condensed">
         <% @performers.each do |performer| %>
           <tr>
@@ -38,13 +39,16 @@
             </td>
           </tr>
         <% end %>
+          <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
       </table>
-
-      <div class="alert alert-secondary">
-        <h3>New Chuds Balance</h3>
-        <p><span id="new-chuds-amount" data-chuds-target="amount"><%= @attendee.chuds_balance %></span> CHUDS</p>
-
-      </div>
+    </div>
       <p class="alert alert-danger text-danger d-none" data-chuds-target="warning">
           You don't have enough Chuds to spend this much!
       </p>
@@ -53,7 +57,22 @@
         <%= image_tag "Chuddy-ThumbsUp-Border.png", width: "100px", height: "100px", class: "me-2" %>
         Send Chuds
       </button>
+      
+      <div id="remaining_chuds_status" class="container mt-4">
+        <div class="card bg-light p-4">
+          <h2 class="text-center mb-3">Your Remaining Chuds</h2>
 
-
+          <div class="row justify-content-center text-center"> <!-- Added justify-content-center -->
+            <div class="col-md-4 mx-auto"> <!-- Removed offset, added mx-auto -->
+              <div class="p-3 border rounded bg-light">
+                <p class="text-muted mb-1">Chud Balance</p>
+                <h3 id="chuds-balance">
+                  <p><span id="new-chuds-amount" data-chuds-target="amount"><%= @attendee.chuds_balance %></span></p>
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     <% end %>
 </div>
