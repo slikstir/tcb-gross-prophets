@@ -40,16 +40,13 @@ class CheckoutController < ApplicationController
       }
     )
 
-    # Store the Stripe payment reference
-    order.update(stripe_payment_id: stripe.id)
-
     render json: { url: stripe.url }
   end
 
   def success
     stripe = Stripe::Checkout::Session.retrieve(params[:session_id])
     order = Order.find_by(number: stripe.metadata["order_number"])
-
+    order.update(stripe_payment_id: stripe.payment_intent)
     if stripe.payment_status == "paid"
       order.pay
       session[:order_id] = nil
