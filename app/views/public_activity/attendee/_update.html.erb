@@ -2,13 +2,15 @@
     data-controller="highlight" 
     data-highlight-duration-value="2000">
   <span><%= activity.created_at.strftime("%Y-%m-%d %I:%m:%S %P") %></span><br>
-  <p><%= activity.trackable_type %> <%= link_to admin_performer_path(activity.trackable) do  %>
-    <strong><i><%= activity.trackable.name %></i></strong>
-  <% end %> Was Updated
+  <p><%= activity.trackable_type %> <strong><i><%= activity.trackable.try(:name) %></i></strong> Was Updated
   <ul>
+  <% begin %>
   <% activity.parameters.each do |p, val| %>
     <% next if val.blank? %>
     <li><i><%= p %></i> updated from <strong><%= val[0] %></strong> to <strong><%= val[1] %></strong></li>
+  <% end %>
+  <% rescue => e %>
+    <li><i>There was an error processing the changes</i></li>
   <% end %>
   </ul>
 </li>
