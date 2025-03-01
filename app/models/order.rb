@@ -57,9 +57,9 @@ class Order < ApplicationRecord
 
     after_transition on: :pay, do: :commission_performers
     after_transition on: :pay, do: :give_attendee_chuds
-    after_transition on: :pay, do: :broadcast_purchase
     after_transition on: :pay, do: :deduct_stock
     after_transition on: :pay, do: :automatic_fulfillment
+    after_transition on: :pay, do: :broadcast_purchase
   end
 
   state_machine :fulfillment_state, initial: :pending do
@@ -95,7 +95,7 @@ class Order < ApplicationRecord
   end
 
   def update_totals
-    self.chuds = line_items.sum { |x| x.chuds.to_i }
+    self.chuds = line_items.sum { |x| x.chuds.to_i * x.quantity }
     self.subtotal = line_items.sum(&:total_price)
     self.tax_total = subtotal * tax_rate
     self.total = subtotal + tax_total
@@ -134,7 +134,7 @@ class Order < ApplicationRecord
   def give_attendee_chuds
     return unless attendee.present?
 
-    attendee.chuds_balance += self.chuds
+    attendee.chuds_balance += self.chuds.to_i
     attendee.save
   end
 

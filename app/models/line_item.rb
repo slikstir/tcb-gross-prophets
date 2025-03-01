@@ -31,7 +31,7 @@ class LineItem < ApplicationRecord
   belongs_to  :performer, optional: true
   belongs_to  :variant
   has_one     :product, through: :variant
-  belongs_to  :attendee, optional: true
+  has_one     :attendee, through: :order
 
   delegate :options, to: :variant
   delegate :chuds, to: :product
@@ -71,9 +71,9 @@ class LineItem < ApplicationRecord
   def broadcast_message
     message = ""
     if self.attendee.present?
-      message = "#{self.attendee.name} purchased #{self.product.name ``}"
+      message = "#{self.attendee.name} purchased #{self.product.name}"
     else
-      message = "#{self.product.sku} was purchased"
+      message = "#{self.product.name} was purchased"
     end
 
     if self.performer.present?
@@ -81,7 +81,7 @@ class LineItem < ApplicationRecord
     end
 
     if self.product.try(:chuds).present?
-      message = "#{message} and earned €#{self.product.chuds} CHUDs"
+      message = "#{message} and earned ¢#{self.product.chuds * self.quantity} CHUDs"
     end
   end
 
