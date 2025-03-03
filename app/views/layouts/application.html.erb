@@ -20,7 +20,7 @@
     <%= stylesheet_link_tag 'bootstrap', 'application',  "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <style>
-      <%= Setting.find_by(code: 'custom_css').try(:value) %>
+      <%= raw Setting.find_by(code: 'custom_css').try(:value) %>
     </style>
   </head>
   <%= render 'shared/analytics_code' %>
