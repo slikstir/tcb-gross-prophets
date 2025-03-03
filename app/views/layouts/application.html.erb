@@ -18,8 +18,10 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag 'bootstrap', 'application',  "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag custom_styles_path + "?v=#{Setting.find_by(code: 'custom_css')&.updated_at.to_i}", "data-turbo-track": "reload", as: :style %>
     <%= javascript_importmap_tags %>
+    <style>
+      <%= Setting.find_by(code: 'custom_css').try(:value) %>
+    </style>
   </head>
   <%= render 'shared/analytics_code' %>
 
