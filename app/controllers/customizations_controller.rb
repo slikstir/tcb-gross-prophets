@@ -1,6 +1,6 @@
 class CustomizationsController < ApplicationController
   def styles
-    setting = Setting.find_by(name: "custom_css")
+    setting = Setting.find_by(code: "custom_css")
     @custom_css = setting&.value || ""
 
     # Explicitly set Content-Type to CSS
