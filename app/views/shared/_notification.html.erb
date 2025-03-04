@@ -1,4 +1,30 @@
-<div data-controller="notifications" class="alert alert-success alert-dismissible fade show" role="alert">
-  <%= message %>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+<% if defined? line_item %>
+  <div  data-controller="notifications" class="chuds-alert alert alert-secondary d-flex align-items-center border-0 rounded-3 shadow-sm fade show pt-0 ps-0 pb-0" role="alert">
+    <% if line_item.product.try(:chuds).present? && line_item.product.chuds > 0 %>
+    <div class="bg-dark text-white px-3 py-2 rounded-start text-center">
+      <div class="fw-bold fs-5">+ <%= line_item.product.chuds %></div>
+      <div class="text-uppercase small">Chuds</div>
+    </div>
+    <% end %>
+    <div class="ms-3 flex-grow-1">
+      <strong>
+        <% if line_item.attendee.present? %> 
+          <%= line_item.attendee.name.upcase %>
+        <% else %>
+          SOMEONE
+        <% end %>
+      </strong> just bought a <strong><%= line_item.product.name %></strong><br>
+      <% if line_item.performer.present? %>
+      <em class="text-muted">from <%= line_item.performer.name %></em>
+      <% end %>
+    </div>
+    <% unless defined? hide_dismissal %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <% end %>
+  </div>
+<% else %>
+  <div data-controller="notifications" class="alert alert-light alert-dismissible fade show" role="alert">
+    <%= message %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>

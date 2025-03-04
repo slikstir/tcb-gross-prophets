@@ -1,6 +1,6 @@
 class WelcomeController < ApplicationController
   layout :set_layout
-  skip_before_action :check_if_logged_in, only: [ :login, :sign_out, :closed, :terms, :faqs ]
+  skip_before_action :check_if_logged_in, only: [ :login, :sign_out, :closed, :terms, :faqs, :order_notifications ]
 
   def index
     @homepage_image = Setting.find_by(code: "homepage_image")
@@ -46,11 +46,15 @@ class WelcomeController < ApplicationController
     @login_help = Setting.find_by(code: "login_info").try(:html)
   end
 
+  def order_notifications
+  end
+
   private
 
   def set_layout
     case action_name
     when "closed"
+    when "order_notifications"
       "minimum"
     else
       "application"

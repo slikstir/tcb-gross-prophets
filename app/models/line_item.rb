@@ -64,7 +64,14 @@ class LineItem < ApplicationRecord
       "notifications",
       target: "notifications",
       partial: "shared/notification",
-      locals: { message: broadcast_message }
+      locals: { message: broadcast_message, line_item: self }
+    )
+
+    Turbo::StreamsChannel.broadcast_append_to(
+      "notifications_screen",
+      target: "notifications",
+      partial: "shared/notification",
+      locals: { message: broadcast_message, line_item: self, hide_dismissal: true }
     )
   end
 
@@ -80,7 +87,7 @@ class LineItem < ApplicationRecord
       message = "#{message} from #{self.performer.name}"
     end
 
-    if self.product.try(:chuds).present?
+    if self.product.try(:chuds).present? && self.product.chuds > 0
       message = "#{message} and earned ¢#{self.product.chuds * self.quantity} CHUDs"
     end
   end

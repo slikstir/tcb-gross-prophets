@@ -3,13 +3,14 @@ Rails.application.routes.draw do
 
   root "welcome#index"
   get "customizations.css", to: "customizations#styles", as: :custom_styles, defaults: { format: :css }
-  
+
   get "login", to: "welcome#login", as: :login
   get "company", to: "welcome#company", as: :company
   get "closed", to: "welcome#closed", as: :closed
   get "faqs", to: "welcome#faqs", as: :faqs
   get "terms", to: "welcome#terms", as: :terms
   get "cart", to: "welcome#cart", as: :cart
+  get "order_notifications", to: "welcome#order_notifications", as: :order_notifications
 
   post "/checkout", to: "checkout#create"
   get "/checkout/success", to: "checkout#success"
