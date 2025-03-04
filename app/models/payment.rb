@@ -33,7 +33,8 @@ class Payment < ApplicationRecord
       attendee.lock! # Lock the attendee row
       performer.lock! # Lock the performer row
 
-      discounted_chuds = amount * 0.75
+      # DISCOUNT RATE IS CURRENTLY 1.0
+      discounted_chuds = amount * 1.0
 
       # Always fetch fresh values inside the transaction
       new_attendee_balance = attendee.chuds_balance - amount
