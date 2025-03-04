@@ -24,7 +24,7 @@
   </head>
   <%= render 'shared/analytics_code' %>
   
-  <body class="">
+  <body  id="<%= request.path == "/" ? 'welcome-index' : request.path.delete_prefix("/").gsub("/", "-")%>">
     <%= yield %> 
   </body>
 </html>
