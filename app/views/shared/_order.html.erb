@@ -12,8 +12,15 @@
     </h2>
     <% if admin? %>
       <div>
-        <%= link_to "Edit", edit_admin_order_path(order), class: "btn btn-sm btn-primary" %>
-        <%= link_to "Cancel", admin_order_path(order), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger ms-2" %>
+        <%= link_to admin_order_path(order, order: { broadcast: true }), method: :patch, class: "btn btn-sm btn-success btn-primary" do %>
+          <%= icon "send", class: "icon-text-white" %> Broadcast
+        <% end %>
+        <%= link_to edit_admin_order_path(order), class: "btn btn-sm btn-primary" do  %>
+          <%= icon "edit", class: "icon-text-white" %> Edit
+        <% end %>
+        <%= link_to admin_order_path(order), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" do  %>
+          <%= icon "x-circle", class: "icon-text-white" %> Cancel
+        <% end %>
       </div>
     <% end %>
   </div>

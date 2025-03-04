@@ -38,9 +38,12 @@ class Order < ApplicationRecord
 
   before_create :assign_number
   before_save   :assign_attendee
+  before_save   :broadcast_purchase, if: -> { broadcast? }
 
   validates :currency, presence: true, inclusion: { in: CURRENCIES }
   validates :stripe_payment_id, uniqueness: true, allow_nil: true
+
+  attribute :broadcast, :boolean, default: false
 
   state_machine :payment_state, initial: :cart do
     state :cart
