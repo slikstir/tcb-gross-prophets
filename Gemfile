@@ -52,7 +52,7 @@ gem "kaminari"
 gem "redis", "~> 4.3", ">= 4.3.1"
 gem "aws-sdk-s3", require: false
 
-gem "rails_icons", "~> 1.1"
+gem "rails_icons", "~> 1.2"
 gem "rqrcode"
 gem "chunky_png"
 
