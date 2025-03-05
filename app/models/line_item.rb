@@ -53,8 +53,8 @@ class LineItem < ApplicationRecord
 
     ActiveRecord::Base.transaction do
       performer.lock! # Lock the performer row
-      performer.commission_balance = performer.commission_balance + total_price
-      performer.chuds_balance = performer.chuds_balance + total_price.to_i
+      performer.commission_balance = performer.commission_balance.to_f + total_price
+      performer.chuds_balance = performer.chuds_balance.to_i + total_price.to_i
       performer.save
     end
   end
