@@ -50,11 +50,15 @@ class CheckoutController < ApplicationController
     if stripe.payment_status == "paid"
       order.pay
       session[:order_id] = nil
-      # TODO: Need this to redirect to the customers order show page
       redirect_to order_path(order), notice: "Payment successful! Thank you for your order!"
     else
       redirect_to cart_path, alert: "Payment failed."
     end
+  rescue Exception => e
+    Rails.logger.error "Error processing payment: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+    order.cancel_stripe_payment
+    redirect_to cart_path, alert: "Payment failed. Let the gurus know you got the error '#{e.message}'."
   end
 
   def cancel

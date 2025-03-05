@@ -35,6 +35,7 @@ class Performer < ApplicationRecord
 
   scope :active, -> { where(active: true) }
 
+  before_save :ensure_values_present
   after_update_commit :broadcast_performer_reload
 
   def self.max_chuds_balance
@@ -112,5 +113,13 @@ class Performer < ApplicationRecord
         locals: { which: "performer_page_reload" }
       )
     end
+  end
+
+  private
+
+  def ensure_values_present
+    self.chuds_balance ||= 0
+    self.performance_points ||= 0
+    self.commission_balance ||= 0
   end
 end

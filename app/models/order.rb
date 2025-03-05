@@ -109,55 +109,6 @@ class Order < ApplicationRecord
     line_items.map(&:requires_fulfillment?).any? { |x| x == true }
   end
 
-  private
-
-  def commission_performers
-    line_items.each(&:update_performer_commissions)
-  end
-
-  def broadcast_purchase
-    line_items.each(&:broadcast_notification)
-  end
-
-  def deduct_stock
-    line_items.each do |item|
-      next unless item.variant.product.track_inventory?
-
-      item.variant.update(stock_level: item.variant.stock_level - item.quantity)
-    end
-  end
-
-  def automatic_fulfillment
-    return if requires_fulfillment?
-
-    self.deliver
-  end
-
-
-  def give_attendee_chuds
-    return unless attendee.present?
-
-    attendee.chuds_balance += self.chuds.to_i
-    attendee.save
-  end
-
-  def assign_number
-    last_order = Order.order(number: :desc).first
-    next_number = last_order&.number&.scan(/\d+/)&.first.to_i + 1
-    self.number = "GP##{next_number.to_s.rjust(5, '0')}"
-  end
-
-  def set_fulfilled_at
-    update_column(:fulfilled_at, Time.current)
-  end
-
-  def assign_attendee
-    return unless email.present?
-    return if attendee.present?
-
-    self.attendee = Attendee.find_by_normalized_email(email)
-  end
-
   def cancel_stripe_payment
     payment_intent = Stripe::PaymentIntent.retrieve(stripe_payment_id)
 
@@ -176,5 +127,69 @@ class Order < ApplicationRecord
     end
   rescue Stripe::StripeError => e
     errors.add(:base, e.message)
+  end
+
+  private
+
+  def commission_performers
+    line_items.each(&:update_performer_commissions)
+  rescue Exception => e
+    Rails.logger.error "Error giving commissioning performers: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+  end
+
+  def broadcast_purchase
+    line_items.each(&:broadcast_notification)
+  rescue Exception => e
+    Rails.logger.error "Error broadcasting purchase: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+  end
+
+  def deduct_stock
+    line_items.each do |item|
+      next unless item.variant.product.track_inventory?
+
+      item.variant.update(stock_level: item.variant.stock_level - item.quantity)
+    end
+  rescue Exception => e
+    Rails.logger.error "Error deducting stock: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+  end
+
+  def automatic_fulfillment
+    return if requires_fulfillment?
+
+    self.deliver
+  rescue Exception => e
+    Rails.logger.error "Error automatic fulfilling: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+  end
+
+
+  def give_attendee_chuds
+    return unless attendee.present?
+
+    attendee.chuds_balance += self.chuds.to_i
+    attendee.save
+  rescue Exception => e
+    Rails.logger.error "Error giving attendees chuds performers: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+  end
+
+  def assign_number
+    last_order = Order.order(number: :desc).first
+    next_number = last_order&.number&.scan(/\d+/)&.first.to_i + 1
+    self.number = "GP##{next_number.to_s.rjust(5, '0')}"
+  end
+
+  def set_fulfilled_at
+    update_column(:fulfilled_at, Time.current)
+  end
+
+  def assign_attendee
+    return unless email.present?
+    return if attendee.present?
+
+    self.attendee = Attendee.find_by_normalized_email(email)
   end
 end
