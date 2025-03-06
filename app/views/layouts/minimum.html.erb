@@ -21,6 +21,9 @@
     <%= stylesheet_link_tag 'bootstrap', 'application', media: 'all' %>
     <%= stylesheet_link_tag custom_styles_path + "?v=#{Setting.find_by(name: 'custom_css')&.updated_at.to_i}" %>
     <%= javascript_importmap_tags %>
+    <style>
+      <%= raw Setting.find_by(code: 'custom_css').try(:value) %>
+    </style>
   </head>
   <%= render 'shared/analytics_code' %>
   
