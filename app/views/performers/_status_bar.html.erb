@@ -1,0 +1,8 @@
+ <div id="performer_<%= performer.id %>_status_bar" class="progress" style="height: 40px; font-size: 30px">
+  <div class="progress-bar bg-success" 
+        role="progressbar" 
+          style="width: <%= (performer.chuds_balance * 1.0) / ( max_chuds_balance * 1.0) * 100.0 %>%;" 
+          aria-valuenow="<%= performer.chuds_balance %>" aria-valuemin="0" aria-valuemax="<%= max_chuds_balance %>">
+    ¢<%= performer.chuds_balance %>
+  </div>
+</div>

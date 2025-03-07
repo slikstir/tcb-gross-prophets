@@ -42,6 +42,10 @@ class Performer < ApplicationRecord
     self.active.maximum(:chuds_balance)
   end
 
+  def self.status_bar_max_value
+    [ Performer.max_chuds_balance + Performer.max_chuds_balance * 0.20, Setting.find_by(code: "max_performers_chuds").try(:value).to_i ].max
+  end
+
   def self.reset_chuds_balance(amount = 0)
     Performer.all.update_all(chuds_balance: amount)
     create_and_broadcast_activity(
@@ -106,12 +110,14 @@ class Performer < ApplicationRecord
 
   def broadcast_performer_reload
     if self.saved_change_to_chuds_balance? || self.saved_change_to_performance_points?
-      Turbo::StreamsChannel.broadcast_replace_to(
-        "performer_page_reload",
-        target: "performer_page_reload",
-        partial: "shared/reload",
-        locals: { which: "performer_page_reload" }
-      )
+      Performer.active.each do |performer|
+        Turbo::StreamsChannel.broadcast_replace_to(
+          "performer_#{performer.id}_status_bar",
+          target: "performer_#{performer.id}_status_bar",
+          partial: "performers/status_bar",
+          locals: { performer: performer, max_chuds_balance: Performer.status_bar_max_value  }
+        )
+      end
     end
   end
 

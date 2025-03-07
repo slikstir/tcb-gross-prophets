@@ -25,7 +25,7 @@ class PerformersController < ApplicationController
   end
 
   def status
-    @max_chuds_balance = [ Performer.max_chuds_balance + Performer.max_chuds_balance * 0.20, Setting.find_by(code: "max_performers_chuds").try(:value).to_i ].max
+    @max_chuds_balance = Performer.status_bar_max_value
   end
 
   private
