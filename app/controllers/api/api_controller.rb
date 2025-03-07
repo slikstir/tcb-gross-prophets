@@ -43,12 +43,12 @@ module Api
 
       if params[:start_or_stop].downcase == "start"
         chud_checkpoint.update(value: "true")
-        render json: { success: true, message: "CHUD Checkpoint has begun" }, status: :ok
+        render json: { success: true, message: "Chud Checkpoint has begun" }, status: :ok
       elsif params[:start_or_stop].downcase == "stop"
         chud_checkpoint.update(value: "false")
-        render json: { success: true, message: "CHUD Checkpoint has ended" }, status: :ok
+        render json: { success: true, message: "Chud Checkpoint has ended" }, status: :ok
       elsif params[:start_or_stop].downcase == "status"
-        render json: { success: true, message: "CHUD Checkpoint is #{chud_checkpoint.value == true ? 'active' : 'inactive' }" }, status: :ok
+        render json: { success: true, message: "Chud Checkpoint is #{chud_checkpoint.value == true ? 'active' : 'inactive' }" }, status: :ok
       else
         render json: { success: false, message: "Invalid checkpoint action" }, status: :bad_request
       end

@@ -88,7 +88,7 @@ class LineItem < ApplicationRecord
     end
 
     if self.product.try(:chuds).present? && self.product.chuds > 0
-      message = "#{message} and earned ¢#{self.product.chuds * self.quantity} CHUDs"
+      message = "#{message} and earned ¢#{self.product.chuds * self.quantity} Chuds"
     end
   end
 

@@ -11,7 +11,7 @@ class PerformersController < ApplicationController
 
   def pay
     if !@chud_checkpoint_time
-      flash[:notice] = "Looks like you mised the CHUD Checkpoint. You can only pay performers during the CHUD Checkpoint Time."
+      flash[:notice] = "Looks like you missed the Chud Checkpoint. You can only send Chuds during the Chud Checkpoint Time."
       redirect_to root_path
     elsif request.post?
       params[:performer].each do |performer_id, amount|
