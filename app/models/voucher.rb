@@ -27,6 +27,10 @@ class Voucher < ApplicationRecord
     true
   end
 
+  def already_redeemed?(email)
+    AttendeeVoucher.exists?(voucher: self)
+  end
+
   def redeem_for(email)
     attendee = Attendee.find_by(email: email)
     return false if attendee.blank?

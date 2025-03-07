@@ -16,7 +16,12 @@ module ApplicationHelper
   end
 
   def homepage_url
-    [ "http://", Rails.application.routes.default_url_options[:host], "/login?code=", @show_code.value ].join
+    [
+      (Rails.env.production? ? "https://" : "http://"),
+      Rails.application.routes.default_url_options[:host],
+      "/login?code=",
+      @show_code.value
+    ].join
   end
 
   def homepage_qr_code

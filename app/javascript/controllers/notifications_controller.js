@@ -19,6 +19,6 @@ export default class extends Controller {
     setTimeout(() => {
       this.element.style.opacity = 0; // Start fade out
       setTimeout(() => this.element.remove(), 500); // Remove after fade out
-    }, 3000);
+    }, 8000);
   }
 }

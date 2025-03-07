@@ -6,8 +6,8 @@ class VouchersController < ApplicationController
       if @voucher.blank?
         flash[:alert] = "Voucher not found!"
         redirect_to vouchers_path
-      elsif @voucher.already_redeemed_by?(session[:email])
-        flash[:alert] = "You've already redeemed this voucher."
+      elsif @voucher.already_redeemed?(session[:email])
+        flash[:alert] = "This voucher has already been redeemed."
         redirect_to vouchers_path
       else
         @voucher.redeem_for(session[:email])

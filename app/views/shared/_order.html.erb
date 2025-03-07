@@ -67,6 +67,12 @@
                     <% item.variant.options.each do |option, val| %>
                       <strong><%= option %>:</strong> <%= val %><br>
                     <% end %>
+                    <% if item.performer.present? %>
+                      <span class="text-muted small">
+                        <strong>Commission Earned By:</strong><br>
+                        <%= item.performer.name %><br>
+                      </span>
+                    <% end %>
                   </td>
                   <td>
                     <%= number_to_currency item.unit_price, unit: currency_icon(order.currency) %>
