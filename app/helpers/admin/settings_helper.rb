@@ -4,7 +4,11 @@ module Admin::SettingsHelper
     when "string"
       form.text_field :value, class: "form-control"
     when "text"
-      form.text_area :value, class: "form-control", rows: 50
+      if setting.code.include? "css"
+        form.text_area :value, class: "form-control", rows: 100, data: { controller: "codemirror" }
+      else
+        form.text_area :value, class: "form-control", rows: 50
+      end
     when "integer"
       form.number_field :value, class: "form-control"
     when "decimal"
