@@ -39,6 +39,7 @@ class LineItem < ApplicationRecord
   before_save :set_price
   after_save  :destroy, if: -> { quantity <= 0 }
   after_save  :update_order_totals
+  after_destroy :update_order_totals
 
   def total_price
     unit_price * quantity
