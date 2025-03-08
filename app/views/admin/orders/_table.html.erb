@@ -64,7 +64,7 @@
                 <%= icon 'edit', class: 'icon-text-white' %>
               <% end %>
             </div>  
-            <% if order.requires_fulfillment? && order.fulfillment_state != 'delivered' %><br>
+            <% if order.payment_state == 'paid' && order.requires_fulfillment? && order.fulfillment_state != 'delivered' %><br>
               <div class="btn-group mt-2">
                 
               <% if order.fulfillment_state == 'pending' %>
