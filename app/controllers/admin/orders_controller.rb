@@ -21,6 +21,9 @@ module Admin
         @orders = @orders.where(fulfillment_state: params[:fulfillment_state])
       end
 
+      # Sorting 
+      @orders = @orders.order(fulfillment_state: :desc, completed_at: :desc)
+
       # Pagination
       @orders = @orders.page(params[:page] ||= 1)
     end

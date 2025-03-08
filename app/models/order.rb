@@ -5,6 +5,7 @@
 #  id                :bigint           not null, primary key
 #  channel           :string
 #  chuds             :integer
+#  completed_at      :datetime
 #  currency          :string
 #  email             :string
 #  fulfilled_at      :datetime
@@ -22,7 +23,8 @@
 #
 # Indexes
 #
-#  index_orders_on_attendee_id  (attendee_id)
+#  index_orders_on_attendee_id   (attendee_id)
+#  index_orders_on_completed_at  (completed_at)
 #
 class Order < ApplicationRecord
   CURRENCIES =  %w[
@@ -30,7 +32,7 @@ class Order < ApplicationRecord
             nzd inr brl rub zar krw mxn idr try thb
             ]
 
-  default_scope { order(created_at: :desc) }
+  scope :paid, -> { where(payment_state: "paid") }
 
 
   belongs_to :attendee, optional: true
@@ -58,6 +60,7 @@ class Order < ApplicationRecord
       transition any => :canceled
     end
 
+    before_transition on: :pay, do: :set_completed_at
     after_transition on: :pay, do: :commission_performers
     after_transition on: :pay, do: :give_attendee_chuds
     after_transition on: :pay, do: :deduct_stock
@@ -142,6 +145,13 @@ class Order < ApplicationRecord
     line_items.each(&:broadcast_notification)
   rescue Exception => e
     Rails.logger.error "Error broadcasting purchase: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+  end
+
+  def set_completed_at
+    self.completed_at = Time.now
+  rescue Exception => e
+    Rails.logger.error "Error marking completed at: #{e.message}"
     Rails.logger.error e.backtrace.join("\n")
   end
 

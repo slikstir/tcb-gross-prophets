@@ -5,6 +5,7 @@
 #  id                :bigint           not null, primary key
 #  channel           :string
 #  chuds             :integer
+#  completed_at      :datetime
 #  currency          :string
 #  email             :string
 #  fulfilled_at      :datetime
@@ -22,7 +23,8 @@
 #
 # Indexes
 #
-#  index_orders_on_attendee_id  (attendee_id)
+#  index_orders_on_attendee_id   (attendee_id)
+#  index_orders_on_completed_at  (completed_at)
 #
 FactoryBot.define do
   factory :order do
