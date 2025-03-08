@@ -36,6 +36,7 @@ class Product < ApplicationRecord
 
   validates :name, :price, :sku, presence: true
   validates :price, numericality: { greater_than: 0 }
+  validates :availability, inclusion: { in: AVAILABILITY_OPTIONS }
 
   delegate :sku, :stock_level, to: :parent
 

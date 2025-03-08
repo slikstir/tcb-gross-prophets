@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     post "/webhooks/stripe", to: "webhooks#stripe"
 
     resources :settings, only: [ :show, :update ]
+    resources :products, only: [ :show, :update ]
 
     resources :performers, only: [ :index, :show ] do
       member do
