@@ -17,7 +17,7 @@
 #  updated_at           :datetime         not null
 #
 class Product < ApplicationRecord
-  AVAILABILITY_OPTIONS = %w[ in_show merch_table ]
+  AVAILABILITY_OPTIONS = %w[ in_show merch_table unavailable ]
 
   has_one_attached :image
   has_rich_text :description

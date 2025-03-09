@@ -1,24 +1,33 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Code</th>
-      <th>Amount</th>
-      <th>Uses</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @vouchers.each do |voucher| %>
+<div class="table table-responsive">
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td><%= link_to voucher.code, admin_voucher_path(voucher) %></td>
-        <td><%= voucher.amount %></td>
-        <td><%= voucher.attendee_vouchers.count %></td>
-        <td>
-          <%= link_to 'Show', admin_voucher_path(voucher) %>
-          <%= link_to 'Edit', edit_admin_voucher_path(voucher) %>
-          <%= link_to 'Destroy', admin_voucher_path(voucher), method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
+        <th>Code</th>
+        <th>Amount</th>
+        <th>Uses</th>
+        <th class="text-center" style="width: 160px">Actions</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @vouchers.each do |voucher| %>
+        <tr>
+          <td><%= link_to voucher.code, admin_voucher_path(voucher) %></td>
+          <td><%= voucher.amount %></td>
+          <td><%= voucher.attendee_vouchers.count %></td>
+          <td>
+              <%= link_to admin_voucher_path(voucher), class: "btn btn-sm btn-success" do %>
+                <%= icon 'folder-open', class: 'icon-text-white' %>
+              <% end %>
+              <%= link_to edit_admin_voucher_path(voucher), class: "btn btn-sm btn-warning"  do  %>
+                <%= icon 'edit', class: 'icon-text-white' %>
+              <% end %>
+              <%= link_to admin_voucher_path(voucher), method: :delete, 
+                        data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger" do %>
+                <%= icon 'trash', class: 'icon-text-white' %>
+              <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

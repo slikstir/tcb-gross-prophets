@@ -1,42 +1,43 @@
 <%= paginate @attendees %>
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Seat No.</th>
-      <th>Chuds Balance</th>
-      <th>Level</th>
-      <th>Performance Points</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @attendees.each do |attendee| %>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td><%= attendee.name %></td>
-        <td><%= attendee.email %></td>
-        <td><%= attendee.seat_number %></td>
-        <td><%= attendee.chuds_balance %></td>
-        <td> <%= attendee.level_name %><br>
-            <%= attendee.level_index %>
-        </td>
-        <td><%= attendee.performance_points %></td>
-        <td>
-          <%= link_to admin_attendee_path(attendee), class: "btn btn-sm btn-success" do %>
-            <%= icon 'folder-open', class: 'icon-text-white' %>
-          <% end %>
-          <%= link_to edit_admin_attendee_path(attendee), class: "btn btn-sm btn-warning"  do  %>
-            <%= icon 'edit', class: 'icon-text-white' %>
-          <% end %>
-          <%= link_to admin_attendee_path(attendee), method: :delete, 
-                    data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger" do %>
-            <%= icon 'trash', class: 'icon-text-white' %>
-          <% end %>        </td>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Seat No.</th>
+        <th>Chuds Balance</th>
+        <th>Level</th>
+        <th>Performance Points</th>
+        <th>Actions</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @attendees.each do |attendee| %>
+        <tr>
+          <td><%= attendee.name %></td>
+          <td><%= attendee.email %></td>
+          <td><%= attendee.seat_number %></td>
+          <td><%= attendee.chuds_balance %></td>
+          <td> <%= attendee.level_name %><br>
+              <%= attendee.level_index %>
+          </td>
+          <td><%= attendee.performance_points %></td>
+          <td>
+            <%= link_to admin_attendee_path(attendee), class: "btn btn-sm btn-success" do %>
+              <%= icon 'folder-open', class: 'icon-text-white' %>
+            <% end %>
+            <%= link_to edit_admin_attendee_path(attendee), class: "btn btn-sm btn-warning"  do  %>
+              <%= icon 'edit', class: 'icon-text-white' %>
+            <% end %>
+            <%= link_to admin_attendee_path(attendee), method: :delete, 
+                      data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger" do %>
+              <%= icon 'trash', class: 'icon-text-white' %>
+            <% end %>        </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <%= paginate @attendees %>
