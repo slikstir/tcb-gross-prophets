@@ -1,15 +1,18 @@
 <h1>Order Reports</h1>
-<%= form_tag reports_admin_orders_path, method: :get do %>
-  <div class="row mb-5">
-    <div class='col-6 col-sm-4'>
+<%= form_tag reports_admin_orders_path, method: :get, id: "order-report-form" do %>
+ <div class="row mb-5">
+    <div class='col'>
       <%= label_tag "Start" %>
-      <%= datetime_field_tag "start_time", params[:start_time] ||= Time.zone.now.beginning_of_day.strftime('%Y-%m-%dT%H:%M'), class: "form-control" %>
+      <%= datetime_field_tag "start_datetime_local",  params[:start_time] ||= Time.zone.now.beginning_of_day.strftime('%Y-%m-%dT%H:%M'), class: "form-control" %>
+      <input type="hidden" name="start_datetime" id="start_datetime">
     </div>
-    <div class='col-6 col-sm-4'>
+    <div class='col'>
       <%= label_tag "End" %>
-      <%= datetime_field_tag "end_time", params[:end_time] ||= Time.zone.now.end_of_day.strftime('%Y-%m-%dT%H:%M'), class: "form-control" %>
+      <%= datetime_field_tag "end_datetime_local",  params[:end_time] ||= Time.zone.now.end_of_day.strftime('%Y-%m-%dT%H:%M'), class: "form-control" %>
+      <input type="hidden" name="end_datetime" id="end_datetime">
     </div>
-    <div class='col-12 col-sm-4'>
+    <div class='col'>
+      <input type="hidden" name="time_zone" id="time_zone">
       <%= submit_tag "Report", class: "btn btn-primary w-100 mt-4" %>
     </div>
   </div>
@@ -52,10 +55,24 @@
         </h3>
       </div>
       <div class="card-body">
-        <p class="card-text">Total sales for the selected period.</p>
-        <h4 class="text-success">
-          <%= number_to_currency @sales_total, unit: currency_icon(@currency) %>
-        </h4>
+       <table class='table'>
+          <thead>
+            <tr>
+              <th>Performer</th>
+              <th>Currency</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @total_commissions.each do |key, val| %>
+            <tr>
+              <td><%= Performer.find(key[0]).name %></td>
+              <td><%= key[1].upcase %></td>
+              <td><%= number_to_currency val, unit: currency_icon(key[1]) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -67,11 +84,25 @@
             Total Product Sales
         </h3>
       </div>
-      <div class="card-body">
-        <p class="card-text">Total sales for the selected period.</p>
-        <h4 class="text-success">
-          <%= number_to_currency @sales_total, unit: currency_icon(@currency) %>
-        </h4>
+     <div class="card-body">
+       <table class='table'>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Currency</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @total_product_sales.each do |key, val| %>
+            <tr>
+              <td><%= key[0] %></td>
+              <td><%= key[1].upcase %></td>
+              <td><%= number_to_currency val, unit: currency_icon(key[1]) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+        </table>
       </div>
     </div>
   </div>

@@ -139,6 +139,28 @@ class Order < ApplicationRecord
     Order.paid.where(completed_at: start_time..end_time).group(:currency).sum(:total)
   end
 
+  def self.total_commissions(start_time, end_time)
+    start_time ||= Time.zone.now.beginning_of_day
+    end_time ||= Time.zone.now.end_of_day
+  
+    LineItem.joins(:order)
+            .where(orders: { payment_state: 'paid', completed_at: start_time..end_time })
+            .group(:performer_id, 'orders.currency') # Group by performer and currency
+            .sum(:total) # Sum total sales for each performer-currency pair
+  end
+
+  def self.product_sales(start_time, end_time)
+    start_time ||= Time.zone.now.beginning_of_day
+    end_time ||= Time.zone.now.end_of_day
+  
+    LineItem.joins(variant: :product) # Join LineItem → Variant → Product
+            .joins(:order) # Join LineItem → Order
+            .where(orders: { payment_state: 'paid', completed_at: start_time..end_time }) # Filter paid orders in range
+            .group('products.name', 'orders.currency') # Group by product name and currency
+            .sum(:total) # Sum total sales for each (product, currency) pair
+  end
+  
+
   private
 
   def commission_performers

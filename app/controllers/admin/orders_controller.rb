@@ -66,10 +66,21 @@ module Admin
     end
 
     def reports
-      @total_sales = Order.total_sales(params[:start_time], params[:end_time])
-
-      # byebug
+      time_zone = params[:time_zone] || "UTC"
+      start_time = params[:start_datetime].present? ? Time.zone.parse(params[:start_datetime]) : Time.zone.now.beginning_of_day
+      end_time = params[:end_datetime].present? ? Time.zone.parse(params[:end_datetime]) : Time.zone.now.end_of_day
+    
+      # Convert times to the detected time zone
+      Time.use_zone(time_zone) do
+        start_time = start_time&.in_time_zone(time_zone)
+        end_time = end_time&.in_time_zone(time_zone)
+      end
+    
+      @total_sales = Order.total_sales(start_time, end_time)
+      @total_commissions = Order.total_commissions(start_time, end_time)
+      @total_product_sales = Order.product_sales(start_time, end_time)
     end
+    
 
     private
 
