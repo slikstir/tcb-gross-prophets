@@ -132,6 +132,13 @@ class Order < ApplicationRecord
     errors.add(:base, e.message)
   end
 
+  def self.total_sales(start_time, end_time)
+    start_time = Time.zone.now.beginning_of_day if start_time.blank?
+    end_time = Time.zone.now.end_of_day if end_time.blank?
+
+    Order.paid.where(completed_at: start_time..end_time).group(:currency).sum(:total)
+  end
+
   private
 
   def commission_performers

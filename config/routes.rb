@@ -40,7 +40,11 @@ Rails.application.routes.draw do
   resources :vouchers, only: [ :index ]
 
   namespace :admin do
-    resources :orders
+    resources :orders do 
+      collection do
+        get :reports
+      end
+    end
     resources :line_items, except: [ :index ]
 
     resources :activities, only: [ :index ] do

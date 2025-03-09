@@ -65,6 +65,12 @@ module Admin
       redirect_to admin_order_path(@order)
     end
 
+    def reports
+      @total_sales = Order.total_sales(params[:start_time], params[:end_time])
+
+      # byebug
+    end
+
     private
 
     def order_params
