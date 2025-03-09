@@ -1,5 +1,7 @@
 module Admin
   class OrdersController < AdminController
+    respond_to :html, :csv
+
     def index
       @orders = Order.all
 
@@ -75,10 +77,19 @@ module Admin
         start_time = start_time&.in_time_zone(time_zone)
         end_time = end_time&.in_time_zone(time_zone)
       end
-    
-      @total_sales = Order.total_sales(start_time, end_time)
-      @total_commissions = Order.total_commissions(start_time, end_time)
-      @total_product_sales = Order.product_sales(start_time, end_time)
+
+      respond_to do |format|
+        format.html do 
+          @total_sales = Order.total_sales(start_time, end_time)
+          @total_commissions = Order.total_commissions(start_time, end_time)
+          @total_product_sales = Order.product_sales(start_time, end_time)
+        end
+
+        format.csv do 
+          csv_data = Order.line_items_csv(start_time, end_time)
+          send_data csv_data, filename: "line_items_#{Time.zone.now.strftime('%Y%m%d_%H%M%S')}.csv"
+        end
+      end
     end
     
 

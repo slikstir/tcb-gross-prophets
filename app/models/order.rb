@@ -26,6 +26,10 @@
 #  index_orders_on_attendee_id   (attendee_id)
 #  index_orders_on_completed_at  (completed_at)
 #
+
+require 'csv'
+include Rails.application.routes.url_helpers
+
 class Order < ApplicationRecord
   CURRENCIES =  %w[
             usd eur gbp jpy cny rmb aud cad chf hkd sgd
@@ -158,6 +162,41 @@ class Order < ApplicationRecord
             .where(orders: { payment_state: 'paid', completed_at: start_time..end_time }) # Filter paid orders in range
             .group('products.name', 'orders.currency') # Group by product name and currency
             .sum(:total) # Sum total sales for each (product, currency) pair
+  end
+
+  def self.line_items_csv(start_time, end_time)
+    start_time ||= Time.zone.now.beginning_of_day
+    end_time ||= Time.zone.now.end_of_day
+
+    line_items = LineItem.joins(:order, variant: :product)
+                         .where(orders: { payment_state: 'paid', completed_at: start_time..end_time })
+
+    CSV.generate(headers: true) do |csv|
+      csv << ['Line Item ID', 'Order', 'URL', 'Fulfilled At', 'Product', 'Variant SKU', 'Currency', 'Completed At', 'Quantity', 'Total', 'Performer']
+
+      line_items.each do |line_item|
+        csv << [
+          line_item.id,
+          line_item.order.number,
+          admin_order_url(line_item.order),
+          line_item.order.fulfilled_at,
+          line_item.product.name,
+          line_item.variant.sku,
+          line_item.order.currency,
+          line_item.order.completed_at.strftime('%Y-%m-%d %H:%M:%S'),
+          line_item.quantity,
+          line_item.total_price,
+          line_item.performer.try(:name)
+        ]
+      end
+    end
+  end
+
+  def self.orders_csv(start_time, end_time)
+    start_time ||= Time.zone.now.beginning_of_day
+    end_time ||= Time.zone.now.end_of_day
+
+    Order.paid.where(completed_at: start_time..end_time)
   end
   
 
