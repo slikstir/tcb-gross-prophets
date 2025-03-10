@@ -49,7 +49,7 @@ gem "annotaterb"
 gem "bootstrap_form", "~> 5.4"
 
 gem "pagy"
-gem "redis", "~> 4.3", ">= 4.3.1"
+gem "redis", "~> 5.4"
 gem "aws-sdk-s3", require: false
 
 gem "rails_icons", "~> 1.1"
