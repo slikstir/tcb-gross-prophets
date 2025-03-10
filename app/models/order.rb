@@ -31,6 +31,8 @@ require 'csv'
 include Rails.application.routes.url_helpers
 
 class Order < ApplicationRecord
+  paginates_per 100
+
   CURRENCIES =  %w[
             usd eur gbp jpy cny rmb aud cad chf hkd sgd
             nzd inr brl rub zar krw mxn idr try thb
