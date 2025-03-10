@@ -150,7 +150,7 @@ class Order < ApplicationRecord
     LineItem.joins(:order)
             .where(orders: { payment_state: 'paid', completed_at: start_time..end_time })
             .group(:performer_id, 'orders.currency') # Group by performer and currency
-            .sum(:total) # Sum total sales for each performer-currency pair
+            .sum('line_items.unit_price * line_items.quantity')# Sum total sales for each performer-currency pair
   end
 
   def self.product_sales(start_time, end_time)
@@ -161,7 +161,7 @@ class Order < ApplicationRecord
             .joins(:order) # Join LineItem → Order
             .where(orders: { payment_state: 'paid', completed_at: start_time..end_time }) # Filter paid orders in range
             .group('products.name', 'orders.currency') # Group by product name and currency
-            .sum(:total) # Sum total sales for each (product, currency) pair
+            .sum('line_items.unit_price * line_items.quantity') # Sum total sales for each (product, currency) pair
   end
 
   def self.line_items_csv(start_time, end_time)
