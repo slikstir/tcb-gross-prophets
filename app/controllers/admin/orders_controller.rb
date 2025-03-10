@@ -10,7 +10,7 @@ module Admin
       # Search by customer email
 
       if params[:search].present?
-        orders = orders.where("customer_email ILIKE ?", "%#{params[:search]}%")
+        orders = orders.where("email ILIKE ?", "%#{params[:search]}%")
       end
 
       # Filter by payment_state (default to 'paid')
