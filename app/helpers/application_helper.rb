@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
   def a_or_an(word)
     return "" if word.blank?
 

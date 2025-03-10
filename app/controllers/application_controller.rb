@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  
   rescue_from ActionController::InvalidAuthenticityToken, with: :handle_csrf_error
   rescue_from ActiveRecord::RecordInvalid, with: :handle_unprocessable_entity
 

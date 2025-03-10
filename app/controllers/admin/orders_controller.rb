@@ -1,33 +1,35 @@
 module Admin
   class OrdersController < AdminController
+    include Pagy::Backend
+    
     respond_to :html, :csv
 
     def index
-      @orders = Order.all
+      orders = Order.all
 
       # Search by customer email
 
       if params[:search].present?
-        @orders = @orders.where("customer_email ILIKE ?", "%#{params[:search]}%")
+        orders = orders.where("customer_email ILIKE ?", "%#{params[:search]}%")
       end
 
       # Filter by payment_state (default to 'paid')
       if params[:payment_state].present?
-        @orders = @orders.where(payment_state: params[:payment_state])
+        orders = orders.where(payment_state: params[:payment_state])
       elsif params[:payment_state] != ""
-        @orders = @orders.where(payment_state: "paid")
+        orders = orders.where(payment_state: "paid")
       end
 
       # Filter by fulfillment_state
       if params[:fulfillment_state].present?
-        @orders = @orders.where(fulfillment_state: params[:fulfillment_state])
+        orders = orders.where(fulfillment_state: params[:fulfillment_state])
       end
 
       # Sorting 
-      @orders = @orders.order(fulfillment_state: :desc, completed_at: :desc)
+      orders = orders.order(fulfillment_state: :desc, completed_at: :desc)
 
       # Pagination
-      @orders = @orders.page(params[:page] ||= 1)
+      @pagy, @orders = pagy(orders)
     end
 
 

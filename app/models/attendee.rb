@@ -22,8 +22,6 @@ class Attendee < ApplicationRecord
       level: proc { |controller, model_instance| (model_instance.saved_change_to_level? ? model_instance.saved_change_to_level : nil) }
     }
 
-  paginates_per 100
-
   after_initialize :set_defaults
   before_save      :normalize_email
 

@@ -1,13 +1,17 @@
 module Admin
   class AttendeesController < AdminController
+    include Pagy::Backend
+
     before_action :set_attendee, only: [ :show, :edit, :update, :destroy ]
 
     def index
-      @attendees = if params[:search].present?
+      attendees = if params[:search].present?
         Attendee.where("name ILIKE ? OR email ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
       else
         Attendee.all
-      end.page(params[:page] ||= 1)
+      end
+
+      @pagy, @attendees = pagy(attendees)
     end
 
     def show; end

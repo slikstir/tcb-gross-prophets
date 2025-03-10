@@ -48,7 +48,7 @@ gem "devise", "~> 4.9", ">= 4.9.4"
 gem "annotaterb"
 gem "bootstrap_form", "~> 5.4"
 
-gem "kaminari"
+gem "pagy"
 gem "redis", "~> 4.3", ">= 4.3.1"
 gem "aws-sdk-s3", require: false
 
