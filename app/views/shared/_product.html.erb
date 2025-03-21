@@ -3,7 +3,7 @@
         <!-- Product Image -->
         <div class="col-md-5 d-flex justify-content-center align-items-center">
           <% if product.image.attached? %>
-            <%= image_tag product.image_medium, class: "img-fluid", style: "max-height: 250px;" %>
+            <%= image_tag product.image, class: "img-fluid", style: "max-height: 250px;" %>
           <% else %>
             <%= image_tag 'placeholder.jpg', class: "img-fluid", style: "max-height: 250px;" %>
           <% end %>
