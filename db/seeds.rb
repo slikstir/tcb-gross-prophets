@@ -8,6 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+return if Rails.env.test?
 
 Setting.create(
   name: 'System Live',

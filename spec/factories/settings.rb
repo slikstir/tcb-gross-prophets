@@ -17,6 +17,8 @@
 #
 FactoryBot.define do
   factory :setting do
-    
+    factory :setting_integer do 
+      value_type { "integer" }
+    end
   end
 end

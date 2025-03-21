@@ -15,12 +15,47 @@
 require 'rails_helper'
 
 RSpec.describe Attendee, type: :model do
-  let(:total_transactions) { 200 }
-  let(:attendees) { create_list(:attendee, total_transactions, chuds_balance: 100, performance_points: 0) }
-  let(:performer) { create(:performer, chuds_balance: 0) }
-  let(:amount) { 12 }
+
+  describe "#create" do
+  context 'Setting.find_by(code: attendee_starting_chuds).value = 7' do 
+      let(:attendee){ create(:attendee) }
+
+      before do 
+        create(:setting_integer, 
+          name: 'Attendee Starting Chuds',
+          code: 'attendee_starting_chuds',
+          value: '7'
+        )
+      end
+
+      it 'sets chuds_balance = 7' do
+        expect(attendee.chuds_balance).to eq(7)  
+      end
+    end
+
+    context 'Setting.find_by(code: attendee_starting_chuds).value = 0' do 
+      let(:attendee){ create(:attendee) }
+
+      before do 
+        create(:setting_integer, 
+          name: 'Attendee Starting Chuds',
+          code: 'attendee_starting_chuds',
+          value: '0'
+        )
+      end
+
+      it 'sets chuds_balance = 0' do 
+        expect(attendee.chuds_balance).to eq(0)  
+      end
+    end
+  end
 
   describe "#transact_chuds" do
+    let(:total_transactions) { 200 }
+    let(:attendees) { create_list(:attendee, total_transactions, chuds_balance: 100, performance_points: 0) }
+    let(:performer) { create(:performer, chuds_balance: 0) }
+    let(:amount) { 12 }
+
     it "handles concurrent chud transactions safely" do
       threads = []
 

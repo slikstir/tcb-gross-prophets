@@ -22,7 +22,7 @@ class Attendee < ApplicationRecord
       level: proc { |controller, model_instance| (model_instance.saved_change_to_level? ? model_instance.saved_change_to_level : nil) }
     }
 
-  after_initialize :set_defaults
+  before_create    :set_defaults
   before_save      :normalize_email
 
   default_scope { order(:email) }
@@ -141,7 +141,8 @@ class Attendee < ApplicationRecord
   private
 
   def set_defaults
-    self.chuds_balance = 0 if self.chuds_balance.blank?
+    default_chuds = Setting.find_by(code: "attendee_starting_chuds")&.value || 0
+    self.chuds_balance = default_chuds if self.chuds_balance.blank?
     self.level = 1 if self.level.blank?
     self.performance_points = 0 if self.performance_points.blank?
   end
