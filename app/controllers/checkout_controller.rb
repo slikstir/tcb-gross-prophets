@@ -27,8 +27,11 @@ class CheckoutController < ApplicationController
       }
     end
 
+    payment_method_types = ["card"]
+    payment_method_types << "afterpay_clearpay" if order.currency.downcase == "usd"
+
     stripe = Stripe::Checkout::Session.create(
-      payment_method_types: ['card', 'afterpay_clearpay'],      
+      payment_method_types: payment_method_types,      
       mode: "payment",
       customer_email: order.email,
       success_url: checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
