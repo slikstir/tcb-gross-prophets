@@ -58,6 +58,7 @@ Rails.application.configure do
 
 
   config.active_storage.service = :amazon
+  config.active_storage.delivery_method = :proxy
 
   Rails.application.routes.default_url_options[:host] = "chuds.money"
 

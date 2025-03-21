@@ -11,7 +11,3 @@ amazon:
   upload:
     acl: public-read
   public: true
-  url: :cdn
-  cdn_url: <%= ENV["AWS_CDN"] %> 
-
-  
