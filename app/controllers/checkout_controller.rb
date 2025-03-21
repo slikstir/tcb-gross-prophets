@@ -28,7 +28,7 @@ class CheckoutController < ApplicationController
     end
 
     stripe = Stripe::Checkout::Session.create(
-      payment_method_types: [ "card" ],
+      payment_method_types: ['card', 'afterpay_clearpay'],      
       mode: "payment",
       customer_email: order.email,
       success_url: checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
