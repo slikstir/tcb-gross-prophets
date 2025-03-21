@@ -56,9 +56,7 @@ Rails.application.configure do
   # Only use :id for inspections in production.
   config.active_record.attributes_for_inspect = [ :id ]
 
-
   config.active_storage.service = :amazon
-  config.active_storage.delivery_method = :proxy
 
   Rails.application.routes.default_url_options[:host] = "chuds.money"
 
