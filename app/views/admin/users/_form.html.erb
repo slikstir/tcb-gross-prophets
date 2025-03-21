@@ -1,12 +1,14 @@
+<%= render 'admin/shared/record_errors', record: @user %>
 <div class="col-12 col-md-6">
-  <%= bootstrap_form_with(model: [:admin, @user], local: true) do |form| %>
+  <%= bootstrap_form_with(model: [:admin, @user], local: true) do |f| %>
 
-    <%= form.text_field :email %>
-    <%= form.password_field :password %>
-    <%= form.password_field :password_confirmation %>
+    <%= f.text_field :email %>
+    <%= f.check_box :reset_api_token %>
+    <%= f.password_field :password, help: "Leave blank if you don't wish to change" %>
+    <%= f.password_field :password_confirmation %>
     
     <div class="actions">
-      <%= form.submit nil, class: 'btn btn-primary' %>
+      <%= f.submit class: 'btn btn-primary' %>
     </div>
   <% end %>
 </div>

@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  api_token              :string
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :string
 #  email                  :string           default(""), not null
@@ -21,11 +22,24 @@
 #
 # Indexes
 #
+#  index_users_on_api_token             (api_token)
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
+  before_create :generate_api_token
+  before_save :generate_api_token, if: :reset_api_token?
+
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable,
          :trackable, :lockable
+
+  attribute :reset_api_token, :boolean, default: :false
+
+  private
+
+  def generate_api_token
+    self.api_token ||= SecureRandom.hex(20)
+  end
+  
 end

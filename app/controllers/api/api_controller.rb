@@ -5,6 +5,9 @@ module Api
     skip_before_action :check_if_live
     skip_before_action :check_if_logged_in
 
+
+    before_action :authenticate_with_token!
+
     def index
       render json: { success: true, message: "Welcome to the Chuds API" }, status: :ok
     end
@@ -55,6 +58,15 @@ module Api
     end
 
     private
+
+    def authenticate_with_token!
+      token = request.headers['Authorization'].to_s.remove("Token ").strip
+      @current_user = User.find_by(api_token: token)
+
+      unless @current_user
+        render json: { error: 'Unauthorized' }, status: :unauthorized
+      end
+    end
 
     def broadcast_performer_reload
       Turbo::StreamsChannel.broadcast_replace_to(

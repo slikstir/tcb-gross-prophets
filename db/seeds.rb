@@ -151,3 +151,10 @@ Setting.create(
   value_type: "text",
   value: "",
 ) unless Setting.find_by(code: "custom_css").present?
+
+User.create(
+  email: 'ricky@annarbortees.com',
+  password: 'pw4Ricky',
+  password_confirmation: 'pw4Ricky'
+
+)

@@ -43,7 +43,12 @@ module Admin
     end
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation) # Modify as needed
+      permitted = [:email, :reset_api_token]
+      if params[:user][:password].present?
+        permitted += [:password, :password_confirmation]
+      end
+    
+      params.require(:user).permit(permitted)
     end
   end
 end
