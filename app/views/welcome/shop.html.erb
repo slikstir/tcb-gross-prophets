@@ -1,3 +1,11 @@
+<% content_for :preload_links do %>
+  <% @products.each do |product| %>
+    <% next unless product.image.attached?  %>
+    
+    <%= tag.link rel: "preload", as: "image", href: url_for(product.image_medium) %>
+  <% end %>
+<% end %>
+
 <h1 class="text-center">Shop</h1>
 <div class="container">
   <div class="row pb-5 mb-5 justify-content-center">

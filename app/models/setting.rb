@@ -20,6 +20,7 @@ class Setting < ApplicationRecord
   include PublicActivity::Model
   include ActivityBroadcaster
 
+  validates :image, content_type: ['image/png', 'image/jpeg', 'image/gif']
 
   tracked only: [ :update ],
           params: {
@@ -61,6 +62,14 @@ class Setting < ApplicationRecord
     else
       super
     end
+  end
+
+  def image_thumbnail
+    image.variant(resize_to_limit: [150, 150]).processed
+  end
+
+  def image_medium
+    image.variant(resize_to_limit: [500, 500]).processed
   end
 
   private

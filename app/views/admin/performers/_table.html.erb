@@ -18,7 +18,7 @@
           <td><%= performer.active? ? "Active" : "Inactive" %></td>
           <td><%= performer.name %><br>
             <% if performer.photo.present? %>
-              <%= image_tag performer.photo, class: "rounded img-fluid", style: "height: 150px;" %>
+              <%= image_tag performer.photo_thumbnail, class: "rounded img-fluid", style: "height: 150px;" %>
             <% end %>
           </td>
           <td><%= performer.chuds_balance %></td>

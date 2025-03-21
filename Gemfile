@@ -62,6 +62,7 @@ gem "image_processing", "~> 1.14"
 gem 'mini_magick', '~> 5.0'
 gem 'ruby-vips', '~> 2.2'
 gem 'ffi'
+gem 'active_storage_validations'
 
 gem 'state_machines-activerecord'
 gem 'stripe'

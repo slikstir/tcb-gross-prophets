@@ -19,6 +19,8 @@ class Performer < ApplicationRecord
   include PublicActivity::Model
   include ActivityBroadcaster
 
+  validates :photo, content_type: ['image/png', 'image/jpeg', 'image/gif']
+
   tracked only: [ :update ],
           params: {
             chuds_balance: proc { |controller, model_instance| (model_instance.saved_change_to_chuds_balance? ? model_instance.saved_change_to_chuds_balance : nil) },
@@ -119,6 +121,14 @@ class Performer < ApplicationRecord
         )
       end
     end
+  end
+
+  def photo_thumbnail
+    photo.variant(resize_to_limit: [150, 150]).processed
+  end
+
+  def photo_medium
+    photo.variant(resize_to_limit: [500, 500]).processed
   end
 
   private

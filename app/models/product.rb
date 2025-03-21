@@ -20,6 +20,7 @@ class Product < ApplicationRecord
   AVAILABILITY_OPTIONS = %w[ in_show merch_table unavailable ]
 
   has_one_attached :image
+  
   has_rich_text :description
 
   has_one :parent,
@@ -37,6 +38,7 @@ class Product < ApplicationRecord
   validates :name, :price, :sku, presence: true
   validates :price, numericality: { greater_than: 0 }
   validates :availability, inclusion: { in: AVAILABILITY_OPTIONS }
+  validates :image, content_type: ['image/png', 'image/jpeg', 'image/gif']
 
   delegate :sku, :stock_level, to: :parent
 
@@ -55,5 +57,13 @@ class Product < ApplicationRecord
   def options_for(number)
     return [] unless number.to_i.between?(1, 3)
     children.pluck("option_#{number}").uniq
+  end
+
+  def image_thumbnail
+    image.variant(resize_to_limit: [150, 150]).processed
+  end
+
+  def image_medium
+    image.variant(resize_to_limit: [500, 500]).processed
   end
 end
