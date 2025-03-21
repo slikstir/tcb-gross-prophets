@@ -1,0 +1,20 @@
+<h1>Admin // Upload Vouchers CSV</h1>
+
+<%= render 'nav' %>
+
+<div class="card my-3">
+  <div class="card-header">CSV Format</div>
+  <div class="card-body">
+    <pre>
+      <code>code,amount</code>
+      <code>test,15</code>
+    </pre>
+  </div>
+</div>
+
+<%= form_with url: upload_admin_vouchers_path, method: :post, local: true, html: { multipart: true } do |f| %>
+   <div class="mb-3">
+    <%= f.file_field :csv, class: "form-control" %>
+  </div>
+  <%= submit_tag "Upload CSV", class: "btn btn-success" %>
+<% end %>

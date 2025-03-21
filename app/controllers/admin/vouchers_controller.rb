@@ -46,6 +46,20 @@ module Admin
       redirect_to admin_vouchers_url, notice: 'Voucher was successfully destroyed.'
     end
 
+    def upload
+      if request.post?
+        csv_file = params[:csv]
+        if csv_file.present?
+          results = Voucher.upload(csv_file)
+          redirect_to admin_vouchers_url, notice: "Vouchers upload processed."\
+                                                  "#{results[:success]} vouchers created, #{results[:failure]} failed. "\
+                                                  "#{results[:failures].map{|x| "#{x[:code]}: #{x[:error]}"}.join(', ')}"
+        else
+          redirect_to admin_vouchers_url, notice: 'Please upload a CSV file.'
+        end
+      end
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_voucher

@@ -40,18 +40,22 @@ Rails.application.routes.draw do
   resources :vouchers, only: [ :index ]
 
   namespace :admin do
+    get "/", to: "admin#index"
+    resources :users, :products, :settings
+    resources :line_items, except: [ :index ]
+
     resources :orders do 
       collection do
         get :reports
       end
     end
-    resources :line_items, except: [ :index ]
 
     resources :activities, only: [ :index ] do
       collection do
         delete :destroy_all, as: :destroy_all
       end
     end
+    
     resources :attendees, :performers do
       collection do
         post "reset_chuds_balance/(:amount)", action: :reset_chuds_balance, as: :reset_chuds_balance
@@ -59,9 +63,13 @@ Rails.application.routes.draw do
         post "gift_chuds/(:amount)", action: :gift_chuds, as: :gift_chuds
       end
     end
-    resources :users, :vouchers, :products,
-              :settings
-    get "/", to: "admin#index"
+
+    resources :vouchers do 
+      collection do 
+        get 'upload', as: :upload
+        post 'upload'
+      end
+    end
   end
 
   namespace :api do

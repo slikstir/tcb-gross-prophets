@@ -88,7 +88,7 @@ class ApplicationController < ActionController::Base
     Rails.logger.error "Session Data: #{session.to_hash.except('session_id', '_csrf_token')}"
     Rails.logger.error "Request URL: #{request.fullpath}"
     Rails.logger.error "Request Method: #{request.method}"
-    Rails.logger.error "Request Params: #{filtered_params}"
+    Rails.logger.error "Request Params: #{filtered_params}" rescue nil
     Rails.logger.error "User Agent: #{request.user_agent}"
     Rails.logger.error "IP Address: #{request.remote_ip}"
   end

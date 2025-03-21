@@ -8,6 +8,9 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+
+require 'csv'
+
 class Voucher < ApplicationRecord
   validates :amount, :code, presence: true
   validates :code, uniqueness: true
@@ -16,6 +19,30 @@ class Voucher < ApplicationRecord
   has_many :attendees, through: :attendee_vouchers
 
   before_save :downcase_code
+
+  def self.upload(file)
+    results = {
+      success: 0,
+      failure: 0, 
+      failures: []
+    }
+    CSV.foreach(file.path, headers: true) do |row|
+      begin 
+        create!(
+          code: row['code'].to_s.strip,
+          amount: row['amount'].to_i
+        )
+        results[:success] += 1
+      rescue => e
+        results[:failure] += 1
+        results[:failures] << {
+          code: row['code'],
+          error: e.message
+        }
+      end
+    end
+    results
+  end
 
   def already_redeemed_by?(email)
     attendee = Attendee.find_by(email: email)
