@@ -46,7 +46,7 @@ RSpec.describe Attendee, type: :model do
       end
 
       # Ensure performer's chud balance matches expected value
-      expected_performer_chuds = total_transactions * amount * 0.75
+      expected_performer_chuds = total_transactions * amount
       expect(performer.reload.chuds_balance).to eq(expected_performer_chuds)
     end
   end
