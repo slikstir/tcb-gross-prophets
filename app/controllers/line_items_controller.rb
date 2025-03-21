@@ -39,6 +39,8 @@ class LineItemsController < ApplicationController
   def find_or_initialize_order
     if session[:order_id].present?
       @order = Order.find(session[:order_id])
+      @order.update(currency: @currency.downcase) if(@order.currency != @currency.downcase)
+      @order.update(tax_rate: @tax_rate) if(@order.tax_rate != @tax_rate)
     else
       @order = Order.new(
         email: session[:email],
