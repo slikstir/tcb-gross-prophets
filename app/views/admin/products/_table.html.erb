@@ -2,6 +2,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
+        <th>Sort</th>
         <th></th>
         <th>Product</th>
         <th>Chuds</th>
@@ -13,6 +14,9 @@
       <% @products.each do |product| %>
         <tr>
           <td>
+            <%= product.sort_order %>
+          </td>
+          <td>
             <% if product.image.attached? %>
               <%= image_tag product.image, class: "img-fluid", style: "max-height: 150px;" %>
             <% else %>
@@ -21,7 +25,9 @@
           </td>
           <td><%= product.name %><br>
               <i><%= product.sku %></i><br>
-              <%= number_to_currency product.price, unit: currency_icon %><br>
+              <%= number_to_currency product.price, unit: currency_icon %><br><br>
+              Project: <%= product.project %><br>
+              Category: <%= product.category %>
           </td>
           <td><%= product.chuds %></td>
           <td><%= product.availability %></td>

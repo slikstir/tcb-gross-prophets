@@ -1,6 +1,7 @@
 class Store::CheckoutController < ApplicationController
   layout 'store' 
-
+  
+  before_action :set_store_dropdowns
   skip_before_action :check_if_live
   skip_before_action :check_if_logged_in
 
@@ -78,7 +79,7 @@ class Store::CheckoutController < ApplicationController
   end
 
   def cancel
-    redirect_to cart_path, alert: "Payment was canceled."
+    redirect_to store_cart_path, alert: "Payment was canceled."
   end
 end
 

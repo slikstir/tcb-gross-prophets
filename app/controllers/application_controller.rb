@@ -61,6 +61,11 @@ class ApplicationController < ActionController::Base
     @current_attendee ||= Attendee.find_by(email: session[:email])
   end
 
+  def set_store_dropdowns
+    @categories = Product.pluck(:category).uniq.reject(&:blank?)
+    @projects = Product.pluck(:project).uniq.reject(&:blank?)
+  end
+
   private
 
   def handle_csrf_error

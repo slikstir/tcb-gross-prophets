@@ -153,6 +153,15 @@ Setting.create(
   value: "",
 ) unless Setting.find_by(code: "custom_css").present?
 
+
+Setting.create(
+  name: "Store Welcome Message",
+  code: "store_message",
+  description: "The store message",
+  value_type: "html",
+  value: "",
+) unless Setting.find_by(code: "store_message").present?
+
 User.create(
   email: 'ricky@annarbortees.com',
   password: 'pw4Ricky',

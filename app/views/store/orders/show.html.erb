@@ -1,1 +1,6 @@
+<% if @order.fulfillment_state != 'fulfilled' %>
+  <div class="alert alert-info" role="alert">
+    Show this confirmation to the merch table to pick up your order. Thank you!
+  </div>
+<% end %>
 <%= render 'shared/order', order: @order %>

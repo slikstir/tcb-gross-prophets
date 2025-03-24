@@ -21,22 +21,28 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-5">
+      <div class="col-sm-3">
+        <%= f.select :availability, Product::AVAILABILITY_OPTIONS.map{|x| [x.humanize, x] } %>
+      </div>
+      <div class="col-sm-3">
         <%= f.number_field :price, step: 0.01, prepend: currency_icon, min: 0 %>
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <%= f.select :taxable, [["Yes", true], ["No", false]] %>
       </div>
-      <div class="col-sm-5">
+      <div class="col-sm-3">
         <%= f.number_field :chuds, label: "How many chuds for purchasing?", step: 1, min: 0 %>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-6">
-        <%= f.select :availability, Product::AVAILABILITY_OPTIONS.map{|x| [x.humanize, x] } %>
-      </div>
-      <div class="col-sm-6">
+      <div class="col-sm-2">
         <%= f.number_field :sort_order, step: 1, min: 0 %>
+      </div>
+      <div class="col-sm-5">
+        <%= f.text_field :project %>
+      </div>
+      <div class="col-sm-5">
+        <%= f.text_field :category %>
       </div>
     </div>
     <div class="row">

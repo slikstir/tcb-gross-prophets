@@ -4,12 +4,14 @@
 #
 #  id                   :bigint           not null, primary key
 #  availability         :string
+#  category             :string
 #  chuds                :integer
 #  name                 :string
 #  option_1             :string
 #  option_2             :string
 #  option_3             :string
 #  price                :decimal(10, 2)
+#  project              :string
 #  requires_fulfillment :boolean          default(TRUE)
 #  sort_order           :integer          default(0)
 #  taxable              :boolean          default(TRUE)
@@ -19,10 +21,12 @@
 #
 # Indexes
 #
+#  index_products_on_category    (category)
+#  index_products_on_project     (project)
 #  index_products_on_sort_order  (sort_order)
 #
 class Product < ApplicationRecord
-  AVAILABILITY_OPTIONS = %w[ in_show merch_table unavailable ]
+  AVAILABILITY_OPTIONS = %w[ unavailable in_show merch_table  ]
 
   has_one_attached :image
   

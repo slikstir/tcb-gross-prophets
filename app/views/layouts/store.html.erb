@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "The Company™ Portal" %></title>
+    <title><%= content_for(:title) || "Shop The Company™ Store" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -56,10 +56,39 @@
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
                 <%= link_to store_path, class: "nav-link" do %>
-                  <% icon 'cart' %> Store
+                  <% icon 'cart' %> All
                 <% end %>
               </li>
+
+              <!-- Shop by Project -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="projectDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Shop by Project
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="projectDropdown">
+                  <% @projects.each do |project| %>
+                    <li>
+                      <%= link_to project, store_path(project: project), class: "dropdown-item" %>
+                    </li>
+                  <% end %>
+                </ul>
+              </li>
+
+              <!-- Shop by Category -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Shop by Category
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                  <% @categories.each do |category| %>
+                    <li>
+                      <%= link_to category, store_path(category: category), class: "dropdown-item" %>
+                    </li>
+                  <% end %>
+                </ul>
+              </li>
             </ul>
+
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
                 <%= link_to store_cart_path, class: "nav-link position-relative d-none d-lg-block", data: { turbo: false } do %>
