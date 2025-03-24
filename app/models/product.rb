@@ -28,6 +28,8 @@ class Product < ApplicationRecord
   
   has_rich_text :description
 
+  default_scope -> { order(:sort_order) }
+
   scope :in_show, -> { where(availability: "in_show") }
   scope :merch_table, -> { where(availability: "merch_table") }
   scope :unavailable, -> { where(availability: "unavailable") } 
