@@ -53,7 +53,8 @@ class ApplicationController < ActionController::Base
   end
 
   def cart_item_count
-    @cart_item_count = Order.find_by(id: session[:order_id]).try(:line_items).sum(:quantity) rescue 0
+    @show_cart_count = Order.find_by(id: session[:show_order_id]).try(:line_items).sum(:quantity) rescue 0
+    @merch_cart_count = Order.find_by(id: session[:merch_order_id]).try(:line_items).sum(:quantity) rescue 0
   end
 
   def current_attendee

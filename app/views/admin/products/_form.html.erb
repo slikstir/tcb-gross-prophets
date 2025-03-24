@@ -31,8 +31,14 @@
         <%= f.number_field :chuds, label: "How many chuds for purchasing?", step: 1, min: 0 %>
       </div>
     </div>
-
-    <%= f.select :availability, Product::AVAILABILITY_OPTIONS.map{|x| [x.humanize, x] } %>
+    <div class="row">
+      <div class="col-sm-6">
+        <%= f.select :availability, Product::AVAILABILITY_OPTIONS.map{|x| [x.humanize, x] } %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.number_field :sort_order, step: 1, min: 0 %>
+      </div>
+    </div>
     <div class="row">
       <div class="col-sm-4">
         <%= f.select :track_inventory, [["No", false], ["Yes", true]] %>

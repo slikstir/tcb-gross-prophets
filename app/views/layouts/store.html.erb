@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "The Company™ Portal" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+
+    <link rel="icon" href="/TCB_Favicon_8.png" type="image/png">
+    <link rel="apple-touch-icon" href="/TCB_Favicon_8.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag 'bootstrap', 'application', media: 'all' %>
+    <%= stylesheet_link_tag custom_styles_path + "?v=#{Setting.find_by(name: 'custom_css')&.updated_at.to_i}" %>
+    <%= javascript_importmap_tags %>
+    <style>
+      <%= raw Setting.find_by(code: 'custom_css').try(:value) %>
+    </style>
+  </head>
+  <%= render 'shared/analytics_code' %>
+  
+  <body class="d-flex flex-column min-vh-100" id="<%= request.path == "/" ? 'welcome-index' : request.path.delete_prefix("/").gsub("/", "-")%>">
+  <main class="flex-grow-1 d-flex flex-column">
+        <!-- start of navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <%= link_to store_path, class: 'navbar-brand' do  %>
+            <%= image_tag 'TheCompany-Wordmark.png', style: 'max-height: 50px;' %>
+          <% end %>
+
+          <div class="d-flex">
+            <!-- Cart Icon in Navbar Toggler (Visible in Mobile) -->
+            <%= link_to store_cart_path, class: "nav-link position-relative d-lg-none", data: { turbo: false } do %>
+              <%= icon 'cart' %>
+              <% if @merch_cart_count.to_i > 0 %>
+                <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger" id="cart-count-mobile">
+                  <%= @merch_cart_count.to_i || 0 %>
+                </span>
+              <% end %>
+            <% end %>
+            <button class="navbar-toggler position-relative me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+          </div>
+
+          <div class="collapse navbar-collapse text-center" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <%= link_to store_path, class: "nav-link" do %>
+                  <% icon 'cart' %> Store
+                <% end %>
+              </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <%= link_to store_cart_path, class: "nav-link position-relative d-none d-lg-block", data: { turbo: false } do %>
+                  <%= icon 'cart' %>
+                  <% if @merch_cart_count.to_i > 0 %>
+                    <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger" id="cart-count-mobile">
+                      <%= @merch_cart_count || 0 %>
+                    </span>
+                  <% end %>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+        <!-- end of navbar -->
+
+
+
+    <div class="d-flex justify-content-center">
+    <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show xs-col-12 col-md-6" role="alert">
+          <%= value %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= yield %> 
+    </div>
+
+    </main>
+       <!-- footer --> 
+      <footer class="footer mt-auto py-3 bg-light mt-10">
+        <div class="container text-center">
+          <span class="text-muted">
+            <%= link_to "Terms of Service", terms_path, target: :_blank %>
+          </span><br>
+          <span class="text-muted">The Company™ Portal Presented By The Tin Can Brothers</span><br>
+          <span class="text-muted">© 2014-<%= Time.now.strftime("%Y")%> The Tin Can Brothers</span><br>
+
+          <span class="text-muted">Cart ID: <%= session[:merch_order_id] %></span>
+        </div>
+      </footer>
+  </body>
+</html>

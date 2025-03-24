@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_21_082242) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_23_235606) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -165,6 +165,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_21_082242) do
     t.string "option_3"
     t.boolean "taxable", default: true
     t.boolean "requires_fulfillment", default: true
+    t.integer "sort_order", default: 0
+    t.index ["sort_order"], name: "index_products_on_sort_order"
   end
 
   create_table "settings", force: :cascade do |t|

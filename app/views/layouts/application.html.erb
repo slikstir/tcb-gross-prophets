@@ -99,9 +99,9 @@
               <li class="nav-item">
                 <%= link_to cart_path, class: "nav-link position-relative d-none d-lg-block", data: { turbo: false } do %>
                   <%= icon 'cart' %>
-                  <% if @cart_item_count.to_i > 0 %>
+                  <% if @show_cart_count.to_i > 0 %>
                     <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger" id="cart-count-mobile">
-                      <%= @cart_item_count || 0 %>
+                      <%= @show_cart_count || 0 %>
                     </span>
                   <% end %>
                 <% end %>

@@ -11,10 +11,15 @@
 #  option_3             :string
 #  price                :decimal(10, 2)
 #  requires_fulfillment :boolean          default(TRUE)
+#  sort_order           :integer          default(0)
 #  taxable              :boolean          default(TRUE)
 #  track_inventory      :boolean
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
+#
+# Indexes
+#
+#  index_products_on_sort_order  (sort_order)
 #
 class Product < ApplicationRecord
   AVAILABILITY_OPTIONS = %w[ in_show merch_table unavailable ]
@@ -22,6 +27,10 @@ class Product < ApplicationRecord
   has_one_attached :image
   
   has_rich_text :description
+
+  scope :in_show, -> { where(availability: "in_show") }
+  scope :merch_table, -> { where(availability: "merch_table") }
+  scope :unavailable, -> { where(availability: "unavailable") } 
 
   has_one :parent,
       -> { where(parent: true) },

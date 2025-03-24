@@ -37,6 +37,8 @@ class Order < ApplicationRecord
             ]
 
   scope :paid, -> { where(payment_state: "paid") }
+  scope :merch_table, -> { where(channel: "merch_table") }
+  scope :in_show, -> { where(channel: "in_show") }
 
 
   belongs_to :attendee, optional: true

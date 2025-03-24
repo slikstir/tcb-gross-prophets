@@ -9,7 +9,7 @@ class WelcomeController < ApplicationController
 
   def sign_out
     session[:email] = nil
-    session[:order_id] = nil
+    session[:show_order_id] = nil
     redirect_to root_path
   end
 
@@ -38,7 +38,7 @@ class WelcomeController < ApplicationController
   end
 
   def cart
-    @cart = Order.find_by(id: session[:order_id])
+    @cart = Order.find_by(id: session[:show_order_id])
     @line_items = @cart.line_items if @cart.present?
   end
 

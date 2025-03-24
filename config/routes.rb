@@ -72,6 +72,18 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :store do 
+    get "/", to: "products#index"
+    resources :products, only: :index
+    resources :orders, only: :show
+
+    get "/cart", to: "checkout#cart", as: :cart
+
+    post "/checkout", to: "checkout#create"
+    get "/checkout/success", to: "checkout#success"
+    get "/checkout/cancel", to: "checkout#cancel"
+  end
+
   namespace :api do
     get "/", to: "api#index"
     post "show/:start_or_stop", to: "api#show"

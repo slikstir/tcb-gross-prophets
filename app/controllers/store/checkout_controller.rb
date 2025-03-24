@@ -1,4 +1,13 @@
-class CheckoutController < ApplicationController
+class Store::CheckoutController < ApplicationController
+  layout 'store' 
+
+  skip_before_action :check_if_live
+  skip_before_action :check_if_logged_in
+
+  def cart
+    @cart = Order.find_by(id: session[:merch_order_id])
+    @line_items = @cart.line_items if @cart.present?
+  end
 
   def create
     order = Order.find(params[:order_id])
@@ -35,8 +44,8 @@ class CheckoutController < ApplicationController
       payment_method_types: payment_method_types,      
       mode: "payment",
       customer_email: order.email,
-      success_url: checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: checkout_cancel_url,
+      success_url: store_checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url: store_checkout_cancel_url,
       line_items: line_items,
       metadata: {
         order_number: order.number,
@@ -50,18 +59,16 @@ class CheckoutController < ApplicationController
   def success
     stripe = Stripe::Checkout::Session.retrieve(params[:session_id])
     order = Order.find_by(number: stripe.metadata["order_number"])
-    order.update(stripe_payment_id: stripe.payment_intent)
+    order.update(
+      stripe_payment_id: stripe.payment_intent,
+      email: stripe.customer_details.email
+    )
     if stripe.payment_status == "paid"
       order.pay
-      if order.channel == "merch_table"
-        session[:merch_order_id] = nil
-        redirect_to store_order_path(order), notice: "Payment successful! Thank you for your order!"
-      else 
-        session[:show_order_id] = nil
-        redirect_to order_path(order), notice: "Payment successful! Thank you for your order!"
-      end
+      session[:merch_order_id] = nil
+      redirect_to store_order_path(order), notice: "Payment successful! Thank you for your order!"
     else
-      redirect_to cart_path, alert: "Payment failed."
+      redirect_to store_cart_path, alert: "Payment failed."
     end
   rescue Exception => e
     Rails.logger.error "Error processing payment: #{e.message}"
@@ -74,3 +81,4 @@ class CheckoutController < ApplicationController
     redirect_to cart_path, alert: "Payment was canceled."
   end
 end
+

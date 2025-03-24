@@ -1,11 +1,11 @@
-<h1 class="text-center">Shop</h1>
-<div class="container">
+<!--<h1 class="text-center">Gross Prophets Merch</h1> -->
+<div class="container mt-5">
   <div class="row pb-5 mb-5 justify-content-center">
     <% @products.each do |product| %>
       <div class="col-lg-6 d-flex align-items-stretch justify-content-center mb-5">
         <div class="card bg-light p-3 w-100 d-flex flex-column">
           <%= bootstrap_form_with model: LineItem.new do |f| %>
-            <%= render 'shared/product', product: product, f: f, channel: "in_show" %>
+            <%= render 'shared/product', product: product, f: f, channel: "merch_table" %>
           <% end %>
         </div>
       </div>

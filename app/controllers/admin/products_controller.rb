@@ -54,7 +54,7 @@ module Admin
         params.require(:product).permit(
           :name, :price, :description, :taxable, :requires_fulfillment,
           :image, :availability, :track_inventory, :stock_level,
-          :sku, :chuds, :option_1, :option_2, :option_3,
+          :sku, :chuds, :option_1, :option_2, :option_3, :sort_order,
           parent_attributes: [ :id, :sku, :option_1, :option_2, :option_3, :_destroy, :parent, :stock_level ],
           children_attributes: [ :id, :sku, :option_1, :option_2, :option_3, :_destroy, :parent, :stock_level ]
         )
