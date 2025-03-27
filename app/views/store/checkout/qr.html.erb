@@ -1,0 +1,18 @@
+<div class="container text-center mt-5">
+  <h1>Scan to Pay</h1>
+  <p>Order #: <%= @order.number %></p>
+  <p><strong>Total:</strong> <%= number_to_currency(@order.total, unit: currency_icon) %></p>
+
+  <%# Render the QR Code %>
+  <div class="mt-4">
+    <%= raw @qr.as_svg(module_size: 6) %>
+  </div>
+
+  <p class="mt-3">
+    Or <a href="<%= @checkout_url %>" target="_blank">click here to pay</a>.
+  </p>
+
+  <%= link_to "New Cart", store_new_cart_path, method: :post, class: 'btn btn-primary btn-large ' %>
+
+</div>
+

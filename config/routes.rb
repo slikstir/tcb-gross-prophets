@@ -83,6 +83,9 @@ Rails.application.routes.draw do
     post "/empty", to: "checkout#empty", as: :empty
     get "/checkout/success", to: "checkout#success"
     get "/checkout/cancel", to: "checkout#cancel"
+    get 'qr/:order_id', to: 'checkout#qr', as: :qr
+    post 'new', to: 'checkout#new', as: :new_cart
+    post 'new', to: 'checkout#new', as: :pay_cash
   end
 
   namespace :api do
