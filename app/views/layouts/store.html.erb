@@ -40,11 +40,9 @@
             <!-- Cart Icon in Navbar Toggler (Visible in Mobile) -->
             <%= link_to store_cart_path, class: "nav-link position-relative d-lg-none", data: { turbo: false } do %>
               <%= icon 'cart' %>
-              <% if @merch_cart_count.to_i > 0 %>
-                <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger" id="cart-count-mobile">
+                <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger <% if @merch_cart_count.to_i == 0 %>d-none<% end %>" id="cart-count-mobile">
                   <%= @merch_cart_count.to_i || 0 %>
                 </span>
-              <% end %>
             <% end %>
             <button class="navbar-toggler position-relative me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -93,11 +91,9 @@
               <li class="nav-item">
                 <%= link_to store_cart_path, class: "nav-link position-relative d-none d-lg-block", data: { turbo: false } do %>
                   <%= icon 'cart' %>
-                  <% if @merch_cart_count.to_i > 0 %>
-                    <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger" id="cart-count-mobile">
+                    <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger<% if @merch_cart_count.to_i == 0 %>d-none<% end %>" id="cart-count-desktop">
                       <%= @merch_cart_count || 0 %>
                     </span>
-                  <% end %>
                 <% end %>
               </li>
             </ul>
@@ -109,7 +105,7 @@
 
 
 
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center" id="flash-messages">
     <% flash.each do |key, value| %>
         <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show xs-col-12 col-md-6" role="alert">
           <%= value %>
@@ -135,5 +131,28 @@
           <span class="text-muted">Cart ID: <%= session[:merch_order_id] %></span>
         </div>
       </footer>
+      <div id="modal-launcher"></div>
+
+    <div id="modals"></div>
+    
+      <!-- Shopping Cart Notice Modal -->
+      <div class="modal fade" id="cartNoticeModal" tabindex="-1" aria-labelledby="cartNoticeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="cartNoticeModalLabel">Item Added</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="cartNoticeBody">
+              Item was successfully added to your cart.
+            </div>
+            <div class="modal-footer">
+              <a href="<%= store_cart_path %>" class="btn btn-warning">Go to Cart</a>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Keep Shopping</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
   </body>
 </html>

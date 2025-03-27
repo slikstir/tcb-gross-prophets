@@ -16,7 +16,12 @@ class LineItemsController < ApplicationController
     
     if @line_item.valid? 
       cart_redirect = (params[:order_channel] == 'merch_table' ? store_cart_path : cart_path)
-      redirect_to cart_redirect
+
+      respond_to do |format|
+        cart_item_count
+        format.turbo_stream
+        format.html { redirect_to cart_redirect }
+      end
     else
       cart_redirect = (params[:order_channel] == 'merch_table' ? 'store' : 'shop')
       redirect_to cart_redirect

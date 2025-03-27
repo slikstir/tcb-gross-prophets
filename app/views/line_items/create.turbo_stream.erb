@@ -1,0 +1,35 @@
+<%= turbo_stream.replace "cart-count-desktop" do %>
+  <% if @merch_cart_count.to_i > 0 %>
+    <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger" id="cart-count-desktop">
+      <%= @merch_cart_count %>
+    </span>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "cart-count-mobile" do %>
+  <% if @merch_cart_count.to_i > 0 %>
+    <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger" id="cart-count-mobile">
+      <%= @merch_cart_count %>
+    </span>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.append "modals" do %>
+  <div data-controller="modal" class="modal fade" id="cartNoticeModal" tabindex="-1" aria-labelledby="cartNoticeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cartNoticeModalLabel">Item Added</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="cartNoticeBody">
+            Added '<%= @line_item.product.name %>' to your cart.
+        </div>
+        <div class="modal-footer">
+          <a href="<%= store_cart_path %>" class="btn btn-warning">Go to Cart</a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Keep Shopping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

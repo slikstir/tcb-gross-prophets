@@ -11,7 +11,7 @@
     <% @products.each do |product| %>
       <div class="col-lg-6 d-flex align-items-stretch justify-content-center mb-5">
         <div class="card bg-light p-3 w-100 d-flex flex-column">
-          <%= bootstrap_form_with model: LineItem.new do |f| %>
+          <%= bootstrap_form_with model: LineItem.new, data: { turbo: true } do |f| %>
             <%= render 'shared/product', product: product, f: f, channel: "merch_table" %>
           <% end %>
         </div>
