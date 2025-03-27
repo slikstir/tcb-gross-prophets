@@ -2,7 +2,7 @@
 <%= turbo_stream_from "#{dom_id(attendee)}_chuds_status" %>
 <div id="<%= dom_id(attendee) %>_chuds_status" class="container mt-4">
   <div class="card bg-light p-4">
-  <h2 class="text-center mb-3">Welcome Back, <%= attendee.name %></h2>
+  <h2 class="text-center mb-3">Welcome <%= attendee.name %></h2>
 
   <div class="row text-center">
     <div class="col-4">

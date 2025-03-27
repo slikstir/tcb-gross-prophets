@@ -4,7 +4,9 @@
   <% if @homepage_image.image? && @homepage_image.image.attached? %>
      <%= image_tag @homepage_image.image, class: "img-fluid" %>
   <% else %>
-    <%= image_tag "GrossProphets-Trio-v2.png", class: "img-fluid" %>
+    <div class="col-12 col-md-4 offset-md-4">
+      <%= image_tag "GrossProphets-Trio-v2.png", class: "img-fluid" %>
+    </div>
   <% end %>
 
   <% unless @homepage_text.blank? %>
