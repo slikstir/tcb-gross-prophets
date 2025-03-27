@@ -10,6 +10,12 @@ class Store::CheckoutController < ApplicationController
     @line_items = @cart.line_items if @cart.present?
   end
 
+  def empty
+    @cart = Order.find(params[:order_id])
+    @cart.line_items.destroy_all
+    redirect_to store_path, notice: "Cart has been emptied."
+  end
+
   def create
     order = Order.find(params[:order_id])
 

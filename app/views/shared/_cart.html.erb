@@ -84,8 +84,12 @@
         <% end %>
         <h4 class="mb-3">Total: <%= number_to_currency(@cart.total, unit: currency_icon) %></h4>
         <% if order_channel == 'merch_table' %>
+
           <%= button_to "Checkout", store_checkout_path(order_id: @cart.id), method: :post, remote: true, 
                   data: { action: "click->checkout#redirect" }, class: "btn btn-warning btn-lg"  %>
+          <div class="mt-5">
+          <%= link_to "Empty", store_empty_path(order_id: @cart.id), method: :post %>
+          </div>
         <% else %>
           <%= button_to "Checkout", checkout_path(order_id: @cart.id), method: :post, remote: true, 
                   data: { action: "click->checkout#redirect" }, class: "btn btn-warning btn-lg"  %>

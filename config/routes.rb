@@ -80,6 +80,7 @@ Rails.application.routes.draw do
     get "/cart", to: "checkout#cart", as: :cart
 
     post "/checkout", to: "checkout#create"
+    post "/empty", to: "checkout#empty", as: :empty
     get "/checkout/success", to: "checkout#success"
     get "/checkout/cancel", to: "checkout#cancel"
   end
