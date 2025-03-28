@@ -1,0 +1,14 @@
+<h1>Thanks for your order!</h1>
+<p>Be sure to stop by the merch table to grab your merch!</p>
+<p>Order Number: <strong><%= @order.number %></strong></p>
+<p>Total: <%= number_to_currency(@order.total, unit: @currency) %></p>
+<p>Items:</p>
+<ul>
+  <li>
+    <% @order.line_items.each do |item| %>
+      <%= item.quantity %> x <%= item.product.name %> - <%= number_to_currency(item.total_price, unit: @currency) %>
+    <% end %>
+    </li>
+</ul>
+
+<p>We appreciate your support!</p>

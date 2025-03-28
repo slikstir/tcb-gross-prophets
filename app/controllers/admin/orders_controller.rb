@@ -25,6 +25,12 @@ module Admin
         orders = orders.where(fulfillment_state: params[:fulfillment_state])
       end
 
+      # Searching for Order Number
+      if params[:number].present?
+        sanitized_number = params[:number].to_s.gsub(/\D/, "") # remove non-digits
+        orders = orders.where("number LIKE ?", "%#{sanitized_number}")
+      end
+
       # Sorting 
       orders = orders.order(fulfillment_state: :desc, completed_at: :desc)
 

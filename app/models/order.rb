@@ -72,6 +72,7 @@ class Order < ApplicationRecord
     after_transition on: :pay, do: :deduct_stock
     after_transition on: :pay, do: :automatic_fulfillment
     after_transition on: :pay, do: :broadcast_purchase
+    after_transition on: :pay, do: :send_receipt_email
   end
 
   state_machine :fulfillment_state, initial: :pending do
@@ -215,6 +216,15 @@ class Order < ApplicationRecord
     line_items.each(&:broadcast_notification)
   rescue Exception => e
     Rails.logger.error "Error broadcasting purchase: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+  end
+
+  def send_receipt_email
+    return unless Rails.env.development?
+    return unless email.present?
+    OrderMailer.receipt_email(self).deliver_later
+  rescue Exception => e
+    Rails.logger.error "Error Sending Customer email: #{e.message}"
     Rails.logger.error e.backtrace.join("\n")
   end
 

@@ -19,6 +19,7 @@ services:
     depends_on:
       - db
       - redis
+      - mailcatcher
 
   db:
     image: postgres:15
@@ -28,6 +29,12 @@ services:
       POSTGRES_DB: tcb_gp_development
     ports:
       - "5432:5432"
+
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "1080:1080"
+      - "1025:1025"
   
   redis:
     image: redis:7
