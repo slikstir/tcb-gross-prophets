@@ -38,17 +38,17 @@
                 <% product.children.each do |child| %>
                   <%= child.option_1 %>
                   <% if child.in_stock? %>
-                    <span class="badge bg-success text-light">In Stock</span>
+                    <span class="badge bg-success text-light"><%= child.stock_level %></span>
                   <% else %>
-                    <span class="badge bg-danger text-light">Sold Out</span>
+                    <span class="badge bg-danger text-light"><%= child.stock_level %></span>
                   <% end %>
                   <br>
                 <% end %>
               <% else %>
                 <% if product.parent.in_stock? %>
-                  <span class="badge bg-success text-light">In Stock</span>
+                  <span class="badge bg-success text-light"><%= parent.stock_level %></span>
                 <% else %>
-                  <span class="badge bg-danger text-light">Sold Out</span>
+                  <span class="badge bg-danger text-light"><%= parent.stock_level %></span>
                 <% end %>
               <% end %>
             <% else %>
