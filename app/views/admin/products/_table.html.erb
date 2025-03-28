@@ -5,8 +5,7 @@
         <th>Sort</th>
         <th></th>
         <th>Product</th>
-        <th>Chuds</th>
-        <th>Availability</th>
+        <th>Stock</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -26,11 +25,37 @@
           <td><%= product.name %><br>
               <i><%= product.sku %></i><br>
               <%= number_to_currency product.price, unit: currency_icon %><br><br>
+              <% if product.chuds.to_i > 0 %>
+                Chuds: <%= product.chuds %><br>
+              <% end %>
               Project: <%= product.project %><br>
               Category: <%= product.category %>
           </td>
-          <td><%= product.chuds %></td>
-          <td><%= product.availability %></td>
+          <td>
+            <%= product.availability.humanize %><br><br>
+            <% if product.track_inventory? %>
+              <% if product.children.any? %>
+                <% product.children.each do |child| %>
+                  <%= child.option_1 %>
+                  <% if child.in_stock? %>
+                    <span class="badge bg-success text-light">In Stock</span>
+                  <% else %>
+                    <span class="badge bg-danger text-light">Sold Out</span>
+                  <% end %>
+                  <br>
+                <% end %>
+              <% else %>
+                <% if product.parent.in_stock? %>
+                  <span class="badge bg-success text-light">In Stock</span>
+                <% else %>
+                  <span class="badge bg-danger text-light">Sold Out</span>
+                <% end %>
+              <% end %>
+            <% else %>
+              <span class="badge bg-success text-light">In Stock</span>
+            <% end %>
+          
+          </td>
           <td>
             <%= link_to admin_product_path(product), class: "btn btn-sm btn-success" do %>
               <%= icon 'folder-open', class: 'icon-text-white' %>

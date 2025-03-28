@@ -35,9 +35,19 @@
 
               <% if product.children.any? %>
                 <div class="mb-3">
-                  <%= f.select :variant_id, product.children.pluck(:option_1, :id).uniq, 
-                  { label: product.option_1, prompt: "Choose..." },
-                  required: true %>
+                  <% variants = product.children.uniq { |v| v.option_1 } %>
+                  <% options = variants.map do |variant| 
+                      [
+                        "#{variant.option_1}#{!variant.in_stock? ? ' (Sold Out)' : ''}",
+                        variant.id,
+                        { disabled: !variant.in_stock? }
+                      ]
+                    end %>
+
+                  <%= f.select :variant_id, 
+                        options_for_select(options), 
+                        { label: product.option_1, prompt: "Choose..." }, 
+                        required: true %>
                 </div>
               <% else %>
                 <%= f.hidden_field :variant_id, value: product.parent.id %>
@@ -57,7 +67,12 @@
               <% if admin? %>
                 <%= link_to "Add to Cart", "#", class: "btn btn-warning w-100 btn-lg" %>
               <% else %>
-                <%= f.submit "Add to Cart", class: "btn btn-warning w-100 btn-lg" %>
+
+                <% if product.children.any? || (product.children.empty? && product.parent.in_stock?) %>
+                  <%= f.submit "Add to Cart", class: "btn btn-warning w-100 btn-lg" %>
+                <% elsif %>
+                  <%= f.submit "(Sold Out)", class: "btn btn-warning w-100 btn-lg", disabled: true %>
+                <% end %>
               <% end %>
             <% end %>
 

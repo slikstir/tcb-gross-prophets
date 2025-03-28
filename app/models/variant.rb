@@ -27,6 +27,14 @@ class Variant < ApplicationRecord
 
   delegate :name, :price, to: :product
 
+  def in_stock?
+    return true unless product.track_inventory?
+    
+    return false if stock_level.nil?
+    return true if stock_level > 0
+    false
+  end
+
   def options
     {
       product.option_1 => option_1,
