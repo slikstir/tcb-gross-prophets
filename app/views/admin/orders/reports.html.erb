@@ -76,7 +76,7 @@
             <tbody>
             <% @total_commissions.each do |key, val| %>
               <tr>
-                <td><%= Performer.find(key[0]).name %></td>
+                <td><%= Performer.find_by(id: key[0])&.name %></td>
                 <td><%= key[1].upcase %></td>
                 <td><%= number_to_currency val, unit: currency_icon(key[1]) %></td>
               </tr>
