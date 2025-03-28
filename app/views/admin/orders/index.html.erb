@@ -5,7 +5,7 @@
 <%= bootstrap_form_with url: admin_orders_path, method: :get, local: true do %>
   <div class="row mb-4">
     <!-- Search by order number -->
-    <div class="col-12 col-sm-3">
+    <div class="col-12 col-sm-2">
       <%= label_tag :number, "Order Number" %>
       <%= text_field_tag :number, params[:number], class: "form-control", placeholder: "e.g. 123" %>
     </div>
@@ -16,8 +16,17 @@
       <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Search by email" %>
     </div>
 
+    <!-- Filter by channel -->
+    <div class="col-12 col-sm-2">
+      <%= label_tag :channel, "Channel" %>
+      <%= select_tag :channel,
+            options_for_select([["Merch Table", "merch_table"], ["In Show", "in_show"]], selected: params[:channel] || "paid"),
+            include_blank: "All Channels", 
+            class: "form-select" %>
+    </div>
+
     <!-- Filter by payment_state -->
-    <div class="col-12 col-sm-3">
+    <div class="col-12 col-sm-2">
       <%= label_tag :payment_state, "Payment State" %>
       <%= select_tag :payment_state,
             options_for_select(Order.state_machines[:payment_state].states.map { |s| [s.name.capitalize, s.name] }, selected: params[:payment_state] || "paid"),
@@ -26,7 +35,7 @@
     </div>
 
     <!-- Filter by fulfillment_state -->
-    <div class="col-12 col-sm-3">
+    <div class="col-12 col-sm-2">
       <%= label_tag :fulfillment_state, "Fulfillment State" %>
       <%= select_tag :fulfillment_state,
             options_for_select(Order.state_machines[:fulfillment_state].states.map { |s| [s.name.capitalize, s.name] }, selected: params[:fulfillment_state]),

@@ -39,6 +39,7 @@
             </span>
           </td>
           <td>
+            <%= order.channel.humanize %>
             <ul>
               <% order.line_items.each do |line_item| %>
               <% next unless line_item.product.requires_fulfillment? %>

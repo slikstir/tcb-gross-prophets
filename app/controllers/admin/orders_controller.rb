@@ -21,6 +21,11 @@ module Admin
       end
 
       # Filter by fulfillment_state
+      if params[:channel].present?
+        orders = orders.where(channel: params[:channel])
+      end
+
+      # Filter by fulfillment_state
       if params[:fulfillment_state].present?
         orders = orders.where(fulfillment_state: params[:fulfillment_state])
       end
