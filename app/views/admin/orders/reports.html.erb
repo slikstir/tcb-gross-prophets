@@ -102,15 +102,17 @@
             <tr>
               <th>Product</th>
               <th>Currency</th>
+              <th>Units</th>
               <th>Total</th>
             </tr>
           </thead>
           <tbody>
-          <% @total_product_sales.each do |key, val| %>
+          <% @total_product_sales.each do |val| %>
             <tr>
-              <td><%= key[0] %></td>
-              <td><%= key[1].upcase %></td>
-              <td><%= number_to_currency val, unit: currency_icon(key[1]) %></td>
+              <td><%= val[0] %></td>
+              <td><%= val[1].upcase %></td>
+              <td><%= val[2] %></td>
+              <td><%= number_to_currency val[3], unit: currency_icon(val[1]) %></td>
             </tr>
           <% end %>
         </tbody>

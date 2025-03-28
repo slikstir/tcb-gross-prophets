@@ -160,11 +160,16 @@ class Order < ApplicationRecord
     start_time ||= Time.zone.now.beginning_of_day
     end_time ||= Time.zone.now.end_of_day
   
-    LineItem.joins(variant: :product) # Join LineItem → Variant → Product
-            .joins(:order) # Join LineItem → Order
-            .where(orders: { payment_state: 'paid', completed_at: start_time..end_time }) # Filter paid orders in range
-            .group('products.name', 'orders.currency') # Group by product name and currency
-            .sum('line_items.unit_price * line_items.quantity') # Sum total sales for each (product, currency) pair
+    LineItem.joins(variant: :product)
+            .joins(:order)
+            .where(orders: { payment_state: 'paid', completed_at: start_time..end_time })
+            .group('products.name', 'orders.currency')
+            .pluck(
+              'products.name',
+              'orders.currency',
+              Arel.sql('SUM(line_items.quantity) AS total_quantity'),
+              Arel.sql('SUM(line_items.unit_price * line_items.quantity) AS total_sales')
+            )  
   end
 
   def self.line_items_csv(start_time, end_time)
