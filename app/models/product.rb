@@ -50,6 +50,8 @@ class Product < ApplicationRecord
       foreign_key: :product_id,
       dependent: :destroy
 
+  has_many :variants
+
   validates :name, :price, :sku, presence: true
   validates :price, numericality: { greater_than: 0 }
   validates :availability, inclusion: { in: AVAILABILITY_OPTIONS }

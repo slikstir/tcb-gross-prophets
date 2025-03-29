@@ -1,6 +1,9 @@
 <h1>Product Details
 </h1>
 
+<%= link_to 'Edit', edit_admin_product_path(@product), class: 'btn btn-primary' %>
+<%= link_to 'Back', admin_products_path, class: 'btn btn-secondary' %>
+
 <div class="alert alert-secondary">
   <%= bootstrap_form_with model: LineItem.new do |f| %>
     <%= render 'shared/product', product: @product, f: f %>
@@ -18,9 +21,49 @@
 </dl>
 
 
-<%= link_to 'Edit', edit_admin_product_path(@product), class: 'btn btn-primary' %>
-<%= link_to 'Back', admin_products_path, class: 'btn btn-secondary' %>
-
-<div>
-TODO: Add a Table of Sales
+<h2>Product Sales</h2>
+<Div class="row">
+<div class="col-sm-6">
+<h3>Summary by Variant</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Variant</th>
+        <th>Sold</th>
+    </thead>
+    <tbody>
+      <% @product.variants.each do |variant| %>
+        <tr>
+          <td><%= variant.name %></td>
+          <td><%= variant.paid_line_items.sum(:quantity) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% if @product.availability == 'in_show' %>
+  <div class="col-sm-6">
+  <h3>Summary by Commission</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Performer</th>
+          <th>Sold</th>
+      </thead>
+      <tbody>
+        <% @product.variants.each do |variant| %>
+          <tr>
+            <th colspan="2"><%= variant.name %></th>
+          </tr>
+          <% variant.performer_sales_summary.each do |summary| %>
+            <tr>
+              <td><%= summary.name %></td>
+              <td><%= summary.total_quantity %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
 </div>

@@ -22,6 +22,11 @@ class Variant < ApplicationRecord
   belongs_to :product,
       inverse_of: :parent,
       optional: true
+      
+  has_many :line_items
+  has_many :paid_line_items, -> {
+    joins(:order).where(orders: { payment_state: 'paid' })
+  }, class_name: 'LineItem'
 
   validates :sku, presence: true
 
@@ -41,5 +46,20 @@ class Variant < ApplicationRecord
         product.option_2 => option_2,
         product.option_3 => option_3
     }.compact.reject { |k, v| v.blank? || k.blank? }
+  end
+
+  def paid_line_items_grouped_by_performer
+    paid_line_items.includes(:performer).group_by(&:performer)
+  end
+
+  def performer_sales_summary
+    paid_line_items
+      .joins(:performer)
+      .group('performers.id', 'performers.name')
+      .select(
+        'performers.id',
+        'performers.name',
+        'SUM(line_items.quantity) AS total_quantity'
+      )
   end
 end
