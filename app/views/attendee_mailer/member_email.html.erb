@@ -1,0 +1,30 @@
+<table style="width: 100%; max-width: 600px; margin: 0; background-color: #f8f9fa">
+  <tr>
+    <td colspan="2" class="text-center">
+      <%= image_tag "https://chuds.money/assets/GPLoginLogo-0c06b903.png", style: "width: 100%; ratio: 1190 / 561;" %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: center">
+      The Company™ Membership Information<br>
+      Member #<%= @attendee.id %>
+      <h2 class="text-center mb-3"><%= @attendee.name %></h2>
+    </td>
+  </tr>
+  
+  <tr style="padding-bottom: 10px;">
+    <td style="border: 1px solid #a0a0a0; text-align: center; padding-top: 20px; padding-bottom: 20px; inherit; border-radius: 8px; background: linear-gradient(111.92deg, rgba(200, 200, 200, 1) 20%, rgba(230, 230, 230, 1) 100%)">
+        <span style="font-size: 1.2em">Level <%= @attendee.level_index %></span><br>
+        <span style="color: #1AAF11; font-size: 1.5em; text-transform: uppercase;"><b><%= @attendee.level_name %></b></span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" style="height: 10px;"></td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #a0a0a0; text-align: center; padding-top: 20px; padding-bottom: 20px; border-radius: 8px; background: linear-gradient(111.92deg, rgba(200, 200, 200, 1) 20%, rgba(230, 230, 230, 1) 100%)">
+        <span class="font-size: 1.2em">Performance Points</span><br>
+        <span style="color: #1AAF11; font-size: 1.5em; text-transform: uppercase;"><b><%= @attendee.performance_points %></b></span>
+    </td>
+  </tr>
+</table>
