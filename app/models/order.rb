@@ -72,7 +72,10 @@ class Order < ApplicationRecord
     after_transition on: :pay, do: :deduct_stock
     after_transition on: :pay, do: :automatic_fulfillment
     after_transition on: :pay, do: :broadcast_purchase
-    after_transition on: :pay, do: :send_receipt_email
+    after_transition on: :pay, do: :broadcast_table_row
+      
+    # Relying on the Stripe email instead
+    # after_transition on: :pay, do: :send_receipt_email
   end
 
   state_machine :fulfillment_state, initial: :pending do
@@ -221,6 +224,17 @@ class Order < ApplicationRecord
     line_items.each(&:broadcast_notification)
   rescue Exception => e
     Rails.logger.error "Error broadcasting purchase: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+  end
+
+  def broadcast_table_row
+    broadcast_prepend_to :orders,
+      target: "orders",
+      partial: "admin/orders/row",
+      locals: { order: self }
+
+  rescue Exception => e
+    Rails.logger.error "Error broadcasting table row: #{e.message}"
     Rails.logger.error e.backtrace.join("\n")
   end
 

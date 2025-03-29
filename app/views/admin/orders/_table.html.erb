@@ -1,5 +1,7 @@
 <%== pagy_bootstrap_nav(@pagy) %>
 
+<%= turbo_stream_from :orders %>
+
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -14,7 +16,7 @@
         <th style="width: 110px">Actions</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="orders">
       <% @orders.each do |order| %>
           <%= render 'row', order: order %>
       <% end %>

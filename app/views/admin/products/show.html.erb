@@ -34,7 +34,7 @@
     <tbody>
       <% @product.variants.each do |variant| %>
         <tr>
-          <td><%= variant.name %></td>
+          <td><%= variant.option_1 %></td>
           <td><%= variant.paid_line_items.sum(:quantity) %></td>
         </tr>
       <% end %>

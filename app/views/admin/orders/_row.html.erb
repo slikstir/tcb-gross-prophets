@@ -1,70 +1,70 @@
-        <tr id="<%= dom_id(order) %>">
-          <td>
-            <%= order.number %><br>
-            <%= order.completed_at.strftime("%m/%d/%y %I:%M%p") if order.completed_at.present? %>
-          </td>
-          <td><%= order.email %></td>
-          <td>
-            <% if order.attendee.present? %>
-              <%= order.attendee.name %><br>
-              <%= "Seat #{order.attendee.seat_number}" if order.attendee.seat_number.present? %>
+<tr id="<%= dom_id(order) %>">
+  <td>
+    <%= order.number %><br>
+    <%= order.completed_at.strftime("%m/%d/%y %I:%M%p") if order.completed_at.present? %>
+  </td>
+  <td><%= order.email %></td>
+  <td>
+    <% if order.attendee.present? %>
+      <%= order.attendee.name %><br>
+      <%= "Seat #{order.attendee.seat_number}" if order.attendee.seat_number.present? %>
+    <% end %>
+  </td>
+  <td>
+    <span class="badge bg-<%= order.payment_state == 'paid' ? 'success' : 'warning' %>">
+      <%= order.payment_state.capitalize %>
+    </span>
+  </td>
+  <td> 
+    <span class="badge bg-<%= fulfillment_badge_class(order.fulfillment_state) %>">
+      <%= order.fulfillment_state.capitalize %>
+    </span>
+  </td>
+  <td>
+    <%= order.channel.humanize %>
+    <ul>
+      <% order.line_items.each do |line_item| %>
+      <% next unless line_item.product.requires_fulfillment? %>
+        <li>
+          <%= line_item.quantity %> x <%= line_item.variant.product.name %>
+            <% line_item.variant.options.each do |option, val| %>
+                <strong><%= option %>:</strong> <%= val %><br>
             <% end %>
-          </td>
-          <td>
-            <span class="badge bg-<%= order.payment_state == 'paid' ? 'success' : 'warning' %>">
-              <%= order.payment_state.capitalize %>
-            </span>
-          </td>
-          <td> 
-            <span class="badge bg-<%= fulfillment_badge_class(order.fulfillment_state) %>">
-              <%= order.fulfillment_state.capitalize %>
-            </span>
-          </td>
-          <td>
-            <%= order.channel.humanize %>
-            <ul>
-              <% order.line_items.each do |line_item| %>
-              <% next unless line_item.product.requires_fulfillment? %>
-                <li>
-                  <%= line_item.quantity %> x <%= line_item.variant.product.name %>
-                    <% line_item.variant.options.each do |option, val| %>
-                        <strong><%= option %>:</strong> <%= val %><br>
-                    <% end %>
-                    <% if line_item.performer.present? %>
-                    <br><span class="text-muted small"><i><%= line_item.performer.name %></i></span>
-                    <% end %>
-                </li>
-              <% end %>
-            </ul>
-          </td>
-          <td><%= number_to_currency order.total, unit: currency_icon(order.currency) %></td>
-          <td>
-            <div class="btn-group">
-              <%= link_to admin_order_path(order), class: "btn btn-sm btn-success" do %>
-                <%= icon 'folder-open', class: 'icon-text-white' %>
-              <% end %>
-              <%= link_to edit_admin_order_path(order), class: "btn btn-sm btn-warning"  do  %>
-                <%= icon 'edit', class: 'icon-text-white' %>
-              <% end %>
-            </div>  
-            <% if order.payment_state == 'paid' && order.requires_fulfillment? && order.fulfillment_state != 'delivered' %><br>
-              <div class="btn-group mt-2">
-                
-              <% if order.fulfillment_state == 'pending' %>
-                <%= link_to admin_order_path(order, order: {fulfillment_state: "packaged"}), method: :patch, 
-                        data: { confirm: 'Are you sure you want to mark the order packaged?', turbo: true}, class: "btn btn-sm btn-info" do %>
-                  <%= icon 'shopping-bag', class: 'icon-text-white' %>
-                <% end %>        
-              <% end %>
-              <% if order.fulfillment_state == 'pending' || order.fulfillment_state == 'packaged' %>
-                <%= link_to admin_order_path(order, order: {fulfillment_state: "delivered"}), method: :patch, 
-                        data: { confirm: 'Are you sure you want to mark the order delivered?', turbo: true }, class: "btn btn-sm btn-success" do %>
-                  <%= icon 'user-check', class: 'icon-text-white' %>
-                <% end %>        
-              <% end %>
-              </div>
-
+            <% if line_item.performer.present? %>
+            <br><span class="text-muted small"><i><%= line_item.performer.name %></i></span>
             <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </td>
+  <td><%= number_to_currency order.total, unit: currency_icon(order.currency) %></td>
+  <td>
+    <div class="btn-group">
+      <%= link_to admin_order_path(order), class: "btn btn-sm btn-success" do %>
+        <%= icon 'folder-open', class: 'icon-text-white' %>
+      <% end %>
+      <%= link_to edit_admin_order_path(order), class: "btn btn-sm btn-warning"  do  %>
+        <%= icon 'edit', class: 'icon-text-white' %>
+      <% end %>
+    </div>  
+    <% if order.payment_state == 'paid' && order.requires_fulfillment? && order.fulfillment_state != 'delivered' %><br>
+      <div class="btn-group mt-2">
+        
+      <% if order.fulfillment_state == 'pending' %>
+        <%= link_to admin_order_path(order, order: {fulfillment_state: "packaged"}), method: :patch, 
+                data: { confirm: 'Are you sure you want to mark the order packaged?', turbo: true}, class: "btn btn-sm btn-info" do %>
+          <%= icon 'shopping-bag', class: 'icon-text-white' %>
+        <% end %>        
+      <% end %>
+      <% if order.fulfillment_state == 'pending' || order.fulfillment_state == 'packaged' %>
+        <%= link_to admin_order_path(order, order: {fulfillment_state: "delivered"}), method: :patch, 
+                data: { confirm: 'Are you sure you want to mark the order delivered?', turbo: true }, class: "btn btn-sm btn-success" do %>
+          <%= icon 'user-check', class: 'icon-text-white' %>
+        <% end %>        
+      <% end %>
+      </div>
 
-            </td>
-        </tr>
+    <% end %>
+
+    </td>
+</tr>
