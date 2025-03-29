@@ -7,10 +7,11 @@ module Admin
     def index
       orders = Order.all
 
-      # Search by customer email
-
+      # Search by customer email, name or seat
       if params[:search].present?
-        orders = orders.where("email ILIKE ?", "%#{params[:search]}%")
+        search_term = "%#{params[:search]}%"
+        orders = orders.joins("LEFT OUTER JOIN attendees ON attendees.id = orders.attendee_id")
+                       .where("orders.email ILIKE :search OR attendees.name ILIKE :search OR attendees.seat_number ILIKE :search", search: search_term)
       end
 
       # Filter by payment_state (default to 'paid')
