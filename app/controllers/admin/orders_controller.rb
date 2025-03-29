@@ -100,6 +100,9 @@ module Admin
           @total_sales = Order.total_sales(start_time, end_time)
           @total_commissions = Order.total_commissions(start_time, end_time)
           @total_product_sales = Order.product_sales(start_time, end_time)
+          @total_variant_sales = Order.variant_sales(start_time, end_time)
+          @total_performer_sales = Order.variant_sales_by_performer(start_time, end_time)
+          
         end
 
         format.csv do 

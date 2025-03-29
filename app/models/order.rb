@@ -175,6 +175,46 @@ class Order < ApplicationRecord
             )  
   end
 
+  def self.variant_sales(start_time, end_time)
+    start_time ||= Time.zone.now.beginning_of_day
+    end_time ||= Time.zone.now.end_of_day
+  
+    LineItem.joins(variant: :product)
+            .joins(:order)
+            .where(orders: { payment_state: 'paid', completed_at: start_time..end_time })
+            .group('products.id', 'products.name', 'variants.option_1', 'orders.currency')
+            .order('products.id')
+            .pluck(
+              Arel.sql("products.name AS product_name"),
+              Arel.sql("variants.option_1 AS variant_name"),
+              Arel.sql('SUM(line_items.quantity) AS total_quantity'),
+              'orders.currency',
+              Arel.sql('SUM(line_items.unit_price * line_items.quantity) AS total_sales')
+            )
+  end
+  
+  def self.variant_sales_by_performer(start_time, end_time)
+    start_time ||= Time.zone.now.beginning_of_day
+    end_time ||= Time.zone.now.end_of_day
+  
+    LineItem.joins(:order)
+            .joins(:variant)
+            .joins('LEFT JOIN performers ON performers.id = line_items.performer_id')
+            .joins('INNER JOIN products ON products.id = variants.product_id')
+            .where(orders: { payment_state: 'paid', completed_at: start_time..end_time })
+            .group('performers.id', 'performers.name', 'variants.id', 'products.name', 'variants.option_1')
+            .order('performers.name', 'products.name')
+            .pluck(
+              Arel.sql("CONCAT(products.name, ' ', variants.option_1) AS variant_name"),
+              'performers.name',
+              Arel.sql('SUM(line_items.quantity) AS total_quantity'),
+              Arel.sql('SUM(line_items.unit_price * line_items.quantity) AS total_sales')
+            )
+  end
+  
+  
+  
+
   def self.line_items_csv(start_time, end_time)
     start_time ||= Time.zone.now.beginning_of_day
     end_time ||= Time.zone.now.end_of_day
