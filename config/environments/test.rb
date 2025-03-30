@@ -49,4 +49,5 @@ Rails.application.configure do
   config.logger.formatter = Logger::Formatter.new
 
   config.active_storage.service = :local
+  config.active_job.queue_adapter = :inline
 end

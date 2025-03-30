@@ -59,6 +59,7 @@ Rails.application.configure do
   config.active_storage.service = :amazon
 
   Rails.application.routes.default_url_options[:host] = "chuds.money"
+  config.active_job.queue_adapter = :sidekiq
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [

@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+
+  constraints SidekiqAdminConstraint do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+  
+
   mount ActionCable.server => "/cable"
 
   root "welcome#index"

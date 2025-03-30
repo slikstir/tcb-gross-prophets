@@ -66,3 +66,4 @@ gem 'active_storage_validations'
 
 gem 'state_machines-activerecord'
 gem 'stripe'
+gem 'sidekiq'
