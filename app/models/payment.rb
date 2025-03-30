@@ -26,28 +26,48 @@ class Payment < ApplicationRecord
   validates :attendee, :performer, presence: true
   validates :amount, numericality: { greater_than_or_equal_to: 0 }
 
-  after_create :process_chud_transfer
+  after_create :deadlock_safe_process_chud_transfer
+
+  def deadlock_safe_process_chud_transfer
+    with_deadlock_retry do
+      process_chud_transfer
+    end
+  rescue ActiveRecord::Rollback => e
+    Rails.logger.error("Payment processing failed: #{e.message}")
+    raise ActiveRecord::Rollback, "Payment processing failed"
+  end
 
   def process_chud_transfer
     ActiveRecord::Base.transaction do
-      attendee.lock! # Lock the attendee row
-      performer.lock! # Lock the performer row
-
-      # DISCOUNT RATE IS CURRENTLY 1.0
+      # Sort both records to lock in consistent order
+      locks = [attendee, performer].sort_by(&:id)
+      locks.each(&:lock!)
+  
       discounted_chuds = amount * 1.0
-
-      # Always fetch fresh values inside the transaction
+  
       new_attendee_balance = attendee.chuds_balance - amount
       new_performance_points = attendee.performance_points + amount
       new_performer_balance = performer.chuds_balance + discounted_chuds
-
-      if new_attendee_balance < 0
-        raise ActiveRecord::Rollback, "Not enough chuds!"
-      end
-
-      # Apply updates within the transaction
-      attendee.update!(chuds_balance: new_attendee_balance, performance_points: new_performance_points)
-      performer.update!(chuds_balance: new_performer_balance)
+  
+      raise ActiveRecord::Rollback, "Not enough chuds!" if new_attendee_balance < 0
+  
+      attendee.update!(
+        chuds_balance: new_attendee_balance,
+        performance_points: new_performance_points
+      )
+  
+      performer.update!(
+        chuds_balance: new_performer_balance
+      )
     end
   end
+
+  def with_deadlock_retry(retries = 3)
+    yield
+  rescue ActiveRecord::Deadlocked => e
+    raise if (retries -= 1).zero?
+    sleep(rand * 0.05) # tiny delay
+    retry
+  end
+  
 end
