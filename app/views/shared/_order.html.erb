@@ -55,7 +55,7 @@
                 <tr>
                   <td>
                     <% if item.product.image.attached? %>
-                      <%= image_tag item.product.image, class: "img-fluid
+                      <%= image_tag rails_public_blob_url(item.product.image), class: "img-fluid
                       rounded", style: "max-width: 80px; height: auto;" %>
                     <% else %>
                       <%= image_tag "placeholder.jpg", class: "img-fluid

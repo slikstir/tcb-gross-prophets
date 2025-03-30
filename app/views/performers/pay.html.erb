@@ -16,9 +16,9 @@
           <tr>
             <td >
               <% if performer.photo.attached? %>
-                <%= image_tag performer.photo, class: "rounded-circle h-100", width: 100, height: 100, style: "width: 100px; height: 100px;" %>
+                <%= image_tag rails_public_blob_url(performer.photo), class: "rounded-circle", width: 100, height: 100, style: "width: 100px; height: 100px; ratio: 1.0" %>
               <% else %>
-                <%= image_tag "landscape-placeholder.svg", class: "rounded-circle h-100", style: "width: 100px; height: 100px; ratio: 1.0;" %>
+                <%= image_tag "landscape-placeholder.svg", class: "rounded-circle", style: "width: 100px; height: 100px; ratio: 1.0;" %>
               <% end %><br>
               <%= performer.name %>
             </td>
