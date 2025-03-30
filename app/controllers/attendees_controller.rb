@@ -13,7 +13,7 @@ class AttendeesController < ApplicationController
 
     session[:show_code] = params[:show_code].downcase
     session[:email] = @attendee.email
-    if @attendee.carts.any?
+    if @attendee.carts.in_show.any?
       session[:show_order_id] = @attendee.carts.in_show.last.id
     else
       session[:show_order_id] = nil
