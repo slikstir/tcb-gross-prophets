@@ -12,7 +12,7 @@
       <%= @performer.name %>
     </p>
 
-    <%= image_tag(@performer.photo, class: "img-fluid") if  @performer.photo.attached? %>
+    <%= image_tag(rails_public_blob_url(@performer.photo), class: "img-fluid") if  @performer.photo.attached? %>
   </div>
   <div class="col">
           <p>

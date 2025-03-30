@@ -2,7 +2,7 @@
 
 <div class="text-center">
   <% if @homepage_image.image? && @homepage_image.image.attached? %>
-     <%= image_tag @homepage_image.image, class: "img-fluid" %>
+     <%= image_tag rails_public_blob_url(@homepage_image.image), class: "img-fluid" %>
   <% else %>
     <div class="col-12 col-md-4 offset-md-4">
       <%= image_tag "GrossProphets-Trio-v2.png", class: "img-fluid" %>

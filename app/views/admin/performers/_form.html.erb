@@ -2,7 +2,7 @@
   <%= bootstrap_form_with(model: [:admin, @performer], local: true) do |f| %>
     <%= f.text_field :name %>
     <% if @performer.photo.attached? %>
-      <%= image_tag @performer.photo, class: "img-fluid", style: "max-height: 250px;" %>
+      <%= image_tag rails_public_blob_url(@performer.photo), class: "img-fluid", style: "max-height: 250px;" %>
     <% end %>
     <%= f.file_field :photo %>
     <%= f.number_field :performance_points %>
