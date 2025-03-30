@@ -9,7 +9,7 @@
             <% product.image.analyze unless product.image.analyzed? %>
             <% ratio = (product.image.metadata[:width].to_f/product.image.metadata[:height].to_f).round(2) %>
 
-            <%= image_tag product.image, class: "img-fluid", style: "width: 100%; ratio: #{ratio};" %>
+            <%= image_tag rails_public_blob_url(product.image), class: "img-fluid", style: "width: 100%; ratio: #{ratio};" %>
           <% else %>
             <%= image_tag 'placeholder.jpg', class: "img-fluid", style: "max-height: 250px;" %>
           <% end %>
