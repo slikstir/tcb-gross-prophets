@@ -20,11 +20,11 @@ class LineItemsController < ApplicationController
       respond_to do |format|
         cart_item_count
         format.turbo_stream
-        format.html { redirect_to cart_redirect }
+        format.html { redirect_to @cart_redirect }
       end
     else
       @cart_redirect = (params[:order_channel] == 'merch_table' ? 'store' : 'shop')
-      redirect_to cart_redirect
+      redirect_to @cart_redirect
     end
   end
 
